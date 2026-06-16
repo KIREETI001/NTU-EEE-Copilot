@@ -45,10 +45,10 @@ for (const uni of dirs(RULEBOOK).filter((d) => d !== "schema")) {
   }
 }
 
-const payload = {
-  generated_at: new Date().toISOString(),
-  cohorts,
-};
+// Deterministic output: NO build timestamp. The artifact is byte-identical for
+// identical YAML, so `git diff --exit-code apps/explorer/public/rulebook.json`
+// after a rebuild is a real staleness gate in CI (see validate-rulebook.mjs).
+const payload = { cohorts };
 
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, JSON.stringify(payload, null, 2));

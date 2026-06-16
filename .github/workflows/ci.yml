@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  engine:
+    name: Engine (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install engine deps
+        run: pip install -r services/engine/requirements.txt
+      - name: Run engine tests
+        working-directory: services/engine
+        run: python -m pytest -q
+
+  rulebook-explorer:
+    name: Rulebook + Explorer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - name: Install deps
+        run: npm ci
+      - name: Validate rulebook (invariants + provenance)
+        run: npm run rulebook:validate
+      - name: Rebuild rulebook JSON
+        run: npm run rulebook:build
+      - name: rulebook.json must be in sync with YAML (deterministic build)
+        run: git diff --exit-code apps/explorer/public/rulebook.json
+      - name: One rule — no grading number hardcoded in a component
+        run: |
+          if grep -rEn "(136|137|5\.00|4\.50|2\.00|\b69\b)" apps/explorer/app apps/explorer/components --include='*.tsx' | grep -v className; then
+            echo "::error::A grading number is hardcoded in a component — it must come from the rulebook/engine"; exit 1
+          fi
+      - name: Build explorer
+        run: npm run explorer:build
+      - name: npm audit (informational)
+        run: npm audit --audit-level=high || true
