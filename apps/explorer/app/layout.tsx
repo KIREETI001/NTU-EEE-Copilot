@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${mono.variable} ${sans.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
         <header className="border-b border-line">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
             <Link href="/" className="font-mono text-sm font-semibold tracking-tight">
@@ -33,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="flex gap-5 font-mono text-xs text-ash">
               <Link href="/" className="hover:text-bone">specializations</Link>
               <Link href="/admissions" className="hover:text-bone">admissions</Link>
+              <Link href="/optimizer" className="text-ember hover:text-bone">optimizer</Link>
               <Link href="/suggest" className="hover:text-bone">suggest&nbsp;a&nbsp;fix</Link>
             </nav>
           </div>
