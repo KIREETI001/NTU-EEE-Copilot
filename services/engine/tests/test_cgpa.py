@@ -48,29 +48,51 @@ def test_in_progress_excluded(gpa_scale):
     assert r.graded_au == 3
 
 
-def test_golden_cgpa_anchor(gpa_scale):
-    """Synthetic transcript engineered to land at 3.74 (the user's documented CGPA).
-    Replace with the real Degree Audit to lock the oracle.
+def test_golden_cgpa_real_degree_audit(gpa_scale):
+    """ORACLE — the real Degree Audit (June 2026, matric U2321008K).
 
-    Construction: 60 AU total.
-      24 AU @ A  (5.00)  = 120.0
-      18 AU @ B+ (4.00)  =  72.0
-      12 AU @ B- (3.00)  =  36.0
-       6 AU @ C+ (2.50)  =  15.0
-      ------------------------------
-      60 AU              = 243.0  -> 243.0 / 60 = 4.05 ... (re-tune below)
+    Every LETTER-GRADED course on the transcript; Medical-Leave ('I'), Pass
+    ('P') and in-progress courses are excluded by the engine. The official audit
+    reports:
+        Total (Grade Point x AU) for CGPA = 329.5
+        Total AU for CGPA Computation     = 88
+        CGPA                              = 3.74
+    If this passes, the engine reproduces the real standing — not a synthetic fit.
     """
-    courses = [
-        make_course("A1", 12, "A"),    # 60.0
-        make_course("A2", 12, "A-"),   # 54.0
-        make_course("B1", 18, "B+"),   # 72.0
-        make_course("B2", 12, "B"),    # 42.0
-        make_course("C1", 6, "C+"),    # 15.0
+    # (code, AU, grade) — category is irrelevant to CGPA; no FGO applied.
+    transcript = [
+        # AY2025 Sem 1
+        ("EE3101", 3, "C+"), ("EE3180", 3, "A-"), ("HG2051", 3, "A-"),
+        ("IE3017", 3, "B-"), ("IE3102", 3, "C+"),
+        # AY2024 Special Term
+        ("ET5131", 3, "A"),
+        # AY2024 Sem 2
+        ("CC0007", 3, "A"), ("EE2073", 2, "B"), ("IE2107", 3, "B-"),
+        ("IE2108", 3, "B"), ("SS5206", 3, "A"),
+        # AY2024 Sem 1
+        ("EE2103", 3, "B-"), ("ML0004", 2, "A"), ("LC5002", 3, "B+"),
+        ("IE2110", 3, "C"), ("IE2106", 3, "B-"), ("EE2101", 3, "B-"),
+        ("CC0006", 3, "B+"),
+        # AY2023 Sem 2
+        ("CC0003", 2, "A-"), ("CC0005", 3, "A-"), ("LC5001", 3, "B+"),
+        ("EE1102", 3, "B-"), ("IE0005", 3, "B"), ("IE2104", 3, "B"),
+        ("MH1811", 3, "B+"),
+        # AY2023 Sem 1
+        ("IE1005", 3, "B"), ("FE1073", 1, "A-"), ("EG1001", 2, "B-"),
+        ("CC0002", 2, "A+"), ("MH1810", 3, "A-"), ("CC0001", 2, "A"),
+        ("PH1011", 3, "B-"),
     ]
-    # total = 60+54+72+42+15 = 243 ; AU = 60 ; 243/60 = 4.05
-    # Re-tune to 3.74: target quality points = 3.74 * 60 = 224.4
+    courses = [make_course(code, au, grade) for code, au, grade in transcript]
     r = compute_cgpa(courses, gpa_scale)
-    assert r.graded_au == 60
-    # Assert the math is internally consistent (point of the test is the engine,
-    # not this synthetic figure). Real anchor goes here.
-    assert abs(r.cgpa - round(243.0 / 60, 2)) < 1e-9
+    assert r.graded_au == 88
+    assert r.quality_points == 329.5
+    assert r.cgpa == 3.74
+
+
+def test_medical_leave_excluded_not_error(gpa_scale):
+    # 'I' (Medical Leave) appears on real transcripts (IE3014, EE3011 on the
+    # June 2026 audit). It must be EXCLUDED from CGPA, never raise.
+    courses = [make_course("X1", 3, "A"), make_course("IE3014", 3, "I")]
+    r = compute_cgpa(courses, gpa_scale)
+    assert r.cgpa == 5.0
+    assert r.graded_au == 3
