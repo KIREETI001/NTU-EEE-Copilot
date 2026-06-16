@@ -73,6 +73,13 @@ fgo:
   # Course categories that can NEVER be FGO'd:
   ineligible_categories: ["FYP", "INTERNSHIP", "SANCTIONED"]
   ineligible_note: "Final Year Projects, Professional Internships/Attachments, and courses under academic sanction are never FGO-eligible."
+  # Specific courses that can NEVER be FGO'd, by CODE. Defense-in-depth: the
+  # engine blocks these even if the caller miscategorizes them — the degree
+  # rulebook files EE4080 under CORE and EE3279 under FC, so a category-only
+  # check would miss them. Kept in sync with degree.yaml
+  # key_courses[].fgo_eligible:false (a test enforces the two agree).
+  ineligible_courses: ["EE4080", "EE3279"]
+  ineligible_courses_confidence: "verified"
 
   eligibility:
     eligible: "All undergraduate students"

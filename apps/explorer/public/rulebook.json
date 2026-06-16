@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-16T02:55:22.967Z",
+  "generated_at": "2026-06-16T16:55:03.108Z",
   "cohorts": {
     "ntu/eee/ay2025-26": {
       "meta": {
@@ -262,6 +262,11 @@
             "SANCTIONED"
           ],
           "ineligible_note": "Final Year Projects, Professional Internships/Attachments, and courses under academic sanction are never FGO-eligible.",
+          "ineligible_courses": [
+            "EE4080",
+            "EE3279"
+          ],
+          "ineligible_courses_confidence": "verified",
           "eligibility": {
             "eligible": "All undergraduate students",
             "excluded_students": [
