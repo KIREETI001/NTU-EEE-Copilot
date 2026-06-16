@@ -67,3 +67,39 @@ def test_suggest_only_below_cgpa(gpa_scale, fgo_rules):
     assert "LOW" in codes
     assert "A1" not in codes
     assert "FYP" not in codes      # ineligible never suggested
+
+
+def test_fyp_blocked_even_when_miscategorized(gpa_scale, fgo_rules):
+    # The rulebook files EE4080 under CORE ("Includes FYP"). Ineligibility must
+    # be by-CODE, not only by-category — else a student categorizing their FYP
+    # the way the rulebook does could be told to FGO an ineligible course.
+    courses = [
+        make_course("EE4080", 8, "C", Category.CORE),  # FYP filed as CORE
+        make_course("X2", 3, "A", Category.BDE),
+    ]
+    sim = simulate_fgo(courses, ["EE4080"], gpa_scale, fgo_rules)
+    assert any("EE4080" in b and "INELIGIBLE" in b for b in sim.blocked)
+    assert sim.cgpa_before == sim.cgpa_after  # could not be converted
+
+
+def test_internship_never_suggested_even_as_fc(gpa_scale, fgo_rules):
+    # EE3279 (internship) is filed under FC in the rulebook; it must never be
+    # suggested for FGO regardless of category.
+    courses = [
+        make_course("A1", 12, "A", Category.CORE),
+        make_course("EE3279", 10, "C", Category.FC),   # internship as FC, drags CGPA
+    ]
+    codes = suggest_fgo_candidates(courses, gpa_scale, fgo_rules)
+    assert "EE3279" not in codes
+
+
+def test_ineligible_courses_match_degree_flags(bundle):
+    # The by-code ineligible set in grading.fgo must cover every course the
+    # degree rulebook flags fgo_eligible:false — no drift between the two files.
+    fgo = bundle["grading"]["fgo"]
+    flagged = {
+        kc["code"] for kc in bundle["degree"]["key_courses"]
+        if kc.get("fgo_eligible") is False
+    }
+    listed = set(fgo.get("ineligible_courses", []))
+    assert flagged <= listed, f"missing from grading.fgo.ineligible_courses: {flagged - listed}"

@@ -57,7 +57,13 @@ def quota_status(courses: list[Course], fgo_rules: dict) -> FgoQuotaStatus:
 
 
 def _is_ineligible(course: Course, fgo_rules: dict) -> bool:
-    return course.category.value in set(fgo_rules.get("ineligible_categories", []))
+    # By category (FYP/INTERNSHIP/SANCTIONED) OR by explicit course code. The
+    # by-code guard is defense-in-depth: the degree rulebook files the actual
+    # ineligible courses (EE4080, EE3279) under CORE/FC, so a category-only
+    # check would let a miscategorized FYP through — for an IRREVERSIBLE action.
+    if course.category.value in set(fgo_rules.get("ineligible_categories", [])):
+        return True
+    return course.code in set(fgo_rules.get("ineligible_courses", []))
 
 
 def simulate_fgo(
