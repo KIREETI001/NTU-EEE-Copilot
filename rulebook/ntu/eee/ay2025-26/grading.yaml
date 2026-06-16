@@ -22,8 +22,11 @@ gpa_scale:
     "D+":  1.50
     "D":   1.00
     "F":   0.00
-  # Excluded from CGPA entirely:
-  non_gpa_outcomes: ["P", "NR", "LOA", "EX", "IP", "TC"]
+  # Excluded from CGPA entirely. Per the official Degree Audit legend:
+  #   P=Pass  NR=No Record  LOA/ABS=Absent (valid reasons)  EX=Exempted
+  #   IP=In Progress  I=Medical Leave  DI=Distinction (pass outcome, no GPA pt)
+  #   TC=Transfer Credit
+  non_gpa_outcomes: ["P", "NR", "LOA", "EX", "IP", "TC", "I", "ABS", "DI"]
   min_cgpa_to_graduate: 2.00
 
 # -----------------------------------------------------------------------------

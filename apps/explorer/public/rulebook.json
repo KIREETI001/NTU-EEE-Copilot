@@ -198,7 +198,10 @@
             "LOA",
             "EX",
             "IP",
-            "TC"
+            "TC",
+            "I",
+            "ABS",
+            "DI"
           ],
           "min_cgpa_to_graduate": 2
         },
