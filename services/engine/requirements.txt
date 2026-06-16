@@ -1,6 +1,14 @@
+# Engine dependencies.
+# Pins are chosen to install on Python 3.14 (the repo's current interpreter):
+# the previous pins forced from-source native builds (Rust/maturin, libyaml)
+# that have no cp314 wheels and fail. All versions below are verified — 20/20
+# engine tests pass and all four optimizer endpoints serve 200 under py3.14.
 fastapi==0.115.6
-uvicorn[standard]==0.34.0
-pydantic==2.10.4
-pyyaml==6.0.2
-pytest==8.3.4
+uvicorn==0.34.0    # plain, not uvicorn[standard]: the [standard] extras pull native
+                   # httptools/uvloop/watchfiles (no cp314 wheels; uvloop is non-Windows)
+                   # and are unnecessary to serve JSON. --reload still works (stat fallback).
+pydantic==2.13.3   # was 2.10.4 — its pydantic-core has no cp314 wheel and built from
+                   # source via maturin, which fails. 2.13.x is still pydantic v2.
+pyyaml==6.0.3      # was 6.0.2 — 6.0.3 is the first release with a cp314 wheel.
+pytest==8.4.2      # was 8.3.4 — 8.4 is the line with Python 3.14 support.
 httpx==0.28.1
