@@ -1,0 +1,156 @@
+# =============================================================================
+# SPECIALIZATIONS  —  NTU / EEE / AY2025-26
+# =============================================================================
+# 8 Final-Year Area Specializations. Codes are COHORT-VERSIONED: AY2025-26
+# renumbered several design electives (e.g. EE4503->EE4523, EE4303->EE4323,
+# EE4207->EE4227). A student's valid code set depends on their final-year AY.
+# `avail` (S1/S2) is a SOFT attribute — flagged subject to change.
+# =============================================================================
+
+recognition_rules:
+  confidence: "verified"
+  major_pe_required_for_degree: 5      # must complete 5 Major PEs for the B.Eng
+  min_au_single_area: 15               # to be RECOGNIZED as specialized
+  min_design_electives: 1
+  min_technical_electives: 2
+  must_be_letter_graded: true
+  fgo_excluded: true                   # FGO'd courses do NOT count toward a specialization
+  max_specializations: 2
+  no_double_count: true                # a course can't count to >1 spec / 2nd major / minor
+  valid_combinations:                  # ways to reach the 15 AU with >=1 design + >=2 technical
+    - "1 Design + 4 Technical"
+    - "2 Design + 3 Technical"
+    - "3 Design + 2 Technical"
+
+year3_major_prescribed_electives:      # the 9 MPEs (Yr3 prerequisites). VERIFIED current.
+  confidence: "verified"
+  list:
+    - { code: "EE3011", title: "Modelling & Control",                 avail: ["S1","S2"] }
+    - { code: "EE3013", title: "Semiconductor Devices & Processing",  avail: ["S1","S2"] }
+    - { code: "EE3015", title: "Power Systems & Conversion",          avail: ["S1","S2"] }
+    - { code: "EE3018", title: "Introduction to Photonics",           avail: ["S1"] }
+    - { code: "EE3019", title: "Integrated Electronics / IC Design",  avail: ["S1","S2"] }
+    - { code: "IE3012", title: "Communication Principles",            avail: ["S1","S2"] }
+    - { code: "IE3014", title: "Digital Signal Processing",           avail: ["S1","S2"] }
+    - { code: "IE3017", title: "Computer Communications",             avail: ["S1","S2"] }
+    - { code: "IE3102", title: "Microprocessor",                      avail: ["S1","S2"] }
+
+specializations:
+  - slug: "power-clean-energy"
+    name: "Power & Clean Energy"
+    confidence: "verified"
+    required_mpe: ["EE3015", "any EE/IE3xxx"]
+    design_electives:
+      - { code: "EE4523", title: "Power Engineering Design",            avail: ["S1"] }
+      - { code: "EE4524", title: "Design of Clean Energy Systems",      avail: ["S2"] }
+    technical_electives:
+      - { code: "EE4273", title: "Digital Control Systems",            avail: ["S2"] }
+      - { code: "EE4530", title: "Power Systems Analysis and Control", avail: ["S1"] }
+      - { code: "EE4532", title: "Power Electronics and Drives",       avail: ["S1"] }
+      - { code: "EE4533", title: "Power Apparatus and System Protection", avail: ["S2"] }
+      - { code: "EE4534", title: "Modern Distribution Systems with Renewable Resources", avail: ["S2"] }
+    change_flag: "Design codes renumbered EE4503/EE4504 -> EE4523/EE4524 in AY2025-26."
+
+  - slug: "robotics-advanced-automation"
+    name: "Robotics & Advanced Automation"
+    confidence: "verified"
+    required_mpe: ["EE3011", "any EE/IE3xxx"]
+    design_electives:
+      - { code: "EE4227", title: "Control Engineering Design", avail: ["S1"] }
+      - { code: "EE4228", title: "Intelligent System Design",  avail: ["S2"] }
+      - { code: "EE4268", title: "Robotics and Automation",    avail: ["S1"] }
+    technical_electives:
+      - { code: "EE4273", title: "Digital Control Systems",                       avail: ["S2"] }
+      - { code: "EE4285", title: "Computational Intelligence",                    avail: ["S2"] }
+      - { code: "EE6225", title: "Multivariable Control Systems Analysis & Design", avail: ["S1"] }
+      - { code: "IE4476", title: "Image Processing & Computer Vision",            avail: ["S1"] }
+    change_flag: "Design codes renumbered EE4207/EE4208 -> EE4227/EE4228."
+
+  - slug: "communication-networks"
+    name: "Communication & Networks"
+    confidence: "verified"
+    required_mpe: ["IE3012", "IE3017"]
+    design_electives:
+      - { code: "IE4120", title: "Optical Communication System Design", avail: ["S1"] }
+      - { code: "IE4129", title: "Wireless System Design",              avail: ["S2"] }
+    technical_electives:
+      - { code: "IE4154", title: "Digital and Telecommunication Systems",          avail: ["S1"] }
+      - { code: "IE4155", title: "Wireless Communications & Mobile Networks",       avail: ["S2"] }
+      - { code: "EE6108", title: "Computer Networks",                              avail: ["S1"] }
+      - { code: "EE6111", title: "5G & Beyond Communication",                      avail: ["S1"] }
+
+  - slug: "computing-intelligent-systems"
+    name: "Computing & Intelligent Systems"
+    confidence: "verified"
+    required_mpe: ["IE3014", "IE3017", "IE3102", "EE3011"]
+    design_electives:
+      - { code: "IE4727", title: "Web Application Design",   avail: ["S1"] }
+      - { code: "IE4728", title: "Enterprise Network Design", avail: ["S2"] }
+    technical_electives:
+      - { code: "EE4285", title: "Computational Intelligence",            avail: ["S2"] }
+      - { code: "EE6108", title: "Computer Networks",                     avail: ["S1"] }
+      - { code: "IE4001", title: "Software Engineering",                  avail: ["S2"] }
+      - { code: "IE4483", title: "Artificial Intelligence & Data Mining", avail: ["S1"] }
+      - { code: "IE4756", title: "Computer Architecture",                 avail: ["S2"] }
+      - { code: "IE4758", title: "Information Security",                  avail: ["S1"] }
+      - { code: "IE4791", title: "Database Systems",                      avail: ["S2"] }
+
+  - slug: "data-analysis-machine-learning"
+    name: "Data Analysis & Machine Learning"
+    confidence: "verified"
+    note: "User's own specialization track."
+    required_mpe: ["IE3014", "IE3017", "IE3102", "EE3011"]
+    design_electives:
+      - { code: "EE4228", title: "Intelligent Systems Design",            avail: ["S2"] }
+      - { code: "IE4424", title: "Machine Learning Design & Application",  avail: ["S2"] }
+    technical_electives:
+      - { code: "EE4285", title: "Computational Intelligence",            avail: ["S2"] }
+      - { code: "EE6403", title: "Distributed Multimedia Systems",        avail: ["S2"] }
+      - { code: "EE6405", title: "Natural Language Processing",           avail: ["S1"] }
+      - { code: "EE6427", title: "Video Signal Processing",              avail: ["S1"] }
+      - { code: "IE4476", title: "Image Processing & Computer Vision",    avail: ["S1"] }
+      - { code: "IE4483", title: "Artificial Intelligence & Data Mining", avail: ["S1"] }
+      - { code: "IE4497", title: "Pattern Recognition & Machine Learning", avail: ["S2"] }
+
+  - slug: "ic-design"
+    name: "IC Design"
+    confidence: "verified"
+    required_mpe: ["EE3019", "EE3013"]
+    design_electives:
+      - { code: "EE4323", title: "Mixed-Signal IC Design",              avail: ["S1"] }
+      - { code: "EE4324", title: "Radio Frequency Integrated System Design", avail: ["S2"] }
+    technical_electives:
+      - { code: "EE4341", title: "Advanced Analog Circuits",                  avail: ["S1"] }
+      - { code: "EE4343", title: "Radio Frequency Circuits",                  avail: ["S2"] }
+      - { code: "EE4344", title: "Analysis & Design of Integrated Circuits",  avail: ["S2"] }
+      - { code: "EE6301", title: "Smart Biosensors and Systems for Healthcare", avail: ["S1"] }
+      - { code: "EE6309", title: "VLSI System",                               avail: ["S2"], level: "PG" }
+    change_flag: "Design codes renumbered EE4303/EE4304 -> EE4323/EE4324 in AY2025-26."
+
+  - slug: "micro-nano-electronics"
+    name: "Micro & Nano Electronics"
+    confidence: "verified"
+    required_mpe: ["EE3013", "EE3018"]
+    design_electives:
+      - { code: "EE4623", title: "CMOS Process & Device Simulation by CAD",       avail: ["S1"] }
+      - { code: "EE4624", title: "Device Parameter Extraction & Layout Implementation", avail: ["S2"] }
+    technical_electives:
+      - { code: "EE4645", title: "Microfabrication Engineering",              avail: ["S2"] }
+      - { code: "EE4647", title: "Microelectronic Devices",                   avail: ["S1"] }
+      - { code: "EE6601", title: "Advanced Wafer Processing",                 avail: ["S2"] }
+      - { code: "EE6610", title: "Integrated Circuit (IC) Packaging",         avail: ["S2"] }
+      - { code: "EE6301", title: "Smart Biosensors and Systems for Healthcare", avail: ["S1"] }
+
+  - slug: "biomedical-electronics"
+    name: "Biomedical Electronics"
+    confidence: "unverified"   # partly from AY2024/25 PDF; a few EE6xxx TBC
+    required_mpe: ["EE3011", "any EE/IE3xxx"]
+    design_electives:
+      - { code: "EE4227", title: "Control Engineering Design", avail: ["S1"] }
+      - { code: "EE4228", title: "Intelligent System Design",  avail: ["S2"] }
+    technical_electives:
+      - { code: "EE4285", title: "Computational Intelligence",                  avail: ["S2"] }
+      - { code: "EE4903", title: "Physiological Systems Analysis",              avail: ["S1"] }
+      - { code: "EE4904", title: "Biomedical Instrumentation",                 avail: ["S2"] }
+      - { code: "EE6301", title: "Smart Biosensors & Systems for Healthcare",   avail: ["S1"] }
+      - { code: "IE4476", title: "Image Processing & Computer Vision",          avail: ["S1"] }

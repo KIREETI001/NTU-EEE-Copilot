@@ -1,0 +1,1242 @@
+{
+  "generated_at": "2026-06-16T02:55:22.967Z",
+  "cohorts": {
+    "ntu/eee/ay2025-26": {
+      "meta": {
+        "schema_version": "1.0.0",
+        "cohort": {
+          "university": "ntu",
+          "university_full": "Nanyang Technological University, Singapore",
+          "programme": "eee",
+          "programme_full": "Bachelor of Engineering (Electrical & Electronic Engineering)",
+          "academic_year": "2025-26",
+          "entry": "year-1",
+          "duration_years": 4,
+          "fgo_regime": "expanded",
+          "fgo_regime_effective": "2026-01-01"
+        },
+        "status": {
+          "last_full_review": "2026-06-16",
+          "reviewed_by": "kireeti",
+          "next_audit_due": "2026-07-16",
+          "overall_confidence": "verified",
+          "open_caveats": [
+            "Total degree AU is 136 by category sum (83+17+15+21); older sheets show 137. Confirm against the per-cohort AU Summary PDF on the EEE intranet.",
+            "Some EE6xxx postgraduate technical electives are marked TBC / subject to availability in source.",
+            "Semester (S1/S2) availability is a soft attribute and changes year to year.",
+            "Canonical area-specialization master PDF is login-gated on the EEE intranet; lists here reconstructed from a current-year copy + the public curriculum page."
+          ]
+        },
+        "sources": {
+          "curriculum_page": {
+            "url": "https://www.ntu.edu.sg/eee/admissions/programmes/undergraduate-programmes/curriculum-(eee)",
+            "format": "html-static",
+            "notes": "Sitefinity CMS, server-rendered. High-level AU structure. Easily scrapeable."
+          },
+          "academic_handbook": {
+            "url": "https://www.ntu.edu.sg/media/docs/default-source/office-of-academic-services/academic-handbook-(undergraduate-studies)-ay2025-26_expanded-fgo_260511.pdf",
+            "format": "pdf",
+            "source_date": "2026-05-11",
+            "notes": "GPA scale, Expanded FGO, honours. Versioned by 'Last updated' date — use as change signal."
+          },
+          "area_specialization": {
+            "url": "https://www.ntu.edu.sg/eee (area specialization document — intranet/login-gated master)",
+            "format": "pdf-gated",
+            "notes": "Detailed per-area course lists. Requires manual supply when changed."
+          },
+          "indicative_grade_profile": {
+            "url": "https://www.ntu.edu.sg/admissions/undergraduate/indicative-grade-profile",
+            "format": "pdf",
+            "notes": "Annual. AY2026/27 UAS rule change flagged (H1 content subject dropped by default)."
+          },
+          "tuition_fees": {
+            "url": "https://www.ntu.edu.sg/admissions/undergraduate/financial-matters/tuition-fees",
+            "format": "html+pdf"
+          },
+          "graduate_employment_survey": {
+            "url": "https://www.moe.gov.sg/-/media (Joint Autonomous Universities GES) + data.gov.sg collection 415",
+            "format": "pdf+opendata",
+            "notes": "EEE-specific rows. Prefer data.gov.sg CSV/API where available."
+          },
+          "course_catalogue": {
+            "url": "https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main",
+            "format": "html-legacy",
+            "notes": "Oracle OWA, server-rendered HTML, no public API. Occasional downtime."
+          }
+        }
+      },
+      "degree": {
+        "total_au": {
+          "value": 136,
+          "confidence": "verified",
+          "note": "Category sum 83+17+15+21=136. Older sheets cite 137 (Physics-variant/rounding). See meta.open_caveats."
+        },
+        "candidature": {
+          "unit": "years",
+          "minimum": 3.5,
+          "normal": 4,
+          "maximum": 6,
+          "confidence": "verified"
+        },
+        "letter_graded_floor_au": {
+          "value": 69,
+          "confidence": "verified"
+        },
+        "categories": [
+          {
+            "code": "CORE",
+            "name": "Major Core",
+            "au": 83,
+            "includes_prescribed_electives": true,
+            "confidence": "verified",
+            "note": "Includes FYP, all core EE/IE courses, 2 Yr3 Major PEs + 2 Design + 3 Technical PEs."
+          },
+          {
+            "code": "ICC_CC",
+            "name": "Interdisciplinary Collaborative Core — Common Core",
+            "au": 17,
+            "confidence": "verified"
+          },
+          {
+            "code": "FC",
+            "name": "Foundation Core",
+            "au": 15,
+            "confidence": "verified",
+            "note": "Intro to Data Science & AI; Engineering Communication; Professional Internship."
+          },
+          {
+            "code": "BDE",
+            "name": "Broadening & Deepening Electives",
+            "au": 21,
+            "confidence": "verified"
+          }
+        ],
+        "key_courses": [
+          {
+            "code": "EE4080",
+            "name": "Final Year Project",
+            "category": "CORE",
+            "au": 8,
+            "note": "4 AU x 2 semesters. Award of Honours depends on it. FGO-INELIGIBLE.",
+            "fgo_eligible": false,
+            "confidence": "verified"
+          },
+          {
+            "code": "EE3279",
+            "name": "Professional Internship",
+            "category": "FC",
+            "au": 10,
+            "note": "20-week attachment. Requires Yr3 standing + >=4 semesters completed. FGO-INELIGIBLE.",
+            "fgo_eligible": false,
+            "confidence": "verified"
+          },
+          {
+            "code": "PH1012",
+            "name": "Physics A",
+            "category": "CORE",
+            "au": 4,
+            "note": "Only for students WITHOUT A-level Physics.",
+            "conditional": true,
+            "confidence": "verified"
+          }
+        ],
+        "semester_map": {
+          "year_1": [
+            "Engineers in Society",
+            "From Computational Thinking to Programming",
+            "Mathematics I & II",
+            "Physics / Physics Foundation for EEE",
+            "An Intro to Engineering & Practices",
+            "EEE Laboratory 1",
+            "Circuit Analysis (EE2101 track)",
+            "Digital Electronics",
+            "Intro to Data Science & AI (Foundation Core)"
+          ],
+          "year_2": [
+            "Analog Electronics (EE2102)",
+            "Semiconductor Fundamentals (EE2103)",
+            "Electrical Devices & Machines",
+            "Engineering Mathematics I & II (IE2107)",
+            "Data Structures & Algorithms (IE2108)",
+            "Signals & Systems (IE2110)",
+            "Intro to EEE Design & Project (EE2073)"
+          ],
+          "year_3": [
+            "Engineering Electromagnetics (EE3101)",
+            "Design & Innovation Project (EE3180)",
+            "Engineering Communication (HW0288)",
+            "2 x Year-3 Major Prescribed Electives",
+            "Professional Internship (EE3279, 10 AU)"
+          ],
+          "year_4": [
+            "Final Year Project (EE4080)",
+            "2 x Design Electives",
+            "3 x Technical Electives",
+            "Remaining ICC Common Core + BDE"
+          ]
+        }
+      },
+      "grading": {
+        "gpa_scale": {
+          "confidence": "verified",
+          "max": 5,
+          "grades": {
+            "A+": 5,
+            "A": 5,
+            "A-": 4.5,
+            "B+": 4,
+            "B": 3.5,
+            "B-": 3,
+            "C+": 2.5,
+            "C": 2,
+            "D+": 1.5,
+            "D": 1,
+            "F": 0
+          },
+          "non_gpa_outcomes": [
+            "P",
+            "NR",
+            "LOA",
+            "EX",
+            "IP",
+            "TC"
+          ],
+          "min_cgpa_to_graduate": 2
+        },
+        "fgo": {
+          "regime": "expanded",
+          "confidence": "verified",
+          "effective": "AY2025-26 Semester 2",
+          "transform": {
+            "pass_grades": [
+              "A+",
+              "A",
+              "A-",
+              "B+",
+              "B",
+              "B-",
+              "C+",
+              "C",
+              "D+",
+              "D"
+            ],
+            "fail_grade": "F"
+          },
+          "pass_label": "P",
+          "fail_label": "NR",
+          "effects": {
+            "excluded_from_cgpa": true,
+            "pass_counts_toward_graduation_au": true,
+            "pass_counts_toward_letter_graded_floor": false,
+            "pass_counts_toward_specialization": false,
+            "nr_earns_au": false,
+            "nr_on_external_transcript": false,
+            "pass_on_external_transcript": true
+          },
+          "irreversible": true,
+          "irreversible_text": "FGO declarations are IRREVOCABLE once submitted. Quota is deducted per course attempt and cannot be restored.",
+          "quota": {
+            "total_au": 24,
+            "confidence": "verified",
+            "subcap_au": 12,
+            "subcap_categories": [
+              "CORE",
+              "MPE",
+              "ICC_CC",
+              "ICC_PROFESSIONAL",
+              "ICC_CARE_SERVE_LEARN",
+              "TAIS",
+              "USP",
+              "NGLP",
+              "GER"
+            ],
+            "remainder_categories": [
+              "BDE",
+              "MPE_BDE_OPTION"
+            ],
+            "note": "24 AU total, of which at most 12 AU may fall on Major Core / MPE / ICC combined. NOTE: under the EARLIER (AY2024-25) FGO, ICC Common Core was EXCLUDED from FGO; the Expanded FGO now PERMITS it within the 12 AU sub-cap. This is the per-cohort branch the engine must respect.\n"
+          },
+          "ineligible_categories": [
+            "FYP",
+            "INTERNSHIP",
+            "SANCTIONED"
+          ],
+          "ineligible_note": "Final Year Projects, Professional Internships/Attachments, and courses under academic sanction are never FGO-eligible.",
+          "eligibility": {
+            "eligible": "All undergraduate students",
+            "excluded_students": [
+              "LKCMedicine",
+              "exchange",
+              "non-graduating"
+            ],
+            "min_grade_to_exercise": null,
+            "confidence": "verified"
+          },
+          "timing": {
+            "window": "Stipulated window after results release (historically ~2-4 days).",
+            "late_declarations_accepted": false,
+            "confidence": "verified",
+            "note": "Exact dates vary by semester; surface 'check official calendar' in UI."
+          },
+          "other_cohort_quotas": {
+            "four_or_five_year_year1": {
+              "total_au": 24,
+              "subcap_au": 12
+            },
+            "four_year_direct_year2": {
+              "total_au": 21,
+              "subcap_au": 12
+            },
+            "part_time": {
+              "total_au": 21,
+              "subcap_au": null
+            },
+            "three_year": {
+              "total_au": 21,
+              "subcap_au": null
+            }
+          }
+        },
+        "honours": {
+          "confidence": "verified",
+          "nomenclature_effective": "AY2017-18",
+          "engineering_fyp_rule": {
+            "applies_to": [
+              "Honours (Highest Distinction)"
+            ],
+            "min_fyp_grade": "A-",
+            "note": "Highest Distinction requires CGPA >= 4.50 AND at least A- in the FYP. Opting out of FYP forfeits Highest Distinction and Distinction."
+          },
+          "classes": [
+            {
+              "name": "Honours (Highest Distinction)",
+              "min_cgpa": 4.5,
+              "max_cgpa": 5,
+              "former": "First Class"
+            },
+            {
+              "name": "Honours (Distinction)",
+              "min_cgpa": 4,
+              "max_cgpa": 4.49,
+              "former": "Second Upper"
+            },
+            {
+              "name": "Honours (Merit)",
+              "min_cgpa": 3.5,
+              "max_cgpa": 3.99,
+              "former": "Second Lower"
+            },
+            {
+              "name": "Honours",
+              "min_cgpa": 3,
+              "max_cgpa": 3.49,
+              "former": "Third Class"
+            },
+            {
+              "name": "Pass",
+              "min_cgpa": 2,
+              "max_cgpa": 2.99,
+              "former": "Pass"
+            }
+          ]
+        },
+        "dean_list": {
+          "confidence": "verified",
+          "rule": "Top 5% of cohort with YGPA >= 4.50, assessed on YGPA BEFORE FGO is applied."
+        },
+        "freshmen_gpa_exemption": {
+          "confidence": "verified",
+          "note": "Up to 6 first-attempt non-pass freshman courses may be excluded from GPA. Applies prior to AY2025-26 Sem 2."
+        }
+      },
+      "specializations": {
+        "recognition_rules": {
+          "confidence": "verified",
+          "major_pe_required_for_degree": 5,
+          "min_au_single_area": 15,
+          "min_design_electives": 1,
+          "min_technical_electives": 2,
+          "must_be_letter_graded": true,
+          "fgo_excluded": true,
+          "max_specializations": 2,
+          "no_double_count": true,
+          "valid_combinations": [
+            "1 Design + 4 Technical",
+            "2 Design + 3 Technical",
+            "3 Design + 2 Technical"
+          ]
+        },
+        "year3_major_prescribed_electives": {
+          "confidence": "verified",
+          "list": [
+            {
+              "code": "EE3011",
+              "title": "Modelling & Control",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            },
+            {
+              "code": "EE3013",
+              "title": "Semiconductor Devices & Processing",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            },
+            {
+              "code": "EE3015",
+              "title": "Power Systems & Conversion",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            },
+            {
+              "code": "EE3018",
+              "title": "Introduction to Photonics",
+              "avail": [
+                "S1"
+              ]
+            },
+            {
+              "code": "EE3019",
+              "title": "Integrated Electronics / IC Design",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            },
+            {
+              "code": "IE3012",
+              "title": "Communication Principles",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            },
+            {
+              "code": "IE3014",
+              "title": "Digital Signal Processing",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            },
+            {
+              "code": "IE3017",
+              "title": "Computer Communications",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            },
+            {
+              "code": "IE3102",
+              "title": "Microprocessor",
+              "avail": [
+                "S1",
+                "S2"
+              ]
+            }
+          ]
+        },
+        "specializations": [
+          {
+            "slug": "power-clean-energy",
+            "name": "Power & Clean Energy",
+            "confidence": "verified",
+            "required_mpe": [
+              "EE3015",
+              "any EE/IE3xxx"
+            ],
+            "design_electives": [
+              {
+                "code": "EE4523",
+                "title": "Power Engineering Design",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4524",
+                "title": "Design of Clean Energy Systems",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "EE4273",
+                "title": "Digital Control Systems",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE4530",
+                "title": "Power Systems Analysis and Control",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4532",
+                "title": "Power Electronics and Drives",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4533",
+                "title": "Power Apparatus and System Protection",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE4534",
+                "title": "Modern Distribution Systems with Renewable Resources",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "change_flag": "Design codes renumbered EE4503/EE4504 -> EE4523/EE4524 in AY2025-26."
+          },
+          {
+            "slug": "robotics-advanced-automation",
+            "name": "Robotics & Advanced Automation",
+            "confidence": "verified",
+            "required_mpe": [
+              "EE3011",
+              "any EE/IE3xxx"
+            ],
+            "design_electives": [
+              {
+                "code": "EE4227",
+                "title": "Control Engineering Design",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4228",
+                "title": "Intelligent System Design",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE4268",
+                "title": "Robotics and Automation",
+                "avail": [
+                  "S1"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "EE4273",
+                "title": "Digital Control Systems",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE4285",
+                "title": "Computational Intelligence",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6225",
+                "title": "Multivariable Control Systems Analysis & Design",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4476",
+                "title": "Image Processing & Computer Vision",
+                "avail": [
+                  "S1"
+                ]
+              }
+            ],
+            "change_flag": "Design codes renumbered EE4207/EE4208 -> EE4227/EE4228."
+          },
+          {
+            "slug": "communication-networks",
+            "name": "Communication & Networks",
+            "confidence": "verified",
+            "required_mpe": [
+              "IE3012",
+              "IE3017"
+            ],
+            "design_electives": [
+              {
+                "code": "IE4120",
+                "title": "Optical Communication System Design",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4129",
+                "title": "Wireless System Design",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "IE4154",
+                "title": "Digital and Telecommunication Systems",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4155",
+                "title": "Wireless Communications & Mobile Networks",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6108",
+                "title": "Computer Networks",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE6111",
+                "title": "5G & Beyond Communication",
+                "avail": [
+                  "S1"
+                ]
+              }
+            ]
+          },
+          {
+            "slug": "computing-intelligent-systems",
+            "name": "Computing & Intelligent Systems",
+            "confidence": "verified",
+            "required_mpe": [
+              "IE3014",
+              "IE3017",
+              "IE3102",
+              "EE3011"
+            ],
+            "design_electives": [
+              {
+                "code": "IE4727",
+                "title": "Web Application Design",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4728",
+                "title": "Enterprise Network Design",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "EE4285",
+                "title": "Computational Intelligence",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6108",
+                "title": "Computer Networks",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4001",
+                "title": "Software Engineering",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "IE4483",
+                "title": "Artificial Intelligence & Data Mining",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4756",
+                "title": "Computer Architecture",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "IE4758",
+                "title": "Information Security",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4791",
+                "title": "Database Systems",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ]
+          },
+          {
+            "slug": "data-analysis-machine-learning",
+            "name": "Data Analysis & Machine Learning",
+            "confidence": "verified",
+            "note": "User's own specialization track.",
+            "required_mpe": [
+              "IE3014",
+              "IE3017",
+              "IE3102",
+              "EE3011"
+            ],
+            "design_electives": [
+              {
+                "code": "EE4228",
+                "title": "Intelligent Systems Design",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "IE4424",
+                "title": "Machine Learning Design & Application",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "EE4285",
+                "title": "Computational Intelligence",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6403",
+                "title": "Distributed Multimedia Systems",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6405",
+                "title": "Natural Language Processing",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE6427",
+                "title": "Video Signal Processing",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4476",
+                "title": "Image Processing & Computer Vision",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4483",
+                "title": "Artificial Intelligence & Data Mining",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4497",
+                "title": "Pattern Recognition & Machine Learning",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ]
+          },
+          {
+            "slug": "ic-design",
+            "name": "IC Design",
+            "confidence": "verified",
+            "required_mpe": [
+              "EE3019",
+              "EE3013"
+            ],
+            "design_electives": [
+              {
+                "code": "EE4323",
+                "title": "Mixed-Signal IC Design",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4324",
+                "title": "Radio Frequency Integrated System Design",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "EE4341",
+                "title": "Advanced Analog Circuits",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4343",
+                "title": "Radio Frequency Circuits",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE4344",
+                "title": "Analysis & Design of Integrated Circuits",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6301",
+                "title": "Smart Biosensors and Systems for Healthcare",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE6309",
+                "title": "VLSI System",
+                "avail": [
+                  "S2"
+                ],
+                "level": "PG"
+              }
+            ],
+            "change_flag": "Design codes renumbered EE4303/EE4304 -> EE4323/EE4324 in AY2025-26."
+          },
+          {
+            "slug": "micro-nano-electronics",
+            "name": "Micro & Nano Electronics",
+            "confidence": "verified",
+            "required_mpe": [
+              "EE3013",
+              "EE3018"
+            ],
+            "design_electives": [
+              {
+                "code": "EE4623",
+                "title": "CMOS Process & Device Simulation by CAD",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4624",
+                "title": "Device Parameter Extraction & Layout Implementation",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "EE4645",
+                "title": "Microfabrication Engineering",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE4647",
+                "title": "Microelectronic Devices",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE6601",
+                "title": "Advanced Wafer Processing",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6610",
+                "title": "Integrated Circuit (IC) Packaging",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6301",
+                "title": "Smart Biosensors and Systems for Healthcare",
+                "avail": [
+                  "S1"
+                ]
+              }
+            ]
+          },
+          {
+            "slug": "biomedical-electronics",
+            "name": "Biomedical Electronics",
+            "confidence": "unverified",
+            "required_mpe": [
+              "EE3011",
+              "any EE/IE3xxx"
+            ],
+            "design_electives": [
+              {
+                "code": "EE4227",
+                "title": "Control Engineering Design",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4228",
+                "title": "Intelligent System Design",
+                "avail": [
+                  "S2"
+                ]
+              }
+            ],
+            "technical_electives": [
+              {
+                "code": "EE4285",
+                "title": "Computational Intelligence",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE4903",
+                "title": "Physiological Systems Analysis",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "EE4904",
+                "title": "Biomedical Instrumentation",
+                "avail": [
+                  "S2"
+                ]
+              },
+              {
+                "code": "EE6301",
+                "title": "Smart Biosensors & Systems for Healthcare",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4476",
+                "title": "Image Processing & Computer Vision",
+                "avail": [
+                  "S1"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "admissions": {
+        "indicative_grade_profile": {
+          "academic_year": "2025-26",
+          "confidence": "verified",
+          "places_taken_up": 688,
+          "note": "Largest single engineering intake at NTU.",
+          "a_level": {
+            "basis": "3 H2 / 1 H1",
+            "p10": "CCC/D",
+            "p90": "AAA/C"
+          },
+          "polytechnic_gpa": {
+            "p10": 3.48,
+            "p90": 3.92
+          },
+          "change_flag": "From AY2026/27 the H1 content-subject grade is no longer included by default in the University Admission Score (UAS); reference the 3 H2 grades. A new AY2026/27 profile was not yet established at IGP publication.\n"
+        },
+        "subject_prerequisites": {
+          "confidence": "verified",
+          "a_level": [
+            "H2 Mathematics",
+            "H2 Physics"
+          ],
+          "note": "Students without A-level Physics must take PH1012 Physics A (4 AU).",
+          "polytechnic": "Relevant diploma."
+        },
+        "signature_programmes": [
+          {
+            "name": "CN Yang Scholars Programme (CNYSP)",
+            "confidence": "verified",
+            "eee_eligible": true,
+            "benefits": {
+              "tuition": "Full subsidised tuition covered",
+              "living_allowance_per_year_sgd": 6500,
+              "accommodation_allowance_per_year_sgd": 2000,
+              "travel_grant_sgd": 8000,
+              "computer_allowance_sgd": 2000
+            },
+            "min_cgpa": 3.5,
+            "note": "CGPA reviewed each semester. Dedicated CNYSP-EEE curriculum exists (Jan 2026)."
+          },
+          {
+            "name": "Renaissance Engineering Programme (REP)",
+            "confidence": "verified",
+            "note": "Integrated Bachelor+Master, separate admission (AAA/A profile), own scholarship (REPS)."
+          },
+          {
+            "name": "University Scholars Programme (NTU-USP)",
+            "confidence": "verified"
+          },
+          {
+            "name": "NTU-SJTU Dual B.Eng (EEE)",
+            "confidence": "unverified",
+            "note": "2+2 dual degree (Singapore + Shanghai), reported from Aug 2026. Verify against official NTU page before publishing in-app."
+          }
+        ],
+        "tuition_fees_per_year_sgd": {
+          "basis": "Accepted offer 2025, lab-based programme, fixed for degree duration.",
+          "confidence": "verified",
+          "singapore_citizen_subsidised": 8250,
+          "singapore_pr_subsidised": 11550,
+          "asean_intl_subsidised_incl_gst": 17950,
+          "other_intl_subsidised_incl_gst": 20000,
+          "non_subsidised_no_grant": 40500
+        }
+      },
+      "careers": {
+        "graduate_employment_survey": {
+          "confidence": "verified",
+          "measured_as_at": "1 November 2025 (≈6 months after final exams)",
+          "methodology_note": "GES 2025 split 'Secured Employment' (86.4%) from 'Currently Employed' (83.3%); not exactly comparable to the single GES 2024 'Employed' figure.",
+          "series": [
+            {
+              "year": 2024,
+              "currently_employed_pct": 79.3,
+              "full_time_permanent_pct": 76.1,
+              "gross_median_sgd": 4800,
+              "gross_mean_sgd": 4824,
+              "gross_p25_sgd": 4200,
+              "gross_p75_sgd": 5155,
+              "basic_median_sgd": 4700
+            },
+            {
+              "year": 2025,
+              "currently_employed_pct": 83.3,
+              "secured_employment_pct": 86.4,
+              "full_time_permanent_pct": 75.8,
+              "gross_median_sgd": 4800,
+              "gross_mean_sgd": 4786,
+              "gross_p25_sgd": 4250,
+              "gross_p75_sgd": 5200,
+              "basic_median_sgd": 4640
+            }
+          ],
+          "positioning_note": "EEE sits mid-pack among NTU engineering (Computer Eng ~$5,150; Mechanical ~$4,500; Civil ~$4,200)."
+        },
+        "employers": {
+          "confidence": "verified",
+          "semiconductor_electronics": [
+            "GlobalFoundries",
+            "Micron",
+            "STMicroelectronics",
+            "Infineon",
+            "Applied Materials",
+            "KLA",
+            "Tokyo Electron",
+            "STATS ChipPAC",
+            "Vanguard International Semiconductor",
+            "Analog Devices",
+            "AMD",
+            "Intel",
+            "Broadcom"
+          ],
+          "defence_research": [
+            "DSO National Laboratories",
+            "DSTA",
+            "ST Engineering",
+            "A*STAR"
+          ],
+          "telco_it": [
+            "Singtel",
+            "Cisco",
+            "Google"
+          ],
+          "other": [
+            "Civil Service",
+            "Finance/data roles"
+          ]
+        },
+        "roles": [
+          "IC / device / process engineer",
+          "RF engineer",
+          "Control / automation engineer",
+          "Power / grid engineer",
+          "Firmware / embedded engineer",
+          "Data / AI engineer",
+          "Systems architect"
+        ],
+        "specialization_career_map": {
+          "confidence": "verified",
+          "map": {
+            "ic-design": {
+              "sectors": [
+                "Semiconductor design & fabrication"
+              ],
+              "employers": [
+                "GlobalFoundries",
+                "Micron",
+                "STMicroelectronics",
+                "Infineon"
+              ],
+              "roles": [
+                "Chip design engineer",
+                "Device/process engineer",
+                "IC packaging engineer"
+              ]
+            },
+            "micro-nano-electronics": {
+              "sectors": [
+                "Semiconductor fabrication",
+                "Materials"
+              ],
+              "employers": [
+                "GlobalFoundries",
+                "Micron",
+                "Applied Materials"
+              ],
+              "roles": [
+                "Process engineer",
+                "Device engineer",
+                "Fab/wafer engineer"
+              ]
+            },
+            "power-clean-energy": {
+              "sectors": [
+                "Utilities",
+                "Clean energy",
+                "EV",
+                "Grid"
+              ],
+              "employers": [
+                "SP Group"
+              ],
+              "roles": [
+                "Power systems engineer",
+                "Power electronics engineer",
+                "Grid/renewables engineer"
+              ]
+            },
+            "communication-networks": {
+              "sectors": [
+                "5G / telecom",
+                "Networking"
+              ],
+              "employers": [
+                "Singtel",
+                "Cisco"
+              ],
+              "roles": [
+                "Network engineer",
+                "RF/wireless engineer",
+                "Telecom systems engineer"
+              ]
+            },
+            "computing-intelligent-systems": {
+              "sectors": [
+                "Software",
+                "AI/ML",
+                "Cloud"
+              ],
+              "employers": [
+                "Google",
+                "tech/finance"
+              ],
+              "roles": [
+                "Software engineer",
+                "ML engineer",
+                "Systems/data engineer"
+              ]
+            },
+            "data-analysis-machine-learning": {
+              "sectors": [
+                "AI/ML",
+                "Data science",
+                "Tech/finance/healthcare"
+              ],
+              "employers": [
+                "tech/finance/healthcare"
+              ],
+              "roles": [
+                "ML engineer",
+                "Data scientist",
+                "AI engineer"
+              ]
+            },
+            "robotics-advanced-automation": {
+              "sectors": [
+                "Industrial automation",
+                "Robotics"
+              ],
+              "employers": [
+                "manufacturing",
+                "robotics firms"
+              ],
+              "roles": [
+                "Automation engineer",
+                "Robotics engineer",
+                "Control systems engineer"
+              ]
+            },
+            "biomedical-electronics": {
+              "sectors": [
+                "Medtech",
+                "Healthcare devices"
+              ],
+              "employers": [
+                "medtech firms"
+              ],
+              "roles": [
+                "Biomedical instrumentation engineer",
+                "Medical device engineer"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

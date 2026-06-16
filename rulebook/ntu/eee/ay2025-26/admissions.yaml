@@ -1,0 +1,58 @@
+# =============================================================================
+# ADMISSIONS · FEES  —  NTU / EEE / AY2025-26
+# =============================================================================
+# Feeds the prospective-student explorer (the public, low-liability v1).
+# =============================================================================
+
+indicative_grade_profile:
+  academic_year: "2025-26"
+  confidence: "verified"
+  places_taken_up: 688
+  note: "Largest single engineering intake at NTU."
+  a_level:
+    basis: "3 H2 / 1 H1"
+    p10: "CCC/D"
+    p90: "AAA/C"
+  polytechnic_gpa:
+    p10: 3.48
+    p90: 3.92
+  change_flag: >
+    From AY2026/27 the H1 content-subject grade is no longer included by default
+    in the University Admission Score (UAS); reference the 3 H2 grades. A new
+    AY2026/27 profile was not yet established at IGP publication.
+
+subject_prerequisites:
+  confidence: "verified"
+  a_level: ["H2 Mathematics", "H2 Physics"]
+  note: "Students without A-level Physics must take PH1012 Physics A (4 AU)."
+  polytechnic: "Relevant diploma."
+
+signature_programmes:
+  - name: "CN Yang Scholars Programme (CNYSP)"
+    confidence: "verified"
+    eee_eligible: true
+    benefits:
+      tuition: "Full subsidised tuition covered"
+      living_allowance_per_year_sgd: 6500
+      accommodation_allowance_per_year_sgd: 2000
+      travel_grant_sgd: 8000
+      computer_allowance_sgd: 2000
+    min_cgpa: 3.5
+    note: "CGPA reviewed each semester. Dedicated CNYSP-EEE curriculum exists (Jan 2026)."
+  - name: "Renaissance Engineering Programme (REP)"
+    confidence: "verified"
+    note: "Integrated Bachelor+Master, separate admission (AAA/A profile), own scholarship (REPS)."
+  - name: "University Scholars Programme (NTU-USP)"
+    confidence: "verified"
+  - name: "NTU-SJTU Dual B.Eng (EEE)"
+    confidence: "unverified"
+    note: "2+2 dual degree (Singapore + Shanghai), reported from Aug 2026. Verify against official NTU page before publishing in-app."
+
+tuition_fees_per_year_sgd:
+  basis: "Accepted offer 2025, lab-based programme, fixed for degree duration."
+  confidence: "verified"
+  singapore_citizen_subsidised: 8250
+  singapore_pr_subsidised: 11550
+  asean_intl_subsidised_incl_gst: 17950
+  other_intl_subsidised_incl_gst: 20000
+  non_subsidised_no_grant: 40500

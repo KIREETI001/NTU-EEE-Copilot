@@ -1,0 +1,104 @@
+# =============================================================================
+# DEGREE STRUCTURE  —  NTU / EEE / AY2025-26
+# =============================================================================
+# AU = Academic Unit. 1 AU = 1 hr lecture/tutorial/seminar per week, OR
+# 3 hrs lab/fieldwork per week. Full-time normal load 16-18 AU/sem.
+# =============================================================================
+
+total_au:
+  value: 136
+  confidence: "verified"
+  note: "Category sum 83+17+15+21=136. Older sheets cite 137 (Physics-variant/rounding). See meta.open_caveats."
+
+candidature:
+  unit: "years"
+  minimum: 3.5
+  normal: 4.0
+  maximum: 6.0
+  confidence: "verified"
+
+# Minimum letter-graded AU that MUST come from NTU. The engine uses this as a
+# floor that FGO 'Pass' credits do NOT count toward (a Pass clears graduation
+# AU but not this letter-graded requirement).
+letter_graded_floor_au:
+  value: 69
+  confidence: "verified"
+
+categories:
+  - code: "CORE"
+    name: "Major Core"
+    au: 83                       # Core + Prescribed Electives combined (Major Requirements)
+    includes_prescribed_electives: true
+    confidence: "verified"
+    note: "Includes FYP, all core EE/IE courses, 2 Yr3 Major PEs + 2 Design + 3 Technical PEs."
+  - code: "ICC_CC"
+    name: "Interdisciplinary Collaborative Core — Common Core"
+    au: 17
+    confidence: "verified"
+  - code: "FC"
+    name: "Foundation Core"
+    au: 15
+    confidence: "verified"
+    note: "Intro to Data Science & AI; Engineering Communication; Professional Internship."
+  - code: "BDE"
+    name: "Broadening & Deepening Electives"
+    au: 21
+    confidence: "verified"
+
+# Courses with hard constraints the engine must know about individually.
+key_courses:
+  - code: "EE4080"
+    name: "Final Year Project"
+    category: "CORE"
+    au: 8
+    note: "4 AU x 2 semesters. Award of Honours depends on it. FGO-INELIGIBLE."
+    fgo_eligible: false
+    confidence: "verified"
+  - code: "EE3279"
+    name: "Professional Internship"
+    category: "FC"
+    au: 10
+    note: "20-week attachment. Requires Yr3 standing + >=4 semesters completed. FGO-INELIGIBLE."
+    fgo_eligible: false
+    confidence: "verified"
+  - code: "PH1012"
+    name: "Physics A"
+    category: "CORE"
+    au: 4
+    note: "Only for students WITHOUT A-level Physics."
+    conditional: true
+    confidence: "verified"
+
+# Standard semester map. Used by the explorer to show prospective students
+# 'what a degree looks like' and (later) by the optimizer to project loads.
+# Codes are cohort-versioned; treat as indicative for AY2025-26.
+semester_map:
+  year_1:
+    - "Engineers in Society"
+    - "From Computational Thinking to Programming"
+    - "Mathematics I & II"
+    - "Physics / Physics Foundation for EEE"
+    - "An Intro to Engineering & Practices"
+    - "EEE Laboratory 1"
+    - "Circuit Analysis (EE2101 track)"
+    - "Digital Electronics"
+    - "Intro to Data Science & AI (Foundation Core)"
+  year_2:
+    - "Analog Electronics (EE2102)"
+    - "Semiconductor Fundamentals (EE2103)"
+    - "Electrical Devices & Machines"
+    - "Engineering Mathematics I & II (IE2107)"
+    - "Data Structures & Algorithms (IE2108)"
+    - "Signals & Systems (IE2110)"
+    - "Intro to EEE Design & Project (EE2073)"
+  year_3:
+    - "Engineering Electromagnetics (EE3101)"
+    - "Design & Innovation Project (EE3180)"
+    - "Engineering Communication (HW0288)"
+    - "2 x Year-3 Major Prescribed Electives"
+    - "Professional Internship (EE3279, 10 AU)"
+  year_4:
+    - "Final Year Project (EE4080)"
+    - "2 x Design Electives"
+    - "3 x Technical Electives"
+    - "Remaining ICC Common Core + BDE"

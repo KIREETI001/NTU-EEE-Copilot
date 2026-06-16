@@ -1,0 +1,17 @@
+{
+  "name": "ntu-copilot",
+  "private": true,
+  "version": "0.1.0",
+  "description": "NTU Academic & Career Co-Pilot — monorepo (rulebook + engine + explorer)",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "rulebook:build": "node scripts/build-rulebook.mjs",
+    "explorer:dev": "npm --workspace apps/explorer run dev",
+    "explorer:build": "npm run rulebook:build && npm --workspace apps/explorer run build",
+    "engine:test": "cd services/engine && python -m pytest",
+    "engine:dev": "cd services/engine && uvicorn app.main:app --reload --port 8000"
+  },
+  "devDependencies": {
+    "yaml": "^2.6.1"
+  }
+}

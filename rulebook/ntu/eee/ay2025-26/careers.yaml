@@ -1,0 +1,83 @@
+# =============================================================================
+# CAREERS · GES  —  NTU / EEE
+# =============================================================================
+# Feeds the Tier-3 career mapping. Uses EEE-SPECIFIC GES rows, NOT all-NTU
+# averages. All figures are self-reported survey data — not guarantees.
+# =============================================================================
+
+graduate_employment_survey:
+  confidence: "verified"
+  measured_as_at: "1 November 2025 (≈6 months after final exams)"
+  methodology_note: "GES 2025 split 'Secured Employment' (86.4%) from 'Currently Employed' (83.3%); not exactly comparable to the single GES 2024 'Employed' figure."
+  series:
+    - year: 2024
+      currently_employed_pct: 79.3
+      full_time_permanent_pct: 76.1
+      gross_median_sgd: 4800
+      gross_mean_sgd: 4824
+      gross_p25_sgd: 4200
+      gross_p75_sgd: 5155
+      basic_median_sgd: 4700
+    - year: 2025
+      currently_employed_pct: 83.3
+      secured_employment_pct: 86.4
+      full_time_permanent_pct: 75.8
+      gross_median_sgd: 4800
+      gross_mean_sgd: 4786
+      gross_p25_sgd: 4250
+      gross_p75_sgd: 5200
+      basic_median_sgd: 4640
+  positioning_note: "EEE sits mid-pack among NTU engineering (Computer Eng ~$5,150; Mechanical ~$4,500; Civil ~$4,200)."
+
+employers:
+  confidence: "verified"
+  semiconductor_electronics: ["GlobalFoundries","Micron","STMicroelectronics","Infineon","Applied Materials","KLA","Tokyo Electron","STATS ChipPAC","Vanguard International Semiconductor","Analog Devices","AMD","Intel","Broadcom"]
+  defence_research: ["DSO National Laboratories","DSTA","ST Engineering","A*STAR"]
+  telco_it: ["Singtel","Cisco","Google"]
+  other: ["Civil Service","Finance/data roles"]
+
+roles:
+  - "IC / device / process engineer"
+  - "RF engineer"
+  - "Control / automation engineer"
+  - "Power / grid engineer"
+  - "Firmware / embedded engineer"
+  - "Data / AI engineer"
+  - "Systems architect"
+
+# Specialization -> career mapping. `spec_slug` keys MUST match specializations.yaml.
+specialization_career_map:
+  confidence: "verified"
+  map:
+    ic-design:
+      sectors: ["Semiconductor design & fabrication"]
+      employers: ["GlobalFoundries","Micron","STMicroelectronics","Infineon"]
+      roles: ["Chip design engineer","Device/process engineer","IC packaging engineer"]
+    micro-nano-electronics:
+      sectors: ["Semiconductor fabrication","Materials"]
+      employers: ["GlobalFoundries","Micron","Applied Materials"]
+      roles: ["Process engineer","Device engineer","Fab/wafer engineer"]
+    power-clean-energy:
+      sectors: ["Utilities","Clean energy","EV","Grid"]
+      employers: ["SP Group"]
+      roles: ["Power systems engineer","Power electronics engineer","Grid/renewables engineer"]
+    communication-networks:
+      sectors: ["5G / telecom","Networking"]
+      employers: ["Singtel","Cisco"]
+      roles: ["Network engineer","RF/wireless engineer","Telecom systems engineer"]
+    computing-intelligent-systems:
+      sectors: ["Software","AI/ML","Cloud"]
+      employers: ["Google","tech/finance"]
+      roles: ["Software engineer","ML engineer","Systems/data engineer"]
+    data-analysis-machine-learning:
+      sectors: ["AI/ML","Data science","Tech/finance/healthcare"]
+      employers: ["tech/finance/healthcare"]
+      roles: ["ML engineer","Data scientist","AI engineer"]
+    robotics-advanced-automation:
+      sectors: ["Industrial automation","Robotics"]
+      employers: ["manufacturing","robotics firms"]
+      roles: ["Automation engineer","Robotics engineer","Control systems engineer"]
+    biomedical-electronics:
+      sectors: ["Medtech","Healthcare devices"]
+      employers: ["medtech firms"]
+      roles: ["Biomedical instrumentation engineer","Medical device engineer"]

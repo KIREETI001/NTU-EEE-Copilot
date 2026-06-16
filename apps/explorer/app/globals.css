@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-plex-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-plex-sans: "IBM Plex Sans", ui-sans-serif, system-ui;
+}
+
+html { color-scheme: dark; }
+
+body {
+  background: #0f0f0f;
+  color: #ededed;
+  font-family: var(--font-plex-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ember scanline seam — the one signature flourish, used once in the header */
+.seam {
+  background: linear-gradient(90deg, transparent, #ff6b35 18%, #ff6b35 82%, transparent);
+  height: 1px;
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pulse-dot { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 1; } }
+}
+
+::selection { background: #ff6b35; color: #0f0f0f; }
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}

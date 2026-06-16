@@ -1,0 +1,74 @@
+# =============================================================================
+# RULEBOOK COHORT META  —  NTU / EEE / AY2025-26
+# =============================================================================
+# This file is the SOURCE OF TRUTH for one cohort. It is human-edited and
+# version-controlled. Git history IS the changelog (NTU publishes none).
+#
+# Every data file in this folder carries `provenance` blocks. The monthly
+# auditor (scripts/audit.mjs — to be built) re-fetches each `source_url`,
+# diffs the EXTRACTED STRUCTURED VALUES (not raw HTML), and opens a PR when a
+# value drifts. It NEVER auto-merges. A human (you) vouches for every change.
+#
+# confidence vocabulary (machine-readable, surfaced in the UI as a badge):
+#   verified   - confirmed from a current official NTU source this cycle
+#   outdated   - from an older/expired source; may no longer hold
+#   unverified - inferred, secondary source, or not yet re-checked
+# =============================================================================
+
+schema_version: "1.0.0"
+
+cohort:
+  university: ntu
+  university_full: "Nanyang Technological University, Singapore"
+  programme: eee
+  programme_full: "Bachelor of Engineering (Electrical & Electronic Engineering)"
+  academic_year: "2025-26"
+  entry: "year-1"            # year-1 | year-2-direct
+  duration_years: 4
+  # The single highest-liability branch in the whole system. FGO rules differ
+  # before vs after this date. Do NOT collapse cohorts across this boundary.
+  fgo_regime: "expanded"     # expanded (>= AY2025-26 Sem2) | standard (earlier)
+  fgo_regime_effective: "2026-01-01"   # AY2025-26 Semester 2
+
+status:
+  last_full_review: "2026-06-16"
+  reviewed_by: "kireeti"
+  next_audit_due: "2026-07-16"          # monthly auditor target
+  overall_confidence: "verified"
+  # known soft spots carried from the research pass — shown to user as caveats
+  open_caveats:
+    - "Total degree AU is 136 by category sum (83+17+15+21); older sheets show 137. Confirm against the per-cohort AU Summary PDF on the EEE intranet."
+    - "Some EE6xxx postgraduate technical electives are marked TBC / subject to availability in source."
+    - "Semester (S1/S2) availability is a soft attribute and changes year to year."
+    - "Canonical area-specialization master PDF is login-gated on the EEE intranet; lists here reconstructed from a current-year copy + the public curriculum page."
+
+# Canonical sources the auditor watches. format drives the scraper strategy.
+sources:
+  curriculum_page:
+    url: "https://www.ntu.edu.sg/eee/admissions/programmes/undergraduate-programmes/curriculum-(eee)"
+    format: "html-static"
+    notes: "Sitefinity CMS, server-rendered. High-level AU structure. Easily scrapeable."
+  academic_handbook:
+    url: "https://www.ntu.edu.sg/media/docs/default-source/office-of-academic-services/academic-handbook-(undergraduate-studies)-ay2025-26_expanded-fgo_260511.pdf"
+    format: "pdf"
+    source_date: "2026-05-11"
+    notes: "GPA scale, Expanded FGO, honours. Versioned by 'Last updated' date — use as change signal."
+  area_specialization:
+    url: "https://www.ntu.edu.sg/eee (area specialization document — intranet/login-gated master)"
+    format: "pdf-gated"
+    notes: "Detailed per-area course lists. Requires manual supply when changed."
+  indicative_grade_profile:
+    url: "https://www.ntu.edu.sg/admissions/undergraduate/indicative-grade-profile"
+    format: "pdf"
+    notes: "Annual. AY2026/27 UAS rule change flagged (H1 content subject dropped by default)."
+  tuition_fees:
+    url: "https://www.ntu.edu.sg/admissions/undergraduate/financial-matters/tuition-fees"
+    format: "html+pdf"
+  graduate_employment_survey:
+    url: "https://www.moe.gov.sg/-/media (Joint Autonomous Universities GES) + data.gov.sg collection 415"
+    format: "pdf+opendata"
+    notes: "EEE-specific rows. Prefer data.gov.sg CSV/API where available."
+  course_catalogue:
+    url: "https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main"
+    format: "html-legacy"
+    notes: "Oracle OWA, server-rendered HTML, no public API. Occasional downtime."

@@ -1,0 +1,121 @@
+# =============================================================================
+# GRADING · FGO · HONOURS  —  NTU / EEE / AY2025-26  (Expanded FGO regime)
+# =============================================================================
+# ⚠  HIGHEST-LIABILITY FILE IN THE REPOSITORY.
+# Every value here drives a number a student may act on. The engine treats
+# this file as authoritative; the UI must surface the irreversibility and
+# "verify with the Office of Academic Services" disclaimer on any FGO output.
+# =============================================================================
+
+gpa_scale:
+  confidence: "verified"
+  max: 5.00
+  grades:
+    "A+":  5.00
+    "A":   5.00
+    "A-":  4.50
+    "B+":  4.00
+    "B":   3.50
+    "B-":  3.00
+    "C+":  2.50
+    "C":   2.00
+    "D+":  1.50
+    "D":   1.00
+    "F":   0.00
+  # Excluded from CGPA entirely:
+  non_gpa_outcomes: ["P", "NR", "LOA", "EX", "IP", "TC"]
+  min_cgpa_to_graduate: 2.00
+
+# -----------------------------------------------------------------------------
+# FLEXIBLE GRADING OPTION (Expanded FGO) — in force from AY2025-26 Semester 2.
+# Supersedes BOTH the COVID-era S/U scheme AND the earlier (AY2024-25) FGO.
+# -----------------------------------------------------------------------------
+fgo:
+  regime: "expanded"
+  confidence: "verified"
+  effective: "AY2025-26 Semester 2"
+
+  # Grade transformation when FGO is exercised on a course:
+  transform:
+    pass_grades: ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "D+", "D"]   # -> P
+    fail_grade: "F"                                                          # -> NR
+  pass_label: "P"
+  fail_label: "NR"
+
+  effects:
+    excluded_from_cgpa: true
+    pass_counts_toward_graduation_au: true
+    pass_counts_toward_letter_graded_floor: false   # still must hit 69 AU letter-graded independently
+    pass_counts_toward_specialization: false         # explicit AY2025-26 rule
+    nr_earns_au: false
+    nr_on_external_transcript: false                 # NR shows internally only
+    pass_on_external_transcript: true
+
+  # IRREVERSIBLE. The engine returns this on every simulation; the UI must shout it.
+  irreversible: true
+  irreversible_text: "FGO declarations are IRREVOCABLE once submitted. Quota is deducted per course attempt and cannot be restored."
+
+  # Quota for THIS cohort (4-year, admitted to Year 1).
+  quota:
+    total_au: 24
+    confidence: "verified"
+    # Sub-cap: max AU that may be FGO'd across these categories COMBINED.
+    subcap_au: 12
+    subcap_categories: ["CORE", "MPE", "ICC_CC", "ICC_PROFESSIONAL", "ICC_CARE_SERVE_LEARN", "TAIS", "USP", "NGLP", "GER"]
+    # Remaining quota (up to total) applies to:
+    remainder_categories: ["BDE", "MPE_BDE_OPTION"]
+    note: >
+      24 AU total, of which at most 12 AU may fall on Major Core / MPE / ICC
+      combined. NOTE: under the EARLIER (AY2024-25) FGO, ICC Common Core was
+      EXCLUDED from FGO; the Expanded FGO now PERMITS it within the 12 AU
+      sub-cap. This is the per-cohort branch the engine must respect.
+
+  # Course categories that can NEVER be FGO'd:
+  ineligible_categories: ["FYP", "INTERNSHIP", "SANCTIONED"]
+  ineligible_note: "Final Year Projects, Professional Internships/Attachments, and courses under academic sanction are never FGO-eligible."
+
+  eligibility:
+    eligible: "All undergraduate students"
+    excluded_students: ["LKCMedicine", "exchange", "non-graduating"]
+    min_grade_to_exercise: null   # even an F can be FGO'd (-> NR); no minimum grade gate
+    confidence: "verified"
+
+  timing:
+    window: "Stipulated window after results release (historically ~2-4 days)."
+    late_declarations_accepted: false
+    confidence: "verified"
+    note: "Exact dates vary by semester; surface 'check official calendar' in UI."
+
+  # Quotas for OTHER cohort shapes (kept here for when the rulebook expands;
+  # the engine reads only the active cohort's `quota` above).
+  other_cohort_quotas:
+    four_or_five_year_year1: { total_au: 24, subcap_au: 12 }
+    four_year_direct_year2:  { total_au: 21, subcap_au: 12 }
+    part_time:               { total_au: 21, subcap_au: null }
+    three_year:              { total_au: 21, subcap_au: null }
+
+# -----------------------------------------------------------------------------
+# HONOURS CLASSIFICATION — College of Engineering.
+# -----------------------------------------------------------------------------
+honours:
+  confidence: "verified"
+  nomenclature_effective: "AY2017-18"
+  # Engineering-specific gate on the top class:
+  engineering_fyp_rule:
+    applies_to: ["Honours (Highest Distinction)"]
+    min_fyp_grade: "A-"
+    note: "Highest Distinction requires CGPA >= 4.50 AND at least A- in the FYP. Opting out of FYP forfeits Highest Distinction and Distinction."
+  classes:
+    - { name: "Honours (Highest Distinction)", min_cgpa: 4.50, max_cgpa: 5.00, former: "First Class" }
+    - { name: "Honours (Distinction)",         min_cgpa: 4.00, max_cgpa: 4.49, former: "Second Upper" }
+    - { name: "Honours (Merit)",               min_cgpa: 3.50, max_cgpa: 3.99, former: "Second Lower" }
+    - { name: "Honours",                        min_cgpa: 3.00, max_cgpa: 3.49, former: "Third Class" }
+    - { name: "Pass",                           min_cgpa: 2.00, max_cgpa: 2.99, former: "Pass" }
+
+dean_list:
+  confidence: "verified"
+  rule: "Top 5% of cohort with YGPA >= 4.50, assessed on YGPA BEFORE FGO is applied."
+
+freshmen_gpa_exemption:
+  confidence: "verified"
+  note: "Up to 6 first-attempt non-pass freshman courses may be excluded from GPA. Applies prior to AY2025-26 Sem 2."

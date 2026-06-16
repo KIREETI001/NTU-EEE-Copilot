@@ -1,0 +1,5 @@
+[project]
+name = "ntu-copilot-engine"
+version = "0.1.0"
+description = "NTU EEE Academic & Career Co-Pilot rule engine"
+requires-python = ">=3.10"
