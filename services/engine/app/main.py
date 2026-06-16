@@ -8,9 +8,10 @@ when a logged-in student opts in.
 """
 from __future__ import annotations
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, model_validator
 
 from .engine import (
     check_specialization,
@@ -33,6 +34,13 @@ app.add_middleware(
 )
 
 
+@app.exception_handler(ValueError)
+async def _domain_value_error(request: Request, exc: ValueError) -> JSONResponse:
+    # The engine raises ValueError for invalid-but-well-formed input (e.g. a
+    # grade not in the cohort scale). Surface as 422, never a 500 stack trace.
+    return JSONResponse(status_code=422, content={"detail": str(exc)})
+
+
 class CohortRef(BaseModel):
     university: str = "ntu"
     programme: str = "eee"
@@ -41,6 +49,14 @@ class CohortRef(BaseModel):
 
 class TranscriptRequest(CohortRef):
     courses: list[Course]
+
+    @model_validator(mode="after")
+    def _reject_duplicate_codes(self) -> "TranscriptRequest":
+        codes = [c.code for c in self.courses]
+        dupes = sorted({c for c in codes if codes.count(c) > 1})
+        if dupes:
+            raise ValueError(f"Duplicate course codes not allowed: {dupes}")
+        return self
 
 
 class FgoRequest(TranscriptRequest):
