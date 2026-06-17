@@ -136,5 +136,7 @@ def specialization_check(req: TranscriptRequest) -> dict:
 
 @app.post("/honours")
 def honours(req: HonoursRequest) -> dict:
-    honours_rules = _grading(req)["honours"]
-    return classify_honours(req.cgpa, req.fyp_grade, honours_rules).model_dump()
+    grading = _grading(req)
+    return classify_honours(
+        req.cgpa, req.fyp_grade, grading["honours"], grading["gpa_scale"]
+    ).model_dump()
