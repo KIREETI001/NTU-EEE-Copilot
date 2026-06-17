@@ -49,6 +49,7 @@ specializations:
       - { code: "EE4532", title: "Power Electronics and Drives",       avail: ["S1"] }
       - { code: "EE4533", title: "Power Apparatus and System Protection", avail: ["S2"] }
       - { code: "EE4534", title: "Modern Distribution Systems with Renewable Resources", avail: ["S2"] }
+      - { code: "EE4535", title: "Digitalization & Electrification of Energy Systems", avail: ["TBC"] }
     change_flag: "Design codes renumbered EE4503/EE4504 -> EE4523/EE4524 in AY2025-26."
 
   - slug: "robotics-advanced-automation"
@@ -58,13 +59,13 @@ specializations:
     design_electives:
       - { code: "EE4227", title: "Control Engineering Design", avail: ["S1"] }
       - { code: "EE4228", title: "Intelligent System Design",  avail: ["S2"] }
-      - { code: "EE4268", title: "Robotics and Automation",    avail: ["S1"] }
     technical_electives:
+      - { code: "EE4268", title: "Robotics and Automation",                       avail: ["S1"] }
       - { code: "EE4273", title: "Digital Control Systems",                       avail: ["S2"] }
       - { code: "EE4285", title: "Computational Intelligence",                    avail: ["S2"] }
       - { code: "EE6225", title: "Multivariable Control Systems Analysis & Design", avail: ["S1"] }
       - { code: "IE4476", title: "Image Processing & Computer Vision",            avail: ["S1"] }
-    change_flag: "Design codes renumbered EE4207/EE4208 -> EE4227/EE4228."
+    change_flag: "Design codes renumbered EE4207/EE4208 -> EE4227/EE4228. EE4268 is a TECHNICAL elective per the AY2024/25 master (was miscategorized as design)."
 
   - slug: "communication-networks"
     name: "Communication & Networks"
@@ -92,6 +93,7 @@ specializations:
       - { code: "IE4001", title: "Software Engineering",                  avail: ["S2"] }
       - { code: "IE4483", title: "Artificial Intelligence & Data Mining", avail: ["S1"] }
       - { code: "IE4756", title: "Computer Architecture",                 avail: ["S2"] }
+      - { code: "IE4757", title: "Cyber Physical Systems",               avail: ["TBC"] }
       - { code: "IE4758", title: "Information Security",                  avail: ["S1"] }
       - { code: "IE4791", title: "Database Systems",                      avail: ["S2"] }
 
@@ -101,7 +103,7 @@ specializations:
     note: "User's own specialization track."
     required_mpe: ["IE3014", "IE3017", "IE3102", "EE3011"]
     design_electives:
-      - { code: "EE4228", title: "Intelligent Systems Design",            avail: ["S2"] }
+      - { code: "EE4228", title: "Intelligent System Design",             avail: ["S2"] }
       - { code: "IE4424", title: "Machine Learning Design & Application",  avail: ["S2"] }
     technical_electives:
       - { code: "EE4285", title: "Computational Intelligence",            avail: ["S2"] }
@@ -110,6 +112,7 @@ specializations:
       - { code: "EE6427", title: "Video Signal Processing",              avail: ["S1"] }
       - { code: "IE4476", title: "Image Processing & Computer Vision",    avail: ["S1"] }
       - { code: "IE4483", title: "Artificial Intelligence & Data Mining", avail: ["S1"] }
+      - { code: "IE4491", title: "Probability Theory and Applications",   avail: ["S1"] }
       - { code: "IE4497", title: "Pattern Recognition & Machine Learning", avail: ["S2"] }
 
   - slug: "ic-design"
@@ -143,7 +146,7 @@ specializations:
 
   - slug: "biomedical-electronics"
     name: "Biomedical Electronics"
-    confidence: "unverified"   # partly from AY2024/25 PDF; a few EE6xxx TBC
+    confidence: "unverified"   # reconciled vs AY2024/25 master; AY2025-26 not yet confirmed
     required_mpe: ["EE3011", "any EE/IE3xxx"]
     design_electives:
       - { code: "EE4227", title: "Control Engineering Design", avail: ["S1"] }
@@ -154,3 +157,5 @@ specializations:
       - { code: "EE4904", title: "Biomedical Instrumentation",                 avail: ["S2"] }
       - { code: "EE6301", title: "Smart Biosensors & Systems for Healthcare",   avail: ["S1"] }
       - { code: "IE4476", title: "Image Processing & Computer Vision",          avail: ["S1"] }
+      - { code: "BG3104", title: "Biomedical Imaging",                          avail: ["S1"] }
+      - { code: "BG3105", title: "Biomedical Instrumentation",                  avail: ["S1"] }

@@ -524,6 +524,13 @@
                 "avail": [
                   "S2"
                 ]
+              },
+              {
+                "code": "EE4535",
+                "title": "Digitalization & Electrification of Energy Systems",
+                "avail": [
+                  "TBC"
+                ]
               }
             ],
             "change_flag": "Design codes renumbered EE4503/EE4504 -> EE4523/EE4524 in AY2025-26."
@@ -550,16 +557,16 @@
                 "avail": [
                   "S2"
                 ]
-              },
+              }
+            ],
+            "technical_electives": [
               {
                 "code": "EE4268",
                 "title": "Robotics and Automation",
                 "avail": [
                   "S1"
                 ]
-              }
-            ],
-            "technical_electives": [
+              },
               {
                 "code": "EE4273",
                 "title": "Digital Control Systems",
@@ -589,7 +596,7 @@
                 ]
               }
             ],
-            "change_flag": "Design codes renumbered EE4207/EE4208 -> EE4227/EE4228."
+            "change_flag": "Design codes renumbered EE4207/EE4208 -> EE4227/EE4228. EE4268 is a TECHNICAL elective per the AY2024/25 master (was miscategorized as design)."
           },
           {
             "slug": "communication-networks",
@@ -709,6 +716,13 @@
                 ]
               },
               {
+                "code": "IE4757",
+                "title": "Cyber Physical Systems",
+                "avail": [
+                  "TBC"
+                ]
+              },
+              {
                 "code": "IE4758",
                 "title": "Information Security",
                 "avail": [
@@ -738,7 +752,7 @@
             "design_electives": [
               {
                 "code": "EE4228",
-                "title": "Intelligent Systems Design",
+                "title": "Intelligent System Design",
                 "avail": [
                   "S2"
                 ]
@@ -790,6 +804,13 @@
               {
                 "code": "IE4483",
                 "title": "Artificial Intelligence & Data Mining",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "IE4491",
+                "title": "Probability Theory and Applications",
                 "avail": [
                   "S1"
                 ]
@@ -985,6 +1006,20 @@
               {
                 "code": "IE4476",
                 "title": "Image Processing & Computer Vision",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "BG3104",
+                "title": "Biomedical Imaging",
+                "avail": [
+                  "S1"
+                ]
+              },
+              {
+                "code": "BG3105",
+                "title": "Biomedical Instrumentation",
                 "avail": [
                   "S1"
                 ]
