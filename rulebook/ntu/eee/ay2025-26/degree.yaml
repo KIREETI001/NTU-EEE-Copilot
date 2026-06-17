@@ -8,7 +8,10 @@
 total_au:
   value: 136
   confidence: "verified"
-  note: "Category sum 83+17+15+21=136. Older sheets cite 137 (Physics-variant/rounding). See meta.open_caveats."
+  # CONFIRMED 136 by the official Degree Audit (2026-06) AU Requirements table:
+  # Core 62 + Major PE 21 + ICC-Common-Core 32 + BDE 21 = 136. (Earlier sheets
+  # cited 137; resolved against the official source.)
+  note: "Confirmed 136 by the official Degree Audit AU Requirements (Core 62 + Major PE 21 + ICC-Common Core 32 + BDE 21)."
 
 candidature:
   unit: "years"
@@ -24,22 +27,32 @@ letter_graded_floor_au:
   value: 69
   confidence: "verified"
 
+# Minimum letter-graded AU from Core + Major PE specifically (distinct from the
+# 69 AU overall floor above). From the official Degree Audit AU Requirements.
+letter_graded_core_mpe_floor_au:
+  value: 50
+  confidence: "verified"
+
+# AU structure mirrors the official Degree Audit "AU Requirements" table
+# (Core 62 + Major PE 21 + ICC-Common Core 32 + BDE 21 = 136). The engine's
+# Category enum keeps ICC_CC and FC separate for course tagging; this list is
+# the AU-requirements view a student sees.
 categories:
   - code: "CORE"
-    name: "Major Core"
-    au: 83                       # Core + Prescribed Electives combined (Major Requirements)
-    includes_prescribed_electives: true
+    name: "Core Courses"
+    au: 62
     confidence: "verified"
-    note: "Includes FYP, all core EE/IE courses, 2 Yr3 Major PEs + 2 Design + 3 Technical PEs."
+    note: "Engineering core (EE/IE) + maths/physics + FYP. Earlier sheet lumped Core+MPE as 83 (62+21)."
+  - code: "MPE"
+    name: "Major Prescribed Electives"
+    au: 21
+    confidence: "verified"
+    note: "5 Major PEs (Yr3 pre-specialization electives); prerequisites to most Yr4 design/technical electives."
   - code: "ICC_CC"
-    name: "Interdisciplinary Collaborative Core — Common Core"
-    au: 17
+    name: "ICC — Common Core"
+    au: 32
     confidence: "verified"
-  - code: "FC"
-    name: "Foundation Core"
-    au: 15
-    confidence: "verified"
-    note: "Intro to Data Science & AI; Engineering Communication; Professional Internship."
+    note: "ICC common core + Foundation Core (Intro to DS&AI, Engineering Communication, Professional Internship). Earlier sheet split as 17 + 15."
   - code: "BDE"
     name: "Broadening & Deepening Electives"
     au: 21

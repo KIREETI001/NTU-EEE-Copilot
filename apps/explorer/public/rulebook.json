@@ -15,15 +15,14 @@
           "fgo_regime_effective": "2026-01-01"
         },
         "status": {
-          "last_full_review": "2026-06-16",
+          "last_full_review": "2026-06-17",
           "reviewed_by": "kireeti",
           "next_audit_due": "2026-07-16",
           "overall_confidence": "verified",
           "open_caveats": [
-            "Total degree AU is 136 by category sum (83+17+15+21); older sheets show 137. Confirm against the per-cohort AU Summary PDF on the EEE intranet.",
             "Some EE6xxx postgraduate technical electives are marked TBC / subject to availability in source.",
             "Semester (S1/S2) availability is a soft attribute and changes year to year.",
-            "Canonical area-specialization master PDF is login-gated on the EEE intranet; lists here reconstructed from a current-year copy + the public curriculum page."
+            "Specialization lists reconciled against the AY2024/25 area-specialization master PDF; a few AY2025-26 deltas may remain for TBC EE6xxx courses."
           ]
         },
         "sources": {
@@ -61,6 +60,18 @@
             "url": "https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main",
             "format": "html-legacy",
             "notes": "Oracle OWA, server-rendered HTML, no public API. Occasional downtime."
+          },
+          "degree_audit": {
+            "url": "NTU StudentLink Degree Audit (student-provided PDF)",
+            "format": "pdf-personal",
+            "source_date": "2026-06",
+            "notes": "Authoritative AU structure + grading for one student. Confirmed total AU=136, the 50 AU Core+MPE letter-graded floor, and the CGPA oracle (3.74). Not a watchable public URL."
+          },
+          "area_specialization_master": {
+            "url": "EEE area-specialization master PDF (R_AreaSpecialization-EEE)",
+            "format": "pdf-gated",
+            "source_date": "2024-25",
+            "notes": "Previously login-gated master. Specialization design/technical lists reconciled against it; it is AY2024/25, so a few AY2025-26 deltas may remain."
           }
         }
       },
@@ -68,7 +79,7 @@
         "total_au": {
           "value": 136,
           "confidence": "verified",
-          "note": "Category sum 83+17+15+21=136. Older sheets cite 137 (Physics-variant/rounding). See meta.open_caveats."
+          "note": "Confirmed 136 by the official Degree Audit AU Requirements (Core 62 + Major PE 21 + ICC-Common Core 32 + BDE 21)."
         },
         "candidature": {
           "unit": "years",
@@ -81,27 +92,31 @@
           "value": 69,
           "confidence": "verified"
         },
+        "letter_graded_core_mpe_floor_au": {
+          "value": 50,
+          "confidence": "verified"
+        },
         "categories": [
           {
             "code": "CORE",
-            "name": "Major Core",
-            "au": 83,
-            "includes_prescribed_electives": true,
+            "name": "Core Courses",
+            "au": 62,
             "confidence": "verified",
-            "note": "Includes FYP, all core EE/IE courses, 2 Yr3 Major PEs + 2 Design + 3 Technical PEs."
+            "note": "Engineering core (EE/IE) + maths/physics + FYP. Earlier sheet lumped Core+MPE as 83 (62+21)."
+          },
+          {
+            "code": "MPE",
+            "name": "Major Prescribed Electives",
+            "au": 21,
+            "confidence": "verified",
+            "note": "5 Major PEs (Yr3 pre-specialization electives); prerequisites to most Yr4 design/technical electives."
           },
           {
             "code": "ICC_CC",
-            "name": "Interdisciplinary Collaborative Core — Common Core",
-            "au": 17,
-            "confidence": "verified"
-          },
-          {
-            "code": "FC",
-            "name": "Foundation Core",
-            "au": 15,
+            "name": "ICC — Common Core",
+            "au": 32,
             "confidence": "verified",
-            "note": "Intro to Data Science & AI; Engineering Communication; Professional Internship."
+            "note": "ICC common core + Foundation Core (Intro to DS&AI, Engineering Communication, Professional Internship). Earlier sheet split as 17 + 15."
           },
           {
             "code": "BDE",
