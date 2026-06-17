@@ -102,3 +102,39 @@ def test_specialization_plan_duplicate_codes_is_422():
     ]}
     r = client.post("/specialization/plan", json=body)
     assert r.status_code == 422
+
+
+# --- internal-secret gate (deploy-time; the BFF proxy adds x-internal-secret) ---
+# When ENGINE_SHARED_SECRET is set (prod, behind the proxy), every request must
+# carry a matching header. Unset (local dev) => open, no behavioural change.
+
+def test_internal_secret_blocks_when_set_without_header(monkeypatch):
+    monkeypatch.setenv("ENGINE_SHARED_SECRET", "s3cret")
+    body = {**COHORT, "courses": [_course("X1", 3, "CORE", "A")]}
+    assert client.post("/cgpa", json=body).status_code == 401
+
+
+def test_internal_secret_blocks_wrong_header(monkeypatch):
+    monkeypatch.setenv("ENGINE_SHARED_SECRET", "s3cret")
+    body = {**COHORT, "courses": [_course("X1", 3, "CORE", "A")]}
+    r = client.post("/cgpa", json=body, headers={"x-internal-secret": "nope"})
+    assert r.status_code == 401
+
+
+def test_internal_secret_allows_correct_header(monkeypatch):
+    monkeypatch.setenv("ENGINE_SHARED_SECRET", "s3cret")
+    body = {**COHORT, "courses": [_course("X1", 3, "CORE", "A")]}
+    r = client.post("/cgpa", json=body, headers={"x-internal-secret": "s3cret"})
+    assert r.status_code == 200
+
+
+def test_internal_secret_exempts_health(monkeypatch):
+    # Platform (Fly) health checks hit /health with no secret.
+    monkeypatch.setenv("ENGINE_SHARED_SECRET", "s3cret")
+    assert client.get("/health").status_code == 200
+
+
+def test_no_secret_configured_means_open(monkeypatch):
+    monkeypatch.delenv("ENGINE_SHARED_SECRET", raising=False)
+    body = {**COHORT, "courses": [_course("X1", 3, "CORE", "A")]}
+    assert client.post("/cgpa", json=body).status_code == 200

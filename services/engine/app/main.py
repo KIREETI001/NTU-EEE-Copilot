@@ -8,7 +8,9 @@ when a logged-in student opts in.
 """
 from __future__ import annotations
 
+import hmac
 import io
+import os
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -40,12 +42,35 @@ from .rulebook import list_cohorts, load_cohort
 
 app = FastAPI(title="NTU EEE Co-Pilot Engine", version="0.1.0")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # explorer dev server
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# CORS is env-gated. In production the engine is private (only the Next BFF proxy
+# calls it, server-to-server) so it needs NO browser CORS — leave ENGINE_CORS_ORIGINS
+# unset and no CORS middleware is mounted. For browser-direct dev, set it to e.g.
+# "http://localhost:3000". See docs/.../2026-06-18-production-backend-design.md §4.
+_cors_origins = [o.strip() for o in os.getenv("ENGINE_CORS_ORIGINS", "").split(",") if o.strip()]
+if _cors_origins:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=_cors_origins,
+        allow_methods=["POST", "GET"],
+        allow_headers=["Content-Type"],
+    )
+
+
+@app.middleware("http")
+async def _require_internal_secret(request: Request, call_next):
+    """Defense-in-depth gate for a public-but-private engine host (e.g. Fly).
+
+    When ENGINE_SHARED_SECRET is set, every request must carry a matching
+    `x-internal-secret` header — the Next BFF proxy adds it. /health is exempt so
+    the platform can health-check. When the env var is UNSET (local dev) the engine
+    is open (no behavioural change). The secret never appears in any log.
+    """
+    secret = os.getenv("ENGINE_SHARED_SECRET")
+    if secret and request.url.path != "/health":
+        provided = request.headers.get("x-internal-secret", "")
+        if not hmac.compare_digest(provided, secret):
+            return JSONResponse(status_code=401, content={"detail": "unauthorized"})
+    return await call_next(request)
 
 
 @app.exception_handler(ValueError)
