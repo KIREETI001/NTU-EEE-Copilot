@@ -4,6 +4,8 @@ import Link from "next/link";
 import "./globals.css";
 import { cohortLabel } from "@/lib/rulebook";
 import { StudentSessionProvider } from "./providers/StudentSession";
+import { RoleProvider } from "./providers/Role";
+import { RoleSwitch } from "./components/RoleSwitch";
 
 const mono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -26,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${mono.variable} ${sans.variable}`}>
       <body suppressHydrationWarning>
+        <RoleProvider>
         <StudentSessionProvider>
         <header className="border-b border-line">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -38,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/optimizer" className="text-ember hover:text-bone">optimizer</Link>
               <Link href="/eligibility" className="text-ember hover:text-bone">eligibility</Link>
               <Link href="/suggest" className="hover:text-bone">suggest&nbsp;a&nbsp;fix</Link>
+              <RoleSwitch />
             </nav>
           </div>
           <div className="seam" />
@@ -52,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         </StudentSessionProvider>
+        </RoleProvider>
       </body>
     </html>
   );
