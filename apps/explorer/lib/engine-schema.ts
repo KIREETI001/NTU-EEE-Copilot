@@ -123,6 +123,31 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/specialization/plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Specialization Plan
+         * @description Eligibility drill-down for ALL specializations.
+         *
+         *     Per spec, returns recognition + the planning view: which completed courses
+         *     count, what's still needed, and which counting courses are FGO-locked (FGO
+         *     forfeits a spec's contribution — surface the irreversibility disclaimer in
+         *     the UI and verify with the Office of Academic Services).
+         */
+        post: operations["specialization_plan_specialization_plan_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/honours": {
         parameters: {
             query?: never;
@@ -398,6 +423,56 @@ export interface components {
             /** Review Reason */
             review_reason?: string | null;
         };
+        /**
+         * SpecializationPlan
+         * @description Eligibility drill-down for ONE specialization.
+         *
+         *     Extends the recognition check with the data a student needs to PLAN toward
+         *     a spec: which of their completed courses currently count, which spec courses
+         *     are still outstanding, and — the liability bit — which counting courses are
+         *     FGO-locked (FGO'ing them forfeits their contribution, since AY2025-26 excludes
+         *     FGO'd courses from a specialization).
+         */
+        SpecializationPlan: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Recognized */
+            recognized: boolean;
+            /** Counted Au */
+            counted_au: number;
+            /** Required Au */
+            required_au: number;
+            /** Design Count */
+            design_count: number;
+            /** Technical Count */
+            technical_count: number;
+            /** Min Design */
+            min_design: number;
+            /** Min Technical */
+            min_technical: number;
+            /**
+             * Completed Counting
+             * @default []
+             */
+            completed_counting: string[];
+            /**
+             * Remaining Needed
+             * @default []
+             */
+            remaining_needed: string[];
+            /**
+             * Fgo Locked
+             * @default []
+             */
+            fgo_locked: string[];
+            /**
+             * Reasons
+             * @default []
+             */
+            reasons: string[];
+        };
         /** SpecializationStatus */
         SpecializationStatus: {
             /** Slug */
@@ -672,6 +747,41 @@ export interface operations {
                 content: {
                     "application/json": {
                         [key: string]: components["schemas"]["SpecializationStatus"];
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    specialization_plan_specialization_plan_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TranscriptRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: components["schemas"]["SpecializationPlan"];
                     };
                 };
             };

@@ -73,3 +73,32 @@ def test_parse_audit_rejects_non_pdf():
         files={"file": ("x.pdf", b"this is not a pdf", "application/pdf")},
     )
     assert r.status_code == 422
+
+
+def test_specialization_plan_returns_all_specs():
+    # DA&ML: 1 design + 2 technical -> on track, FGO-locked surfaced.
+    body = {**COHORT, "courses": [
+        _course("IE4424", 3, "CORE", "A"),   # DA&ML design
+        _course("EE6405", 3, "CORE", "B"),   # DA&ML technical
+        _course("IE4483", 3, "CORE", "B+"),  # DA&ML technical
+    ]}
+    r = client.post("/specialization/plan", json=body)
+    assert r.status_code == 200
+    plans = r.json()
+    # One plan per specialization, keyed by slug.
+    assert "data-analysis-machine-learning" in plans
+    daml = plans["data-analysis-machine-learning"]
+    assert daml["counted_au"] == 9
+    assert daml["required_au"] == 15
+    assert set(daml["completed_counting"]) == {"IE4424", "EE6405", "IE4483"}
+    assert set(daml["fgo_locked"]) == {"IE4424", "EE6405", "IE4483"}
+    assert "EE6427" in daml["remaining_needed"]
+
+
+def test_specialization_plan_duplicate_codes_is_422():
+    body = {**COHORT, "courses": [
+        _course("IE4424", 3, "CORE", "A"),
+        _course("IE4424", 3, "CORE", "B"),
+    ]}
+    r = client.post("/specialization/plan", json=body)
+    assert r.status_code == 422

@@ -89,6 +89,31 @@ class SpecializationStatus(BaseModel):
     reasons: list[str] = []       # why not recognized, or confirmations
 
 
+class SpecializationPlan(BaseModel):
+    """Eligibility drill-down for ONE specialization.
+
+    Extends the recognition check with the data a student needs to PLAN toward
+    a spec: which of their completed courses currently count, which spec courses
+    are still outstanding, and — the liability bit — which counting courses are
+    FGO-locked (FGO'ing them forfeits their contribution, since AY2025-26 excludes
+    FGO'd courses from a specialization).
+    """
+
+    slug: str
+    name: str
+    recognized: bool
+    counted_au: int
+    required_au: int
+    design_count: int
+    technical_count: int
+    min_design: int                # >=1 design electives required (from rulebook)
+    min_technical: int             # >=2 technical electives required (from rulebook)
+    completed_counting: list[str] = []   # student's completed courses that count now
+    remaining_needed: list[str] = []     # spec design/technical courses NOT yet counting
+    fgo_locked: list[str] = []           # counting courses that would be FORFEITED if FGO'd
+    reasons: list[str] = []
+
+
 class HonoursResult(BaseModel):
     classification: str
     cgpa: float

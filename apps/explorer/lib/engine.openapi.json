@@ -278,6 +278,49 @@
         }
       }
     },
+    "/specialization/plan": {
+      "post": {
+        "summary": "Specialization Plan",
+        "description": "Eligibility drill-down for ALL specializations.\n\nPer spec, returns recognition + the planning view: which completed courses\ncount, what's still needed, and which counting courses are FGO-locked (FGO\nforfeits a spec's contribution \u2014 surface the irreversibility disclaimer in\nthe UI and verify with the Office of Academic Services).",
+        "operationId": "specialization_plan_specialization_plan_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/SpecializationPlan"
+                  },
+                  "type": "object",
+                  "title": "Response Specialization Plan Specialization Plan Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/honours": {
       "post": {
         "summary": "Honours",
@@ -920,6 +963,92 @@
         ],
         "title": "ParsedCourse",
         "description": "A course extracted from a Degree Audit \u2014 a DRAFT for student review.\n\nNever trusted blindly: `needs_review` flags anything the parser was not sure\nabout, and nothing reaches FGO without the student confirming."
+      },
+      "SpecializationPlan": {
+        "properties": {
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "recognized": {
+            "type": "boolean",
+            "title": "Recognized"
+          },
+          "counted_au": {
+            "type": "integer",
+            "title": "Counted Au"
+          },
+          "required_au": {
+            "type": "integer",
+            "title": "Required Au"
+          },
+          "design_count": {
+            "type": "integer",
+            "title": "Design Count"
+          },
+          "technical_count": {
+            "type": "integer",
+            "title": "Technical Count"
+          },
+          "min_design": {
+            "type": "integer",
+            "title": "Min Design"
+          },
+          "min_technical": {
+            "type": "integer",
+            "title": "Min Technical"
+          },
+          "completed_counting": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Completed Counting",
+            "default": []
+          },
+          "remaining_needed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Remaining Needed",
+            "default": []
+          },
+          "fgo_locked": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fgo Locked",
+            "default": []
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "recognized",
+          "counted_au",
+          "required_au",
+          "design_count",
+          "technical_count",
+          "min_design",
+          "min_technical"
+        ],
+        "title": "SpecializationPlan",
+        "description": "Eligibility drill-down for ONE specialization.\n\nExtends the recognition check with the data a student needs to PLAN toward\na spec: which of their completed courses currently count, which spec courses\nare still outstanding, and \u2014 the liability bit \u2014 which counting courses are\nFGO-locked (FGO'ing them forfeits their contribution, since AY2025-26 excludes\nFGO'd courses from a specialization)."
       },
       "SpecializationStatus": {
         "properties": {

@@ -19,6 +19,7 @@ from .engine import (
     check_specialization,
     classify_honours,
     compute_cgpa,
+    plan_specialization,
     quota_status,
     simulate_fgo,
     suggest_fgo_candidates,
@@ -31,6 +32,7 @@ from .models import (
     FgoSimulation,
     FgoSuggestion,
     HonoursResult,
+    SpecializationPlan,
     SpecializationStatus,
 )
 from .parser.audit import extract_pdf_text, parse_audit_text
@@ -142,6 +144,24 @@ def specialization_check(req: TranscriptRequest) -> dict:
     rules = spec_doc["recognition_rules"]
     return {
         s["slug"]: check_specialization(req.courses, s, rules).model_dump()
+        for s in spec_doc["specializations"]
+    }
+
+
+@app.post("/specialization/plan", response_model=dict[str, SpecializationPlan])
+def specialization_plan(req: TranscriptRequest) -> dict:
+    """Eligibility drill-down for ALL specializations.
+
+    Per spec, returns recognition + the planning view: which completed courses
+    count, what's still needed, and which counting courses are FGO-locked (FGO
+    forfeits a spec's contribution — surface the irreversibility disclaimer in
+    the UI and verify with the Office of Academic Services).
+    """
+    bundle = load_cohort(req.university, req.programme, req.cohort)
+    spec_doc = bundle["specializations"]
+    rules = spec_doc["recognition_rules"]
+    return {
+        s["slug"]: plan_specialization(req.courses, s, rules).model_dump()
         for s in spec_doc["specializations"]
     }
 
