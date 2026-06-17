@@ -464,3 +464,45 @@ public deploy.
   public (access-gate spec §141; audit §5).
 - Any change to engine **math** or the rulebook. The proxy is pure transport.
 - Implementing or wiring any of the above in this branch — **design only**.
+
+---
+
+## 10. Decisions made — 2026-06-18 (Vercel + Supabase) + what is now wired
+
+> The sections above were "design only." The user has now chosen the stack, and the
+> **provider-agnostic** parts are implemented on `main` (env-gated; nothing deployed).
+
+**Decisions locked by the user:**
+- **Explorer host:** **Vercel** (Next server; the `/api/optimizer/*` proxy + `middleware.ts`
+  run as Vercel functions — §1.4 trade accepted: not a pure static export).
+- **Auth provider (decision #4):** **Supabase Auth** (email OTP to start), replacing the
+  interim shared-secret `/unlock`. The HMAC `optimizer-gate.ts` / `/unlock` from the
+  access-gate spec is therefore **not** implemented — Supabase mints + verifies the session.
+- **Role persistence (WS4):** role persists **across sessions** → `localStorage`
+  (`RoleProvider`), distinct from the session-only student audit (`StudentSession`).
+
+**Implemented now (env-gated, build-green, NOT deployed):**
+
+| File | What |
+|---|---|
+| `app/api/optimizer/[...path]/route.ts` | BFF proxy — Supabase-session check → path allowlist → forward to server-only `ENGINE_URL` → byte-for-byte pass-through (§2). |
+| `lib/optimizer-proxy.ts` (+ `.test.mjs`) | Engine-path allowlist incl. `specialization/plan`; unit-tested. |
+| `lib/supabase/{config,server,client,middleware}.ts`, `middleware.ts` | Supabase session refresh + route gate over `/optimizer`, `/eligibility`, `/api/optimizer/*`. **Fail-closed in production**, open in local dev (`OPTIMIZER_REQUIRE_AUTH`). |
+| `app/login/page.tsx` | Email-OTP sign-in (swappable for magic-link / OAuth). |
+| `app/providers/Role.tsx`, `app/components/RoleSwitch.tsx` | Cross-session role + header toggle. |
+| `app/optimizer/page.tsx`, `app/eligibility/page.tsx` | `ENGINE = "/api/optimizer"` (same-origin); `NEXT_PUBLIC_ENGINE_URL` removed. |
+| `.env.example` | `ENGINE_URL`, `ENGINE_SHARED_SECRET?`, `NEXT_PUBLIC_SUPABASE_*`, `OPTIMIZER_REQUIRE_AUTH`. |
+
+**STILL OPEN — the one real blocker before deploy (needs the user):**
+- **Engine host (decisions #1/#2).** Vercel cannot privately host the Python/FastAPI engine
+  (heavy `pdfplumber`; Vercel gives no private ingress for an arbitrary long-running server).
+  So the engine needs its own home reachable from Vercel's functions. **Recommended:** a small
+  always-on host (**Fly.io / Render / Railway**) with the engine **secret-gated** via
+  `ENGINE_SHARED_SECRET` — the proxy already sends `x-internal-secret`; the **engine-side check
+  of that header is still a TODO** in `main.py`. True "no public ingress" (§1 Option A/B) is not
+  achievable when the caller is Vercel serverless (dynamic egress IPs); secret-gating + the
+  Supabase gate at the proxy is the pragmatic substitute. **Confirm the host.**
+- **Deferred until the host is chosen:** engine-side `x-internal-secret` check, env-gated CORS
+  removal (§4), CI `deploy` job + smoke test (§6).
+- **Lower-priority user calls:** Supabase login method (OTP now; magic-link / NTU-domain
+  restriction later), session TTL (§7 #6), public domain + TLS (§7 #3).
