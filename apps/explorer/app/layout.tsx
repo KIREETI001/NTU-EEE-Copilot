@@ -36,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/" className="hover:text-bone">specializations</Link>
               <Link href="/admissions" className="hover:text-bone">admissions</Link>
               <Link href="/optimizer" className="text-ember hover:text-bone">optimizer</Link>
+              <Link href="/eligibility" className="text-ember hover:text-bone">eligibility</Link>
               <Link href="/suggest" className="hover:text-bone">suggest&nbsp;a&nbsp;fix</Link>
             </nav>
           </div>
