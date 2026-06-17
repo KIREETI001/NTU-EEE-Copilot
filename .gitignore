@@ -24,6 +24,9 @@ htmlcov/
 # build caches
 *.tsbuildinfo
 
+# personal documents — NEVER commit a real Degree Audit / transcript PDF (PDPA)
+*.pdf
+
 # env
 .env
 .env.local

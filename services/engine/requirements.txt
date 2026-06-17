@@ -14,3 +14,4 @@ pydantic==2.13.4   # pydantic v2; has cp314 wheels.
 pyyaml==6.0.3      # first release with a cp314 wheel.
 pytest==9.1.0      # cp314-compatible test runner.
 httpx==0.28.1      # used by Starlette's TestClient in tests/test_api.py.
+pdfplumber==0.11.10  # Degree Audit PDF text extraction (pulls pdfminer.six + Pillow).

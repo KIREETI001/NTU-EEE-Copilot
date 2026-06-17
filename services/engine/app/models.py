@@ -94,3 +94,33 @@ class HonoursResult(BaseModel):
     cgpa: float
     fyp_grade: Optional[str] = None
     notes: list[str] = []
+
+
+class ParsedCourse(BaseModel):
+    """A course extracted from a Degree Audit — a DRAFT for student review.
+
+    Never trusted blindly: `needs_review` flags anything the parser was not sure
+    about, and nothing reaches FGO without the student confirming.
+    """
+
+    code: str
+    title: str = ""
+    au: int = 0
+    category: Optional[Category] = None
+    grade: Optional[str] = None
+    status: str = "completed"        # completed | in_progress | pending | non_gpa
+    needs_review: bool = False
+    review_reason: Optional[str] = None
+
+
+class AuditParseResult(BaseModel):
+    courses: list[ParsedCourse] = []
+    # What the audit document itself states (for the cross-check):
+    reported_cgpa: Optional[float] = None
+    reported_graded_au: Optional[int] = None
+    reported_quality_points: Optional[float] = None
+    # What the engine recomputes from the parsed completed courses:
+    recomputed_cgpa: Optional[float] = None
+    recomputed_graded_au: Optional[int] = None
+    cgpa_matches: Optional[bool] = None   # None = could not cross-check
+    warnings: list[str] = []
