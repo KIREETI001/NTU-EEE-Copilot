@@ -130,6 +130,26 @@ for (const uni of subdirs(RULEBOOK)) {
           }
         }
       }
+
+      // 7. Course-title consistency: a code must carry ONE title everywhere it
+      // appears. This is the canonical-course-table goal (no same-code-different-
+      // title drift) enforced WITHOUT a separate table — catches e.g.
+      // "Intelligent System(s) Design" or "& vs and Systems".
+      const titlesByCode = {};
+      const collect = (code, title) => {
+        if (!code || !title) return;
+        (titlesByCode[code] ||= new Set()).add(title);
+      };
+      for (const spec of docs.specializations?.specializations || []) {
+        for (const c of spec.design_electives || []) collect(c.code, c.title);
+        for (const c of spec.technical_electives || []) collect(c.code, c.title);
+      }
+      for (const kc of degree?.key_courses || []) collect(kc.code, kc.name);
+      for (const [code, titles] of Object.entries(titlesByCode)) {
+        if (titles.size > 1) {
+          fail(key, `course ${code} has divergent titles: ${[...titles].map((t) => JSON.stringify(t)).join(" vs ")}`);
+        }
+      }
     }
   }
 }

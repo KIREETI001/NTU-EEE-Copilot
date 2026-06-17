@@ -126,7 +126,7 @@ specializations:
       - { code: "EE4341", title: "Advanced Analog Circuits",                  avail: ["S1"] }
       - { code: "EE4343", title: "Radio Frequency Circuits",                  avail: ["S2"] }
       - { code: "EE4344", title: "Analysis & Design of Integrated Circuits",  avail: ["S2"] }
-      - { code: "EE6301", title: "Smart Biosensors and Systems for Healthcare", avail: ["S1"] }
+      - { code: "EE6301", title: "Smart Biosensors & Systems for Healthcare", avail: ["S1"] }
       - { code: "EE6309", title: "VLSI System",                               avail: ["S2"], level: "PG" }
     change_flag: "Design codes renumbered EE4303/EE4304 -> EE4323/EE4324 in AY2025-26."
 
@@ -142,7 +142,7 @@ specializations:
       - { code: "EE4647", title: "Microelectronic Devices",                   avail: ["S1"] }
       - { code: "EE6601", title: "Advanced Wafer Processing",                 avail: ["S2"] }
       - { code: "EE6610", title: "Integrated Circuit (IC) Packaging",         avail: ["S2"] }
-      - { code: "EE6301", title: "Smart Biosensors and Systems for Healthcare", avail: ["S1"] }
+      - { code: "EE6301", title: "Smart Biosensors & Systems for Healthcare", avail: ["S1"] }
 
   - slug: "biomedical-electronics"
     name: "Biomedical Electronics"
