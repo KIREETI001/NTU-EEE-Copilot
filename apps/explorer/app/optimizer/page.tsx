@@ -10,14 +10,17 @@ import { useStudentSession, type Row } from "@/app/providers/StudentSession";
 // quota, and a MATH-ONLY suggestion of which courses to FGO to lift your CGPA.
 //
 // This UI holds NO grading logic. Every number comes from the Python engine
-// (single source of truth, 20 tests). It POSTs to NEXT_PUBLIC_ENGINE_URL.
+// (single source of truth). It POSTs same-origin to the BFF proxy (/api/optimizer).
 // Start the engine first:  cd services/engine && uvicorn app.main:app --port 8000
 //
 // ⚠ Before any PUBLIC deploy, gate this route behind auth. FGO is irreversible;
 //   never show suggestions to a casual visitor as if they were advice.
 // =============================================================================
 
-const ENGINE = process.env.NEXT_PUBLIC_ENGINE_URL || "http://localhost:8000";
+// Same-origin BFF proxy (app/api/optimizer/[...path]). The browser never sees the
+// engine origin; the proxy verifies the Supabase session then forwards to the
+// server-only ENGINE_URL. NEXT_PUBLIC_ENGINE_URL is gone (it leaked the origin).
+const ENGINE = "/api/optimizer";
 const COHORT = { university: "ntu", programme: "eee", cohort: "ay2025-26" };
 
 const GRADES = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "D+", "D", "F"];

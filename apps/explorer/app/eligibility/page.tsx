@@ -24,7 +24,9 @@ import { useStudentSession } from "@/app/providers/StudentSession";
 // Start the engine first:  cd services/engine && uvicorn app.main:app --port 8000
 // =============================================================================
 
-const ENGINE = process.env.NEXT_PUBLIC_ENGINE_URL || "http://localhost:8000";
+// Same-origin BFF proxy — see app/optimizer/page.tsx. Routes through the
+// Supabase-gated /api/optimizer proxy to the server-only private engine.
+const ENGINE = "/api/optimizer";
 const COHORT = { university: "ntu", programme: "eee", cohort: "ay2025-26" };
 
 type SpecializationPlan = components["schemas"]["SpecializationPlan"];
