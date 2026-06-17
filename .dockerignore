@@ -1,0 +1,11 @@
+# Trim the Docker build context (only the engine image uses Docker; it COPYs just
+# services/engine + rulebook). Keeps the upload small and the image clean.
+.git
+.github
+.claude
+**/node_modules
+**/.next
+**/.venv
+apps
+docs
+*.zip

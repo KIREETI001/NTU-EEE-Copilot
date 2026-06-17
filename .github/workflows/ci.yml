@@ -43,5 +43,45 @@ jobs:
           fi
       - name: Build explorer
         run: npm run explorer:build
+      - name: Proxy allowlist unit tests
+        working-directory: apps/explorer
+        run: node --test lib/optimizer-proxy.test.mjs
+      - name: No sensitive logging on the engine request path (PDPA)
+        run: |
+          if grep -rnE "print\(|logging\." services/engine/app/main.py services/engine/app/parser/audit.py services/engine/app/engine; then
+            echo "::error::logging/print found on the engine request path — must stay clean (PDPA)"; exit 1
+          fi
       - name: npm audit (informational)
         run: npm audit --audit-level=high || true
+
+  deploy:
+    name: Deploy (private engine + explorer)
+    needs: [engine, rulebook-explorer]
+    # OFF by default. To enable: set repo variable DEPLOY_ENABLED=true, configure
+    # the `production` environment (required reviewer), and add the secrets below.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy engine to Fly (private, secret-gated)
+        run: flyctl deploy --config services/engine/fly.toml --dockerfile services/engine/Dockerfile --remote-only .
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Deploy explorer to Vercel (prod)
+        run: npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      - name: Smoke — engine 401s without the secret; proxy 401s without a session
+        run: |
+          eng=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$ENGINE_PUBLIC_URL/cgpa" -H 'content-type: application/json' -d '{}')
+          test "$eng" = "401" || { echo "::error::engine reachable without the shared secret (got $eng)"; exit 1; }
+          pxy=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$EXPLORER_PUBLIC_URL/api/optimizer/cgpa" -H 'content-type: application/json' -d '{}')
+          test "$pxy" = "401" || { echo "::error::optimizer proxy open without a session (got $pxy)"; exit 1; }
+        env:
+          ENGINE_PUBLIC_URL: ${{ secrets.ENGINE_PUBLIC_URL }}
+          EXPLORER_PUBLIC_URL: ${{ secrets.EXPLORER_PUBLIC_URL }}

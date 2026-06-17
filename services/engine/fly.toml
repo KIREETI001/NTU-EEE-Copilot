@@ -1,0 +1,34 @@
+# Fly.io config for the NTU EEE Co-Pilot engine.
+#
+# The engine has NO public UI and holds the grading math. It is reachable at
+# https://<app>.fly.dev but every request (except /health) requires the
+# `x-internal-secret` header that the Next BFF proxy injects — so a casual visitor
+# cannot POST grades to it. This is the pragmatic "private" posture when the caller
+# (Vercel serverless) has dynamic egress IPs. See WS5 design §10.
+#
+# Deploy (from the repo root):
+#   flyctl deploy --config services/engine/fly.toml --dockerfile services/engine/Dockerfile .
+# Set the secret (NOT in this file — it is committed):
+#   flyctl secrets set ENGINE_SHARED_SECRET=$(openssl rand -hex 32)
+
+app = "ntu-eee-copilot-engine"   # <-- change to your Fly app name (flyctl apps create)
+primary_region = "sin"           # Singapore — closest to NTU users
+
+[build]
+
+[env]
+  # Non-secret config only. ENGINE_SHARED_SECRET is a Fly *secret*, set via CLI.
+  ENGINE_CORS_ORIGINS = ""       # no browser CORS in prod (server-to-server only)
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0       # scale to zero when idle; set 1 to avoid cold starts
+
+  [[http_service.checks]]
+    method = "get"
+    path = "/health"             # exempt from the secret gate, so health checks pass
+    interval = "30s"
+    timeout = "5s"
