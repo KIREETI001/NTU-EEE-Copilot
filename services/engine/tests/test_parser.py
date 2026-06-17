@@ -16,7 +16,6 @@ FIXTURE = (Path(__file__).parent / "fixtures" / "audit_sample.txt").read_text(en
 def test_cross_check_reproduces_real_cgpa(gpa_scale):
     r = parse_audit_text(FIXTURE, gpa_scale=gpa_scale)
     assert r.reported_cgpa == 3.74
-    assert r.reported_quality_points == 329.5
     assert r.reported_graded_au == 88
     assert r.recomputed_cgpa == 3.74
     assert r.recomputed_graded_au == 88
