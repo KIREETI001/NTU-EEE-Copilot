@@ -3,6 +3,7 @@
 import { useState, type ChangeEvent } from "react";
 
 import type { components } from "@/lib/engine-schema";
+import { useStudentSession, type Row } from "@/app/providers/StudentSession";
 
 // =============================================================================
 // OPTIMIZER  —  the high-liability layer. Enter your standing, see CGPA, FGO
@@ -31,34 +32,38 @@ const CATEGORIES: { id: string; label: string; fgo: boolean }[] = [
   { id: "INTERNSHIP", label: "Professional Internship — FGO-ineligible", fgo: false },
 ];
 
-type Row = {
-  code: string;
-  au: number;
-  category: string;
-  grade: string;
-  fgo_applied: boolean;
-};
-
-const SEED: Row[] = [
-  { code: "EE2101", au: 3, category: "CORE", grade: "A-", fgo_applied: false },
-  { code: "EE2102", au: 3, category: "CORE", grade: "B+", fgo_applied: false },
-  { code: "IE2108", au: 3, category: "CORE", grade: "B", fgo_applied: false },
-  { code: "BDE101", au: 3, category: "BDE", grade: "C+", fgo_applied: false },
-];
+// `Row` (imported above) and the table's SEED rows now live in the
+// StudentSession provider — single definition, shared with the persistence
+// layer. The provider seeds the table when nothing is stored.
 
 // Engine response types are GENERATED from the engine's OpenAPI schema
 // (npm run types:engine) — not hand-mirrored, so contract drift is a compile error.
-type Quota = components["schemas"]["FgoQuotaStatus"];
-type Sim = components["schemas"]["FgoSimulation"];
+// FgoQuotaStatus / FgoSimulation flow through the StudentSession context; the
+// page only names ParseResult directly (in onUpload).
 type ParseResult = components["schemas"]["AuditParseResult"];
 
 export default function OptimizerPage() {
-  const [rows, setRows] = useState<Row[]>(SEED);
-  const [cgpa, setCgpa] = useState<number | null>(null);
-  const [quota, setQuota] = useState<Quota | null>(null);
-  const [suggested, setSuggested] = useState<string[] | null>(null);
-  const [sim, setSim] = useState<Sim | null>(null);
-  const [parsed, setParsed] = useState<ParseResult | null>(null);
+  // Persisted (sessionStorage-backed) state — survives navigation + in-tab
+  // reload, cleared when the tab/session ends. See providers/StudentSession.
+  const {
+    rows,
+    setRows,
+    cgpa,
+    setCgpa,
+    quota,
+    setQuota,
+    suggested,
+    setSuggested,
+    sim,
+    setSim,
+    parsed,
+    setParsed,
+    hasData,
+    clear,
+  } = useStudentSession();
+
+  // Transient, intentionally NOT persisted: an error message and an in-flight
+  // flag are about *this* render, not the student's data.
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -113,6 +118,14 @@ export default function OptimizerPage() {
     if (!suggested?.length) return;
     const r = await call("/fgo/simulate", { fgo_codes: suggested });
     if (r) setSim(r);
+  }
+
+  // Wipe the student's data from this browser session: the provider resets the
+  // table to seed and clears parsed/cgpa/quota/suggested/sim + the
+  // sessionStorage key. We also clear the transient error.
+  function clearData() {
+    clear();
+    setErr(null);
   }
 
   async function onUpload(e: ChangeEvent<HTMLInputElement>) {
@@ -205,16 +218,31 @@ export default function OptimizerPage() {
           <span className="text-ember">You review and correct</span> before any FGO math. The PDF
           is processed in memory and never stored.
         </p>
-        <label className="mt-3 inline-flex cursor-pointer items-center rounded border border-ember px-3 py-1.5 font-mono text-xs text-ember hover:bg-ember/10">
-          <input
-            type="file"
-            accept="application/pdf,.pdf"
-            onChange={onUpload}
-            disabled={busy}
-            className="hidden"
-          />
-          {busy ? "parsing…" : "choose Degree Audit PDF"}
-        </label>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <label className="inline-flex cursor-pointer items-center rounded border border-ember px-3 py-1.5 font-mono text-xs text-ember hover:bg-ember/10">
+            <input
+              type="file"
+              accept="application/pdf,.pdf"
+              onChange={onUpload}
+              disabled={busy}
+              className="hidden"
+            />
+            {busy ? "parsing…" : "choose Degree Audit PDF"}
+          </label>
+          {hasData && (
+            <button
+              type="button"
+              onClick={clearData}
+              className="inline-flex items-center rounded border border-line px-3 py-1.5 font-mono text-xs text-ash hover:border-bad hover:text-bad"
+              title="Wipe your audit, table, and results from this browser session"
+            >
+              clear my data
+            </button>
+          )}
+        </div>
+        <p className="mt-3 border-t border-line pt-3 font-mono text-[11px] leading-relaxed text-ash">
+          Kept in your browser, this session only — cleared when you close the tab.
+        </p>
       </div>
 
       {/* parse result: the trust verdict + courses NOT loaded into the table */}

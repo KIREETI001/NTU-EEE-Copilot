@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import { cohortLabel } from "@/lib/rulebook";
+import { StudentSessionProvider } from "./providers/StudentSession";
 
 const mono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${mono.variable} ${sans.variable}`}>
       <body suppressHydrationWarning>
+        <StudentSessionProvider>
         <header className="border-b border-line">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
             <Link href="/" className="font-mono text-sm font-semibold tracking-tight">
@@ -48,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <p className="mt-1">Data is reconstructed from public NTU sources; confidence badges show how verified each field is.</p>
           </div>
         </footer>
+        </StudentSessionProvider>
       </body>
     </html>
   );
