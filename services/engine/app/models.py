@@ -73,6 +73,11 @@ class FgoSimulation(BaseModel):
     warnings: list[str] = []
 
 
+class FgoSuggestion(BaseModel):
+    suggested_codes: list[str]
+    disclaimer: str
+
+
 class SpecializationStatus(BaseModel):
     slug: str
     name: str

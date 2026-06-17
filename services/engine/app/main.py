@@ -21,7 +21,15 @@ from .engine import (
     simulate_fgo,
     suggest_fgo_candidates,
 )
-from .models import Course
+from .models import (
+    CgpaResult,
+    Course,
+    FgoQuotaStatus,
+    FgoSimulation,
+    FgoSuggestion,
+    HonoursResult,
+    SpecializationStatus,
+)
 from .rulebook import list_cohorts, load_cohort
 
 app = FastAPI(title="NTU EEE Co-Pilot Engine", version="0.1.0")
@@ -88,19 +96,19 @@ def get_rulebook(university: str, programme: str, cohort: str) -> dict:
         raise HTTPException(status_code=404, detail=str(e))
 
 
-@app.post("/cgpa")
+@app.post("/cgpa", response_model=CgpaResult)
 def cgpa(req: TranscriptRequest) -> dict:
     scale = _grading(req)["gpa_scale"]
     return compute_cgpa(req.courses, scale).model_dump()
 
 
-@app.post("/fgo/quota")
+@app.post("/fgo/quota", response_model=FgoQuotaStatus)
 def fgo_quota(req: TranscriptRequest) -> dict:
     fgo_rules = _grading(req)["fgo"]
     return quota_status(req.courses, fgo_rules).model_dump()
 
 
-@app.post("/fgo/simulate")
+@app.post("/fgo/simulate", response_model=FgoSimulation)
 def fgo_simulate(req: FgoRequest) -> dict:
     grading = _grading(req)
     return simulate_fgo(
@@ -108,7 +116,7 @@ def fgo_simulate(req: FgoRequest) -> dict:
     ).model_dump()
 
 
-@app.post("/fgo/suggest")
+@app.post("/fgo/suggest", response_model=FgoSuggestion)
 def fgo_suggest(req: TranscriptRequest) -> dict:
     grading = _grading(req)
     codes = suggest_fgo_candidates(req.courses, grading["gpa_scale"], grading["fgo"])
@@ -123,7 +131,7 @@ def fgo_suggest(req: TranscriptRequest) -> dict:
     }
 
 
-@app.post("/specialization/check")
+@app.post("/specialization/check", response_model=dict[str, SpecializationStatus])
 def specialization_check(req: TranscriptRequest) -> dict:
     bundle = load_cohort(req.university, req.programme, req.cohort)
     spec_doc = bundle["specializations"]
@@ -134,7 +142,7 @@ def specialization_check(req: TranscriptRequest) -> dict:
     }
 
 
-@app.post("/honours")
+@app.post("/honours", response_model=HonoursResult)
 def honours(req: HonoursRequest) -> dict:
     grading = _grading(req)
     return classify_honours(

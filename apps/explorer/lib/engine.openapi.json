@@ -1,0 +1,809 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NTU EEE Co-Pilot Engine",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rulebook/{university}/{programme}/{cohort}": {
+      "get": {
+        "summary": "Get Rulebook",
+        "operationId": "get_rulebook_rulebook__university___programme___cohort__get",
+        "parameters": [
+          {
+            "name": "university",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "University"
+            }
+          },
+          {
+            "name": "programme",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Programme"
+            }
+          },
+          {
+            "name": "cohort",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cohort"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Rulebook Rulebook  University   Programme   Cohort  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cgpa": {
+      "post": {
+        "summary": "Cgpa",
+        "operationId": "cgpa_cgpa_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CgpaResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fgo/quota": {
+      "post": {
+        "summary": "Fgo Quota",
+        "operationId": "fgo_quota_fgo_quota_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FgoQuotaStatus"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fgo/simulate": {
+      "post": {
+        "summary": "Fgo Simulate",
+        "operationId": "fgo_simulate_fgo_simulate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FgoRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FgoSimulation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fgo/suggest": {
+      "post": {
+        "summary": "Fgo Suggest",
+        "operationId": "fgo_suggest_fgo_suggest_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FgoSuggestion"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/specialization/check": {
+      "post": {
+        "summary": "Specialization Check",
+        "operationId": "specialization_check_specialization_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TranscriptRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/SpecializationStatus"
+                  },
+                  "type": "object",
+                  "title": "Response Specialization Check Specialization Check Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/honours": {
+      "post": {
+        "summary": "Honours",
+        "operationId": "honours_honours_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HonoursRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HonoursResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Category": {
+        "type": "string",
+        "enum": [
+          "CORE",
+          "MPE",
+          "MPE_BDE_OPTION",
+          "ICC_CC",
+          "FC",
+          "BDE",
+          "FYP",
+          "INTERNSHIP",
+          "SANCTIONED"
+        ],
+        "title": "Category",
+        "description": "Course categories. Drives FGO eligibility + sub-cap logic."
+      },
+      "CgpaResult": {
+        "properties": {
+          "cgpa": {
+            "type": "number",
+            "title": "Cgpa"
+          },
+          "graded_au": {
+            "type": "integer",
+            "title": "Graded Au"
+          },
+          "quality_points": {
+            "type": "number",
+            "title": "Quality Points"
+          },
+          "excluded_fgo_au": {
+            "type": "integer",
+            "title": "Excluded Fgo Au"
+          }
+        },
+        "type": "object",
+        "required": [
+          "cgpa",
+          "graded_au",
+          "quality_points",
+          "excluded_fgo_au"
+        ],
+        "title": "CgpaResult"
+      },
+      "Course": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "au": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Au"
+          },
+          "category": {
+            "$ref": "#/components/schemas/Category"
+          },
+          "grade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grade"
+          },
+          "fgo_applied": {
+            "type": "boolean",
+            "title": "Fgo Applied",
+            "default": false
+          },
+          "spec_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spec Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "au",
+          "category"
+        ],
+        "title": "Course",
+        "description": "A single course on a student's record."
+      },
+      "FgoQuotaStatus": {
+        "properties": {
+          "regime": {
+            "type": "string",
+            "title": "Regime"
+          },
+          "total_quota_au": {
+            "type": "integer",
+            "title": "Total Quota Au"
+          },
+          "subcap_quota_au": {
+            "type": "integer",
+            "title": "Subcap Quota Au"
+          },
+          "used_total_au": {
+            "type": "integer",
+            "title": "Used Total Au"
+          },
+          "used_subcap_au": {
+            "type": "integer",
+            "title": "Used Subcap Au"
+          },
+          "remaining_total_au": {
+            "type": "integer",
+            "title": "Remaining Total Au"
+          },
+          "remaining_subcap_au": {
+            "type": "integer",
+            "title": "Remaining Subcap Au"
+          },
+          "over_total": {
+            "type": "boolean",
+            "title": "Over Total"
+          },
+          "over_subcap": {
+            "type": "boolean",
+            "title": "Over Subcap"
+          },
+          "irreversible": {
+            "type": "boolean",
+            "title": "Irreversible"
+          },
+          "irreversible_text": {
+            "type": "string",
+            "title": "Irreversible Text"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "regime",
+          "total_quota_au",
+          "subcap_quota_au",
+          "used_total_au",
+          "used_subcap_au",
+          "remaining_total_au",
+          "remaining_subcap_au",
+          "over_total",
+          "over_subcap",
+          "irreversible",
+          "irreversible_text"
+        ],
+        "title": "FgoQuotaStatus"
+      },
+      "FgoRequest": {
+        "properties": {
+          "university": {
+            "type": "string",
+            "title": "University",
+            "default": "ntu"
+          },
+          "programme": {
+            "type": "string",
+            "title": "Programme",
+            "default": "eee"
+          },
+          "cohort": {
+            "type": "string",
+            "title": "Cohort",
+            "default": "ay2025-26"
+          },
+          "courses": {
+            "items": {
+              "$ref": "#/components/schemas/Course"
+            },
+            "type": "array",
+            "title": "Courses"
+          },
+          "fgo_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fgo Codes",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "courses"
+        ],
+        "title": "FgoRequest"
+      },
+      "FgoSimulation": {
+        "properties": {
+          "cgpa_before": {
+            "type": "number",
+            "title": "Cgpa Before"
+          },
+          "cgpa_after": {
+            "type": "number",
+            "title": "Cgpa After"
+          },
+          "delta": {
+            "type": "number",
+            "title": "Delta"
+          },
+          "quota": {
+            "$ref": "#/components/schemas/FgoQuotaStatus"
+          },
+          "blocked": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Blocked",
+            "default": []
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "cgpa_before",
+          "cgpa_after",
+          "delta",
+          "quota"
+        ],
+        "title": "FgoSimulation"
+      },
+      "FgoSuggestion": {
+        "properties": {
+          "suggested_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suggested Codes"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "suggested_codes",
+          "disclaimer"
+        ],
+        "title": "FgoSuggestion"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HonoursRequest": {
+        "properties": {
+          "university": {
+            "type": "string",
+            "title": "University",
+            "default": "ntu"
+          },
+          "programme": {
+            "type": "string",
+            "title": "Programme",
+            "default": "eee"
+          },
+          "cohort": {
+            "type": "string",
+            "title": "Cohort",
+            "default": "ay2025-26"
+          },
+          "cgpa": {
+            "type": "number",
+            "title": "Cgpa"
+          },
+          "fyp_grade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fyp Grade"
+          }
+        },
+        "type": "object",
+        "required": [
+          "cgpa"
+        ],
+        "title": "HonoursRequest"
+      },
+      "HonoursResult": {
+        "properties": {
+          "classification": {
+            "type": "string",
+            "title": "Classification"
+          },
+          "cgpa": {
+            "type": "number",
+            "title": "Cgpa"
+          },
+          "fyp_grade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fyp Grade"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "classification",
+          "cgpa"
+        ],
+        "title": "HonoursResult"
+      },
+      "SpecializationStatus": {
+        "properties": {
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "recognized": {
+            "type": "boolean",
+            "title": "Recognized"
+          },
+          "counted_au": {
+            "type": "integer",
+            "title": "Counted Au"
+          },
+          "required_au": {
+            "type": "integer",
+            "title": "Required Au"
+          },
+          "design_count": {
+            "type": "integer",
+            "title": "Design Count"
+          },
+          "technical_count": {
+            "type": "integer",
+            "title": "Technical Count"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Reasons",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "recognized",
+          "counted_au",
+          "required_au",
+          "design_count",
+          "technical_count"
+        ],
+        "title": "SpecializationStatus"
+      },
+      "TranscriptRequest": {
+        "properties": {
+          "university": {
+            "type": "string",
+            "title": "University",
+            "default": "ntu"
+          },
+          "programme": {
+            "type": "string",
+            "title": "Programme",
+            "default": "eee"
+          },
+          "cohort": {
+            "type": "string",
+            "title": "Cohort",
+            "default": "ay2025-26"
+          },
+          "courses": {
+            "items": {
+              "$ref": "#/components/schemas/Course"
+            },
+            "type": "array",
+            "title": "Courses"
+          }
+        },
+        "type": "object",
+        "required": [
+          "courses"
+        ],
+        "title": "TranscriptRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

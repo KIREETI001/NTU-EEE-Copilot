@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import type { components } from "@/lib/engine-schema";
+
 // =============================================================================
 // OPTIMIZER  —  the high-liability layer. Enter your standing, see CGPA, FGO
 // quota, and a MATH-ONLY suggestion of which courses to FGO to lift your CGPA.
@@ -44,24 +46,17 @@ const SEED: Row[] = [
   { code: "BDE101", au: 3, category: "BDE", grade: "C+", fgo_applied: false },
 ];
 
-type Quota = {
-  total_quota_au: number;
-  subcap_quota_au: number;
-  used_total_au: number;
-  used_subcap_au: number;
-  remaining_total_au: number;
-  remaining_subcap_au: number;
-  over_total: boolean;
-  over_subcap: boolean;
-  warnings: string[];
-};
+// Engine response types are GENERATED from the engine's OpenAPI schema
+// (npm run types:engine) — not hand-mirrored, so contract drift is a compile error.
+type Quota = components["schemas"]["FgoQuotaStatus"];
+type Sim = components["schemas"]["FgoSimulation"];
 
 export default function OptimizerPage() {
   const [rows, setRows] = useState<Row[]>(SEED);
   const [cgpa, setCgpa] = useState<number | null>(null);
   const [quota, setQuota] = useState<Quota | null>(null);
   const [suggested, setSuggested] = useState<string[] | null>(null);
-  const [sim, setSim] = useState<any | null>(null);
+  const [sim, setSim] = useState<Sim | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
