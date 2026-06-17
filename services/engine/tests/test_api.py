@@ -64,3 +64,12 @@ def test_honours_unknown_fyp_grade_is_422():
     body = {**COHORT, "cgpa": 4.60, "fyp_grade": "Z"}
     r = client.post("/honours", json=body)
     assert r.status_code == 422
+
+
+def test_parse_audit_rejects_non_pdf():
+    # A non-PDF upload must come back as a clean 4xx, not a 500.
+    r = client.post(
+        "/parse-audit",
+        files={"file": ("x.pdf", b"this is not a pdf", "application/pdf")},
+    )
+    assert r.status_code == 422

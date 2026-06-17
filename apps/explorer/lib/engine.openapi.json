@@ -315,10 +315,183 @@
           }
         }
       }
+    },
+    "/parse-audit": {
+      "post": {
+        "summary": "Parse Audit",
+        "description": "Parse an uploaded Degree Audit PDF into a reviewable DRAFT.\n\nThe PDF is processed in memory and is never stored or logged (PDPA). The\nresult is a draft for the student to review/correct \u2014 it is NOT FGO advice.",
+        "operationId": "parse_audit_parse_audit_post",
+        "parameters": [
+          {
+            "name": "university",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ntu",
+              "title": "University"
+            }
+          },
+          {
+            "name": "programme",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "eee",
+              "title": "Programme"
+            }
+          },
+          {
+            "name": "cohort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "ay2025-26",
+              "title": "Cohort"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_parse_audit_parse_audit_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditParseResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AuditParseResult": {
+        "properties": {
+          "courses": {
+            "items": {
+              "$ref": "#/components/schemas/ParsedCourse"
+            },
+            "type": "array",
+            "title": "Courses",
+            "default": []
+          },
+          "reported_cgpa": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reported Cgpa"
+          },
+          "reported_graded_au": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reported Graded Au"
+          },
+          "reported_quality_points": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reported Quality Points"
+          },
+          "recomputed_cgpa": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recomputed Cgpa"
+          },
+          "recomputed_graded_au": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recomputed Graded Au"
+          },
+          "cgpa_matches": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cgpa Matches"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "AuditParseResult"
+      },
+      "Body_parse_audit_parse_audit_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_parse_audit_parse_audit_post"
+      },
       "Category": {
         "type": "string",
         "enum": [
@@ -681,6 +854,72 @@
           "cgpa"
         ],
         "title": "HonoursResult"
+      },
+      "ParsedCourse": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "au": {
+            "type": "integer",
+            "title": "Au",
+            "default": 0
+          },
+          "category": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Category"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "grade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grade"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "completed"
+          },
+          "needs_review": {
+            "type": "boolean",
+            "title": "Needs Review",
+            "default": false
+          },
+          "review_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code"
+        ],
+        "title": "ParsedCourse",
+        "description": "A course extracted from a Degree Audit \u2014 a DRAFT for student review.\n\nNever trusted blindly: `needs_review` flags anything the parser was not sure\nabout, and nothing reaches FGO without the student confirming."
       },
       "SpecializationStatus": {
         "properties": {

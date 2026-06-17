@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 
 import type { components } from "@/lib/engine-schema";
 
@@ -50,6 +50,7 @@ const SEED: Row[] = [
 // (npm run types:engine) — not hand-mirrored, so contract drift is a compile error.
 type Quota = components["schemas"]["FgoQuotaStatus"];
 type Sim = components["schemas"]["FgoSimulation"];
+type ParseResult = components["schemas"]["AuditParseResult"];
 
 export default function OptimizerPage() {
   const [rows, setRows] = useState<Row[]>(SEED);
@@ -57,6 +58,7 @@ export default function OptimizerPage() {
   const [quota, setQuota] = useState<Quota | null>(null);
   const [suggested, setSuggested] = useState<string[] | null>(null);
   const [sim, setSim] = useState<Sim | null>(null);
+  const [parsed, setParsed] = useState<ParseResult | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -113,6 +115,48 @@ export default function OptimizerPage() {
     if (r) setSim(r);
   }
 
+  async function onUpload(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-uploading the same file
+    if (!file) return;
+    setErr(null);
+    setBusy(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch(`${ENGINE}/parse-audit`, { method: "POST", body: fd });
+      if (!res.ok) throw new Error(`Engine returned ${res.status}`);
+      const data: ParseResult = await res.json();
+      setParsed(data);
+      // Load ONLY the cross-check-verified completed modules into the editable
+      // table. Pending / in-progress / flagged rows are surfaced separately for
+      // the student to handle — never silently fed into FGO.
+      const completed = (data.courses ?? []).filter(
+        (c) => c.status === "completed" && !c.needs_review && c.category
+      );
+      setRows(
+        completed.map((c) => ({
+          code: c.code,
+          au: c.au ?? 0,
+          category: String(c.category),
+          grade: c.grade ?? "B",
+          fgo_applied: false,
+        }))
+      );
+      // Reset any prior computed results — they're stale now.
+      setCgpa(null);
+      setQuota(null);
+      setSuggested(null);
+      setSim(null);
+    } catch (e: any) {
+      setErr(
+        `Could not parse the PDF via the engine at ${ENGINE}. Is it running? (${e.message})`
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+
   function update(i: number, patch: Partial<Row>) {
     setRows((rs) => rs.map((r, idx) => (idx === i ? { ...r, ...patch } : r)));
   }
@@ -149,6 +193,86 @@ export default function OptimizerPage() {
           Academic Services before declaring anything.
         </p>
       </div>
+
+      {/* upload your Degree Audit to auto-fill */}
+      <div className="mb-6 rounded-lg border border-line bg-surface p-4">
+        <p className="font-mono text-xs uppercase tracking-wider text-ash">
+          Auto-fill from your Degree Audit
+        </p>
+        <p className="mt-1 text-sm leading-relaxed text-bone">
+          Upload your NTU Degree Audit PDF — the engine extracts your completed modules,
+          grades and pending courses, then cross-checks them against your audit&apos;s own CGPA.{" "}
+          <span className="text-ember">You review and correct</span> before any FGO math. The PDF
+          is processed in memory and never stored.
+        </p>
+        <label className="mt-3 inline-flex cursor-pointer items-center rounded border border-ember px-3 py-1.5 font-mono text-xs text-ember hover:bg-ember/10">
+          <input
+            type="file"
+            accept="application/pdf,.pdf"
+            onChange={onUpload}
+            disabled={busy}
+            className="hidden"
+          />
+          {busy ? "parsing…" : "choose Degree Audit PDF"}
+        </label>
+      </div>
+
+      {/* parse result: the trust verdict + courses NOT loaded into the table */}
+      {parsed && (
+        <div
+          className={`mb-6 rounded-lg border p-4 ${
+            parsed.cgpa_matches ? "border-ember/40 bg-ember/5" : "border-bad/40 bg-bad/5"
+          }`}
+        >
+          <p
+            className={`font-mono text-xs font-semibold uppercase tracking-wider ${
+              parsed.cgpa_matches ? "text-ember" : "text-bad"
+            }`}
+          >
+            {parsed.cgpa_matches
+              ? "✓ extraction verified by CGPA cross-check"
+              : "⚠ extraction NOT verified — review every row"}
+          </p>
+          <p className="mt-1 text-sm leading-relaxed text-bone">
+            Recomputed CGPA {parsed.recomputed_cgpa?.toFixed(2) ?? "—"} vs audit-reported{" "}
+            {parsed.reported_cgpa?.toFixed(2) ?? "—"} ·{" "}
+            {parsed.recomputed_graded_au ?? "—"}/{parsed.reported_graded_au ?? "—"} graded AU.{" "}
+            {parsed.cgpa_matches
+              ? "The completed modules below reconcile exactly to your audit — still verify before declaring any FGO."
+              : "The numbers do NOT reconcile; the parse may be wrong. Correct the rows or fall back to manual entry."}
+          </p>
+          {parsed.warnings && parsed.warnings.length > 0 && (
+            <ul className="mt-2 space-y-1">
+              {parsed.warnings.map((w, i) => (
+                <li key={i} className="font-mono text-[11px] text-warn">
+                  ⚠ {w}
+                </li>
+              ))}
+            </ul>
+          )}
+          {(() => {
+            const other = (parsed.courses ?? []).filter(
+              (c) => !(c.status === "completed" && !c.needs_review && c.category)
+            );
+            return other.length > 0 ? (
+              <div className="mt-3 border-t border-line pt-3">
+                <p className="font-mono text-[11px] uppercase tracking-wider text-ash">
+                  {other.length} course(s) not loaded into the table — review separately:
+                </p>
+                <ul className="mt-1 space-y-1">
+                  {other.map((c) => (
+                    <li key={c.code} className="font-mono text-[11px] text-ash">
+                      <span className="text-bone">{c.code}</span> · {c.status}
+                      {c.grade ? ` (${c.grade})` : ""}
+                      {c.needs_review && c.review_reason ? ` — ${c.review_reason}` : ""}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null;
+          })()}
+        </div>
+      )}
 
       {/* course table */}
       <div className="overflow-x-auto rounded-lg border border-line">

@@ -140,10 +140,63 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/parse-audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Parse Audit
+         * @description Parse an uploaded Degree Audit PDF into a reviewable DRAFT.
+         *
+         *     The PDF is processed in memory and is never stored or logged (PDPA). The
+         *     result is a draft for the student to review/correct — it is NOT FGO advice.
+         */
+        post: operations["parse_audit_parse_audit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AuditParseResult */
+        AuditParseResult: {
+            /**
+             * Courses
+             * @default []
+             */
+            courses: components["schemas"]["ParsedCourse"][];
+            /** Reported Cgpa */
+            reported_cgpa?: number | null;
+            /** Reported Graded Au */
+            reported_graded_au?: number | null;
+            /** Reported Quality Points */
+            reported_quality_points?: number | null;
+            /** Recomputed Cgpa */
+            recomputed_cgpa?: number | null;
+            /** Recomputed Graded Au */
+            recomputed_graded_au?: number | null;
+            /** Cgpa Matches */
+            cgpa_matches?: boolean | null;
+            /**
+             * Warnings
+             * @default []
+             */
+            warnings: string[];
+        };
+        /** Body_parse_audit_parse_audit_post */
+        Body_parse_audit_parse_audit_post: {
+            /** File */
+            file: string;
+        };
         /**
          * Category
          * @description Course categories. Drives FGO eligibility + sub-cap logic.
@@ -308,6 +361,42 @@ export interface components {
              * @default []
              */
             notes: string[];
+        };
+        /**
+         * ParsedCourse
+         * @description A course extracted from a Degree Audit — a DRAFT for student review.
+         *
+         *     Never trusted blindly: `needs_review` flags anything the parser was not sure
+         *     about, and nothing reaches FGO without the student confirming.
+         */
+        ParsedCourse: {
+            /** Code */
+            code: string;
+            /**
+             * Title
+             * @default
+             */
+            title: string;
+            /**
+             * Au
+             * @default 0
+             */
+            au: number;
+            category?: components["schemas"]["Category"] | null;
+            /** Grade */
+            grade?: string | null;
+            /**
+             * Status
+             * @default completed
+             */
+            status: string;
+            /**
+             * Needs Review
+             * @default false
+             */
+            needs_review: boolean;
+            /** Review Reason */
+            review_reason?: string | null;
         };
         /** SpecializationStatus */
         SpecializationStatus: {
@@ -617,6 +706,43 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HonoursResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    parse_audit_parse_audit_post: {
+        parameters: {
+            query?: {
+                university?: string;
+                programme?: string;
+                cohort?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_parse_audit_parse_audit_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditParseResult"];
                 };
             };
             /** @description Validation Error */

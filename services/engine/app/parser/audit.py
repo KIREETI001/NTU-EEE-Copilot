@@ -250,12 +250,16 @@ def parse_audit_text(text: str, gpa_scale: dict | None = None) -> AuditParseResu
     return result
 
 
-def extract_pdf_text(path: str) -> str:
-    """Thin pdfplumber wrapper: concatenate each page's extracted text."""
+def extract_pdf_text(source) -> str:
+    """Thin pdfplumber wrapper: concatenate each page's extracted text.
+
+    `source` may be a path string or a binary file-like (e.g. io.BytesIO of an
+    uploaded file) — pdfplumber.open accepts both.
+    """
     import pdfplumber
 
     parts: list[str] = []
-    with pdfplumber.open(path) as pdf:
+    with pdfplumber.open(source) as pdf:
         for page in pdf.pages:
             parts.append(page.extract_text() or "")
     return "\n".join(parts)

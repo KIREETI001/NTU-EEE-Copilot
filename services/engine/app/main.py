@@ -8,7 +8,9 @@ when a logged-in student opts in.
 """
 from __future__ import annotations
 
-from fastapi import FastAPI, HTTPException, Request
+import io
+
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, model_validator
@@ -22,6 +24,7 @@ from .engine import (
     suggest_fgo_candidates,
 )
 from .models import (
+    AuditParseResult,
     CgpaResult,
     Course,
     FgoQuotaStatus,
@@ -30,6 +33,7 @@ from .models import (
     HonoursResult,
     SpecializationStatus,
 )
+from .parser.audit import extract_pdf_text, parse_audit_text
 from .rulebook import list_cohorts, load_cohort
 
 app = FastAPI(title="NTU EEE Co-Pilot Engine", version="0.1.0")
@@ -148,3 +152,24 @@ def honours(req: HonoursRequest) -> dict:
     return classify_honours(
         req.cgpa, req.fyp_grade, grading["honours"], grading["gpa_scale"]
     ).model_dump()
+
+
+@app.post("/parse-audit", response_model=AuditParseResult)
+async def parse_audit(
+    file: UploadFile = File(...),
+    university: str = "ntu",
+    programme: str = "eee",
+    cohort: str = "ay2025-26",
+) -> AuditParseResult:
+    """Parse an uploaded Degree Audit PDF into a reviewable DRAFT.
+
+    The PDF is processed in memory and is never stored or logged (PDPA). The
+    result is a draft for the student to review/correct — it is NOT FGO advice.
+    """
+    grading = _grading(CohortRef(university=university, programme=programme, cohort=cohort))
+    data = await file.read()
+    try:
+        text = extract_pdf_text(io.BytesIO(data))
+    except Exception as exc:  # noqa: BLE001 - any pdf failure is a client error
+        raise HTTPException(status_code=422, detail=f"Could not read the PDF: {exc}")
+    return parse_audit_text(text, gpa_scale=grading["gpa_scale"])
