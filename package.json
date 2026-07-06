@@ -7,6 +7,8 @@
   "scripts": {
     "rulebook:build": "node scripts/build-rulebook.mjs",
     "rulebook:validate": "node scripts/validate-rulebook.mjs",
+    "rulebook:audit": "node scripts/audit.mjs",
+    "audit:test": "node --test \"scripts/audit/*.test.mjs\"",
     "explorer:dev": "npm --workspace apps/explorer run dev",
     "explorer:build": "npm run rulebook:build && npm --workspace apps/explorer run build",
     "engine:test": "cd services/engine && python -m pytest",
