@@ -57,7 +57,14 @@ export async function fetchCatalogueRaw(url = CATALOGUE_URL) {
 
 async function main() {
   const args = process.argv.slice(2);
-  const ay = args.includes("--ay") ? args[args.indexOf("--ay") + 1] : "2025-26";
+  let ay = "2025-26";
+  const ayIdx = args.indexOf("--ay");
+  if (ayIdx >= 0) {
+    ay = args[ayIdx + 1];
+    if (!ay || ay.startsWith("--")) {
+      throw new Error("--ay requires a value, e.g. --ay 2025-26");
+    }
+  }
   const raw = await fetchCatalogueRaw();
   const catalogue = normalizeCatalogue(raw, { academicYear: ay });
   const out = join(REPO, "catalogue", "ntu", `ay${ay}`, "courses.json");

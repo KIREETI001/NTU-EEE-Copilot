@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "description": "NTU Academic & Career Co-Pilot — monorepo (rulebook + engine + explorer)",
   "workspaces": ["apps/*"],
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "rulebook:build": "node scripts/build-rulebook.mjs",
     "rulebook:validate": "node scripts/validate-rulebook.mjs",

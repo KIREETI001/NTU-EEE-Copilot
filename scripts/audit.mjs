@@ -76,10 +76,15 @@ function degreeMatchFor(meta) {
 }
 // Auditor cadence is monthly; propose one month out without pulling in a date
 // library. (Plain Date is fine here — this is a CLI, not a workflow script.)
-function plusOneMonthISO() {
-  const d = new Date();
-  d.setMonth(d.getMonth() + 1);
-  return d.toISOString().slice(0, 10);
+// UTC throughout, and clamped to the last day of the target month so
+// end-of-month runs don't roll over (Jan 31 -> Feb 28/29, never Mar 3).
+function plusOneMonthISO(from = new Date()) {
+  const y = from.getUTCFullYear();
+  const m = from.getUTCMonth();
+  // Day 0 of month m+2 == last day of month m+1.
+  const lastOfTarget = new Date(Date.UTC(y, m + 2, 0)).getUTCDate();
+  const day = Math.min(from.getUTCDate(), lastOfTarget);
+  return new Date(Date.UTC(y, m + 1, day)).toISOString().slice(0, 10);
 }
 
 function discoverCohorts() {
@@ -153,7 +158,9 @@ async function main() {
     const freshness = {};
     for (const [name, src] of Object.entries(sources)) {
       if (name === "graduate_employment_survey") continue; // handled by GES provider
-      freshness[name] = NO_NET ? { status: "skipped", note: "network disabled" } : await checkFreshness(src);
+      freshness[name] = NO_NET
+        ? { status: "skipped", lastModified: null, etag: null, note: "network disabled" }
+        : await checkFreshness(src);
       if (freshness[name].status === "changed") actionable = true;
     }
 
