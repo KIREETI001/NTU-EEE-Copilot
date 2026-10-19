@@ -50,7 +50,8 @@ uvicorn app.main:app --reload --port 8000   # → http://localhost:8000/docs
 - ✅ Rulebook spine (AY2025-26 EEE, full provenance)
 - ✅ Rule engine + 20 passing tests
 - ✅ Explorer (8 specialization pages, admissions, suggestion interface) — builds clean
-- ⬜ Optimizer UI · scraper · monthly auditor · transcript parser (see `CLAUDE.md`)
+- ✅ Optimizer UI (FGO & CGPA, degree-audit upload) and specialization eligibility page — needs the engine running
+- ⬜ Scraper · monthly auditor · public deployment (see `CLAUDE.md`)
 
 ## Security
 
