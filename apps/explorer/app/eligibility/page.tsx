@@ -88,10 +88,10 @@ export default function EligibilityPage() {
   return (
     <div>
       <header className="mb-6 border-b border-line pb-6">
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-ember">
-          Undergrad · private layer
+        <p className="mb-2 text-[15px] text-ash">
+          For current undergrads. Your data stays in this browser tab.
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight">Specialization eligibility</h1>
+        <h1 className="font-serif text-[40px] font-medium leading-tight sm:text-[48px]">Specialization eligibility</h1>
         <p className="mt-2 text-ash">
           Which of the 8 EEE specializations you&apos;re recognised for — and exactly what&apos;s
           left to secure each one — computed by the engine from the courses you uploaded on the
@@ -102,16 +102,16 @@ export default function EligibilityPage() {
       {/* No uploaded courses → point the student at the optimizer first. */}
       {!hasData ? (
         <div className="rounded-lg border border-line bg-surface p-6">
-          <p className="font-mono text-xs uppercase tracking-wider text-ash">No courses yet</p>
+          <p className="font-mono text-[13.5px] text-ash">No courses yet</p>
           <p className="mt-2 text-sm leading-relaxed text-bone">
             Upload your Degree Audit on the optimizer first — your courses are kept in this
             browser session and shared with this page, so you only enter them once.
           </p>
           <Link
             href="/optimizer"
-            className="mt-4 inline-flex items-center rounded bg-ember px-3 py-1.5 font-mono text-xs font-semibold text-canvas"
+            className="mt-4 inline-flex items-center rounded bg-ember px-3 py-1.5 font-mono text-[13.5px] font-semibold text-canvas"
           >
-            go to the optimizer →
+            Go to the planner
           </Link>
         </div>
       ) : (
@@ -120,23 +120,23 @@ export default function EligibilityPage() {
             <button
               onClick={checkEligibility}
               disabled={busy}
-              className="rounded bg-ember px-3 py-1.5 font-mono text-xs font-semibold text-canvas disabled:opacity-40"
+              className="rounded bg-ember px-3 py-1.5 font-mono text-[13.5px] font-semibold text-canvas disabled:opacity-40"
             >
-              {busy ? "checking…" : plans ? "re-check eligibility" : "check my eligibility →"}
+              {busy ? "Checking…" : plans ? "Check again" : "Check my eligibility"}
             </button>
             <Link
               href="/optimizer"
-              className="rounded border border-line px-3 py-1.5 font-mono text-xs text-ash hover:border-ash hover:text-bone"
+              className="rounded border border-line px-3 py-1.5 font-mono text-[13.5px] text-ash hover:border-ash hover:text-bone"
             >
               edit my courses
             </Link>
-            <span className="font-mono text-[11px] text-ash">
+            <span className="font-mono text-[13.5px] text-ash">
               {toCourses().length} course(s) in this session
             </span>
           </div>
 
           {err && (
-            <p className="mb-6 rounded border border-bad/40 bg-bad/5 px-3 py-2 font-mono text-[11px] text-bad">
+            <p className="mb-6 rounded border border-bad/40 bg-bad/5 px-3 py-2 font-mono text-[13.5px] text-bad">
               {err}
             </p>
           )}
@@ -184,18 +184,18 @@ function EligibilityCard({
         <div className="flex items-start justify-between gap-3">
           <h2 className="text-lg font-semibold tracking-tight text-bone">{plan.name}</h2>
           <span
-            className={`shrink-0 rounded px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${
+            className={`shrink-0 rounded px-2 py-0.5 font-mono text-[12.5px] ${
               plan.recognized
                 ? "bg-ember/20 text-ember"
                 : "border border-line text-ash"
             }`}
           >
-            {plan.recognized ? "recognised" : "on track"}
+            {plan.recognized ? "Recognised" : "In progress"}
           </span>
         </div>
 
         {/* AU progress */}
-        <p className="mt-3 font-mono text-[11px] text-ash">
+        <p className="mt-3 font-mono text-[13.5px] text-ash">
           {plan.counted_au} / {plan.required_au} AU counting
         </p>
         <div className="mt-1 h-1.5 w-full overflow-hidden rounded bg-line">
@@ -206,12 +206,12 @@ function EligibilityCard({
         </div>
 
         {/* design / technical progress */}
-        <p className="mt-2 font-mono text-[11px] text-ash">
-          design {plan.design_count}/{plan.min_design} · technical{" "}
+        <p className="mt-2 font-mono text-[13.5px] text-ash">
+          design {plan.design_count}/{plan.min_design}, technical{" "}
           {plan.technical_count}/{plan.min_technical}
         </p>
 
-        <p className="mt-3 font-mono text-[11px] text-ember">
+        <p className="mt-3 font-mono text-[13.5px] text-ember">
           {expanded ? "− hide what's left" : "+ what's left to secure it"}
         </p>
       </button>
@@ -226,7 +226,7 @@ function DrillDown({ plan }: { plan: SpecializationPlan }) {
     <div className="mt-4 space-y-4 border-t border-line pt-4">
       {/* Courses still needed to secure the spec. */}
       <div>
-        <p className="font-mono text-[10px] uppercase tracking-wider text-ash">
+        <p className="font-mono text-[12.5px] text-ash">
           Courses to secure it ({plan.remaining_needed.length})
         </p>
         {plan.remaining_needed.length > 0 ? (
@@ -234,7 +234,7 @@ function DrillDown({ plan }: { plan: SpecializationPlan }) {
             {plan.remaining_needed.map((code) => (
               <li
                 key={code}
-                className="rounded border border-line bg-surface px-2 py-1 font-mono text-[11px] text-bone"
+                className="rounded border border-line bg-surface px-2 py-1 font-mono text-[13.5px] text-bone"
               >
                 {code}
               </li>
@@ -252,14 +252,14 @@ function DrillDown({ plan }: { plan: SpecializationPlan }) {
       {/* Courses currently counting. */}
       {plan.completed_counting.length > 0 && (
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-wider text-ash">
+          <p className="font-mono text-[12.5px] text-ash">
             Already counting ({plan.completed_counting.length})
           </p>
           <ul className="mt-2 flex flex-wrap gap-1.5">
             {plan.completed_counting.map((code) => (
               <li
                 key={code}
-                className="rounded border border-ember/40 bg-ember/5 px-2 py-1 font-mono text-[11px] text-ember"
+                className="rounded border border-ember/40 bg-ember/5 px-2 py-1 font-mono text-[13.5px] text-ember"
               >
                 {code}
               </li>
@@ -271,12 +271,12 @@ function DrillDown({ plan }: { plan: SpecializationPlan }) {
       {/* FGO-locked disclaimer — the liability bit, driven by fgo_locked. */}
       {plan.fgo_locked.length > 0 && (
         <div className="rounded border border-bad/40 bg-bad/5 p-3">
-          <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-bad">
-            ⚠ FGO is irreversible
+          <p className="font-mono text-[12.5px] font-semibold text-bad">
+            FGO is irreversible
           </p>
           <p className="mt-1 text-sm leading-relaxed text-bone">
             These cleared courses count toward {plan.name} —{" "}
-            <span className="font-mono text-bad">{plan.fgo_locked.join(" · ")}</span>. If you FGO
+            <span className="font-mono text-bad">{plan.fgo_locked.join(", ")}</span>. If you FGO
             them they no longer count toward this specialization. FGO is irreversible; verify with
             the Office of Academic Services before declaring anything.
           </p>

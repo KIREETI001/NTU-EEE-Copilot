@@ -18,92 +18,85 @@ export default function Home() {
 
   return (
     <div>
-      {/* hero — leads with the single most characteristic decision an EEE student faces */}
-      <section className="mb-14">
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-ember">
-          NTU Electrical &amp; Electronic Engineering
-        </p>
-        <h1 className="max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight md:text-5xl">
-          Eight specializations.<br />
-          One <span className="text-ember">irreversible</span> set of choices.
-        </h1>
-        <p className="mt-5 max-w-2xl text-ash">
-          Research every EEE specialization, what it requires, and where it leads —
-          anchored to a version-tracked rulebook, not a forum post. For current
-          undergrads and prospective students deciding if this is their path.
-        </p>
-
-        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-4">
-          <Stat k="degree AU" v={String(degree.total_au.value)} sub="across 4 years" />
-          <Stat k="specializations" v={String(specs.length)} sub={`${rules.min_au_single_area} AU to claim one`} />
-          <Stat k="median salary" v={`S$${ges2025?.gross_median_sgd?.toLocaleString()}`} sub="GES 2025, fresh grad" />
-          <Stat k="A-level (90th)" v={adm.indicative_grade_profile.a_level.p90} sub="indicative entry" />
+      {/* Hero: the decision an EEE student actually faces, stated plainly. */}
+      <section className="mb-16 grid gap-10 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] md:items-end">
+        <div>
+          <h1 className="font-serif text-[40px] font-medium leading-[1.05] text-bone sm:text-[56px]">
+            Choose your EEE specialization knowing exactly what it takes.
+          </h1>
+          <p className="mt-6 max-w-[58ch] text-[17px] leading-relaxed text-ash">
+            The requirements, electives and career outcomes for all {specs.length} NTU Electrical &amp; Electronic
+            Engineering specializations, taken from a rulebook that records where every number came from.
+            Written for current undergrads planning their electives and for students deciding whether EEE is for them.
+          </p>
         </div>
+
+        <dl className="grid gap-4 rounded-xl border border-line bg-surface p-6 text-[15px] leading-snug">
+          <Fact term="Degree">{String(degree.total_au.value)} AU over four years</Fact>
+          <Fact term="Specialization">{rules.min_au_single_area} AU from one track, letter-graded</Fact>
+          <Fact term="Fresh-grad median pay">
+            S${ges2025?.gross_median_sgd?.toLocaleString()} a month (GES 2025)
+          </Fact>
+          <Fact term="Indicative A-level entry">{adm.indicative_grade_profile.a_level.p90} (90th percentile)</Fact>
+        </dl>
       </section>
 
-      <section>
-        <div className="mb-5 flex items-end justify-between">
-          <h2 className="font-mono text-sm uppercase tracking-widest text-ash">
-            Specialization tracks
-          </h2>
-          <p className="font-mono text-[11px] text-ash">tap a track for courses + careers</p>
+      <section aria-labelledby="tracks">
+        <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-bone pb-3">
+          <h2 id="tracks" className="font-serif text-[28px] font-medium">The {specs.length} specializations</h2>
+          <p className="text-[14px] text-ash">Open a track for its electives, prerequisites and careers.</p>
         </div>
 
-        <div className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
+        <ol>
           {specs.map((s) => {
             const career = careers.specialization_career_map?.map?.[s.slug];
             const courseCount = s.design_electives.length + s.technical_electives.length;
             return (
-              <Link
-                key={s.slug}
-                href={`/specializations/${s.slug}`}
-                className="group flex flex-col gap-3 bg-surface p-5 transition-colors hover:bg-surface2"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-lg font-semibold leading-tight group-hover:text-ember">
+              <li key={s.slug} className="border-b border-line">
+                <Link
+                  href={`/specializations/${s.slug}`}
+                  className="group grid gap-x-8 gap-y-2 py-6 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_auto] sm:items-baseline"
+                >
+                  <span className="font-serif text-[26px] font-medium leading-tight text-bone group-hover:text-ember sm:text-[30px]">
                     {s.name}
-                  </h3>
-                  <ConfidenceBadge level={s.confidence} />
-                </div>
-                <p className="font-mono text-[11px] text-ash">
-                  {courseCount} electives · MPE: {s.required_mpe.slice(0, 2).join(", ")}
-                </p>
-                {career && (
-                  <p className="mt-auto text-sm text-ash">
-                    → {career.roles.slice(0, 2).join(" · ")}
-                  </p>
-                )}
-              </Link>
+                  </span>
+                  <span className="text-[15px] leading-relaxed text-ash">
+                    {career ? <>Typical roles: {career.roles.slice(0, 2).join(", ")}.<br /></> : null}
+                    {courseCount} electives. Prerequisite: {s.required_mpe.slice(0, 2).join(" and ")}.
+                  </span>
+                  <span className="sm:justify-self-end">
+                    <ConfidenceBadge level={s.confidence} />
+                  </span>
+                </Link>
+              </li>
             );
           })}
-        </div>
+        </ol>
       </section>
 
-      <section className="mt-12 rounded-lg border border-line bg-surface p-6">
-        <h2 className="font-mono text-sm uppercase tracking-widest text-ash">
-          How recognition works
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-bone">
-          To have a specialization printed on your transcript you need{" "}
-          <span className="text-ember">{rules.min_au_single_area} AU from one track</span>:
-          at least {rules.min_design_electives} design elective and{" "}
-          {rules.min_technical_electives} technical electives, all letter-graded.
-          Courses you put on FGO do <span className="text-bad">not</span> count.
-          You complete {rules.major_pe_required_for_degree} Major Prescribed
-          Electives for the degree regardless, and you may hold up to{" "}
-          {rules.max_specializations} specializations.
-        </p>
+      <section className="mt-16 grid gap-6 rounded-xl bg-surface2 p-6 sm:p-8 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <h2 className="font-serif text-[26px] font-medium leading-tight">How a specialization gets on your transcript</h2>
+        <div className="text-[16px] leading-relaxed text-bone">
+          <p>
+            You need <strong className="font-semibold">{rules.min_au_single_area} AU from one track</strong>: at least{" "}
+            {rules.min_design_electives} design elective and {rules.min_technical_electives} technical electives, all
+            letter-graded. Courses you take under FGO <strong className="font-semibold text-bad">do not count</strong>.
+          </p>
+          <p className="mt-3 text-ash">
+            Every student completes {rules.major_pe_required_for_degree} Major Prescribed Electives for the degree
+            either way, and you can hold up to {rules.max_specializations} specializations.
+          </p>
+        </div>
       </section>
     </div>
   );
 }
 
-function Stat({ k, v, sub }: { k: string; v: string; sub: string }) {
+function Fact({ term, children }: { term: string; children: React.ReactNode }) {
   return (
-    <div className="bg-surface p-5">
-      <p className="font-mono text-[10px] uppercase tracking-wider text-ash">{k}</p>
-      <p className="mt-1 text-2xl font-semibold text-bone">{v}</p>
-      <p className="font-mono text-[10px] text-ash">{sub}</p>
+    <div className="grid grid-cols-[9.5rem_minmax(0,1fr)] gap-3 border-b border-line pb-4 last:border-0 last:pb-0">
+      <dt className="text-ash">{term}</dt>
+      <dd className="font-medium text-bone">{children}</dd>
     </div>
   );
 }

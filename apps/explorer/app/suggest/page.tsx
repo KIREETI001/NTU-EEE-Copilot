@@ -61,10 +61,10 @@ export default function SuggestPage() {
   return (
     <div className="max-w-2xl">
       <header className="mb-8 border-b border-line pb-6">
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-ember">
+        <p className="mb-2 text-[15px] text-ash">
           Keep the rulebook honest
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight">Suggest a fix</h1>
+        <h1 className="font-serif text-[40px] font-medium leading-tight sm:text-[48px]">Suggest a fix</h1>
         <p className="mt-2 text-ash">
           Spotted a wrong course code, a changed cap, a missing elective? You see
           rule changes before our monthly audit does. Every suggestion is reviewed
@@ -74,7 +74,7 @@ export default function SuggestPage() {
 
       <div className="space-y-6">
         <div>
-          <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-ash">
+          <label className="mb-2 block font-mono text-[13.5px] text-ash">
             What kind of issue
           </label>
           <div className="flex flex-wrap gap-2">
@@ -96,7 +96,7 @@ export default function SuggestPage() {
 
         <Field
           label="Where is it"
-          hint="e.g. Data Analysis & ML → EE6405, or Admissions → tuition"
+          hint="For example: EE6405 under Data Analysis & ML, or tuition under Admissions"
         >
           <input
             value={where}
@@ -131,22 +131,22 @@ export default function SuggestPage() {
             disabled={!canSubmit}
             className="rounded bg-ember px-5 py-2.5 font-mono text-sm font-semibold text-canvas transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
           >
-            File correction →
+            Send correction
           </button>
           {!canSubmit && (
-            <span className="font-mono text-[11px] text-ash">
+            <span className="font-mono text-[13.5px] text-ash">
               Add a location and a description to submit.
             </span>
           )}
         </div>
 
         {submitted === "github" && (
-          <p className="rounded border border-ok/30 bg-ok/5 px-3 py-2 font-mono text-[11px] text-ok">
+          <p className="rounded border border-ok/30 bg-ok/5 px-3 py-2 font-mono text-[13.5px] text-ok">
             Opened a pre-filled GitHub issue in a new tab. Submit it there and a maintainer will verify it.
           </p>
         )}
         {submitted === "mailto" && (
-          <p className="rounded border border-warn/30 bg-warn/5 px-3 py-2 font-mono text-[11px] text-warn">
+          <p className="rounded border border-warn/30 bg-warn/5 px-3 py-2 font-mono text-[13.5px] text-warn">
             No repo configured — opened your email client instead. Set NEXT_PUBLIC_REPO to route suggestions to GitHub.
           </p>
         )}
@@ -166,10 +166,10 @@ function Field({
 }) {
   return (
     <div>
-      <label className="mb-1 block font-mono text-xs uppercase tracking-wider text-ash">
+      <label className="mb-1 block font-mono text-[13.5px] text-ash">
         {label}
       </label>
-      <p className="mb-2 font-mono text-[11px] text-ash/70">{hint}</p>
+      <p className="mb-2 font-mono text-[13.5px] text-ash/70">{hint}</p>
       {children}
     </div>
   );

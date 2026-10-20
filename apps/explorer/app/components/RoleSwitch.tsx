@@ -1,21 +1,19 @@
 "use client";
 
-// Compact role indicator/toggle for the header. Persists across sessions via the
-// RoleProvider (localStorage). Full per-role nav hiding is a WS4 follow-up; this
-// is the minimal surface that makes the persisted role visible + switchable.
+// Role toggle for the header. Persists across sessions via the RoleProvider (localStorage).
 import { useRole, type Role } from "@/app/providers/Role";
 
 const OPTIONS: { value: Role; label: string }[] = [
-  { value: "prospective", label: "prospective" },
-  { value: "student", label: "student" },
+  { value: "prospective", label: "Prospective" },
+  { value: "student", label: "Student" },
 ];
 
 export function RoleSwitch() {
   const { role, setRole, ready } = useRole();
-  if (!ready) return <span className="font-mono text-xs text-ash/40">·</span>;
+  if (!ready) return <span className="h-8 lg:order-last" aria-hidden="true" />;
 
   return (
-    <span className="flex items-center gap-1 font-mono text-[11px]">
+    <span role="group" aria-label="I am a" className="flex shrink-0 items-center gap-0.5 rounded-lg border border-line p-0.5 text-[13.5px] lg:order-last">
       {OPTIONS.map((opt) => {
         const active = role === opt.value;
         return (
@@ -26,10 +24,10 @@ export function RoleSwitch() {
             aria-pressed={active}
             className={
               active
-                ? "rounded-sm border border-ember/60 px-1.5 py-0.5 text-ember"
-                : "rounded-sm border border-transparent px-1.5 py-0.5 text-ash hover:text-bone"
+                ? "whitespace-nowrap rounded-md bg-ember px-2.5 py-1 font-medium text-surface"
+                : "whitespace-nowrap rounded-md px-2.5 py-1 text-ash hover:text-bone"
             }
-            title={active ? "your saved role (click to clear)" : `view as ${opt.label}`}
+            title={active ? "Your saved role. Click to clear." : opt.value === "student" ? "View as a current student" : "View as a prospective student"}
           >
             {opt.label}
           </button>

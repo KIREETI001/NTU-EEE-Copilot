@@ -27,24 +27,24 @@ export default async function SpecPage({
 
   return (
     <article>
-      <Link href="/" className="font-mono text-xs text-ash hover:text-bone">
-        ← all tracks
+      <Link href="/" className="text-[15px] text-ash underline decoration-line underline-offset-4 hover:text-bone hover:decoration-ash">
+        All specializations
       </Link>
 
       <header className="mt-4 flex flex-wrap items-start justify-between gap-3 border-b border-line pb-6">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight">{spec.name}</h1>
-          <p className="mt-2 font-mono text-xs text-ash">
-            Year-3 prerequisite MPE:{" "}
-            <span className="text-bone">{spec.required_mpe.join(" · ")}</span>
+          <h1 className="font-serif text-[40px] font-medium leading-tight sm:text-[48px]">{spec.name}</h1>
+          <p className="mt-3 text-[16px] text-ash">
+            Year 3 prerequisite (Major Prescribed Elective):{" "}
+            <span className="font-medium text-bone">{spec.required_mpe.join(", ")}</span>
           </p>
         </div>
         <ConfidenceBadge level={spec.confidence} />
       </header>
 
       {spec.change_flag && (
-        <p className="mt-4 rounded border border-warn/30 bg-warn/5 px-3 py-2 font-mono text-[11px] text-warn">
-          ⚠ {spec.change_flag}
+        <p className="mt-6 rounded-lg border-l-4 border-warn bg-warn/10 px-4 py-3 text-[15px] text-bone">
+          <strong className="font-semibold text-warn">Recent change. </strong>{spec.change_flag}
         </p>
       )}
 
@@ -54,28 +54,23 @@ export default async function SpecPage({
       </div>
 
       <section className="mt-10 rounded-lg border border-line bg-surface p-5">
-        <h2 className="font-mono text-xs uppercase tracking-widest text-ash">
-          To claim this specialization
-        </h2>
-        <p className="mt-2 text-sm leading-relaxed text-bone">
-          {rules.min_au_single_area} AU from this track ·{" "}
-          ≥{rules.min_design_electives} design + ≥{rules.min_technical_electives} technical ·
-          all letter-graded · no FGO. Valid combinations:{" "}
-          {rules.valid_combinations.join(" / ")}.
+        <h2 className="font-serif text-[24px] font-medium">To have it recognised</h2>
+        <p className="mt-2 text-[16px] leading-relaxed text-bone">
+          Take {rules.min_au_single_area} AU from this track, with at least {rules.min_design_electives} design and{" "}
+          {rules.min_technical_electives} technical electives, all letter-graded. Courses taken under FGO don&apos;t count.
+          Combinations that work: {rules.valid_combinations.join(", or ")}.
         </p>
       </section>
 
       {career && (
         <section className="mt-8">
-          <h2 className="mb-4 font-mono text-sm uppercase tracking-widest text-ash">
-            Where it leads
-          </h2>
+          <h2 className="mb-4 font-serif text-[28px] font-medium">Where it leads</h2>
           <div className="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
             <CareerCol title="Sectors" items={career.sectors} />
             <CareerCol title="Roles" items={career.roles} accent />
             <CareerCol title="Employers" items={career.employers} />
           </div>
-          <p className="mt-3 font-mono text-[11px] text-ash">
+          <p className="mt-3 text-[14px] text-ash">
             Career mapping derived from NTU EEE GES data and specialization scope. Indicative, not a placement guarantee.
           </p>
         </section>
@@ -95,26 +90,26 @@ function CourseList({
 }) {
   return (
     <div>
-      <h2 className="mb-3 font-mono text-xs uppercase tracking-widest text-ash">
-        {title} <span className="text-ash/60">({courses.length})</span>
+      <h2 className="mb-3 flex items-baseline gap-2 font-serif text-[24px] font-medium">
+        {title} <span className="font-sans text-[15px] font-normal text-ash">{courses.length}</span>
       </h2>
-      <ul className="space-y-2">
+      <ul className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
         {courses.map((c) => (
           <li
             key={c.code}
-            className="flex items-baseline justify-between gap-3 rounded border border-line bg-surface px-3 py-2"
+            className="flex items-baseline justify-between gap-3 px-4 py-3"
           >
             <span>
-              <span className={`font-mono text-sm ${accent ? "text-ember" : "text-bone"}`}>
+              <span className={`text-[14px] font-semibold ${accent ? "text-ember" : "text-bone"}`}>
                 {c.code}
               </span>
-              <span className="ml-2 text-sm text-ash">{c.title}</span>
+              <span className="ml-3 text-[15px] text-bone">{c.title}</span>
               {c.level === "PG" && (
-                <span className="ml-2 font-mono text-[10px] text-warn">PG</span>
+                <span className="ml-2 rounded bg-warn/10 px-1.5 py-0.5 text-[12.5px] font-medium text-warn" title="Postgraduate-level course">Postgraduate</span>
               )}
             </span>
             {c.avail && (
-              <span className="shrink-0 font-mono text-[10px] text-ash">{c.avail.join("/")}</span>
+              <span className="shrink-0 text-[13.5px] text-ash" title="Semesters offered">{c.avail.join(", ")}</span>
             )}
           </li>
         ))}
@@ -126,10 +121,10 @@ function CourseList({
 function CareerCol({ title, items, accent }: { title: string; items: string[]; accent?: boolean }) {
   return (
     <div className="bg-surface p-4">
-      <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-ash">{title}</p>
+      <p className="mb-2 text-[14px] font-semibold text-bone">{title}</p>
       <ul className="space-y-1">
         {items.map((it) => (
-          <li key={it} className={`text-sm ${accent ? "text-bone" : "text-ash"}`}>
+          <li key={it} className={`text-[15px] ${accent ? "text-bone" : "text-ash"}`}>
             {it}
           </li>
         ))}
