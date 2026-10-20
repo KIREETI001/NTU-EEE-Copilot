@@ -13,7 +13,7 @@ import { useStudentSession, type Row } from "@/app/providers/StudentSession";
 // (single source of truth). It POSTs same-origin to the BFF proxy (/api/optimizer).
 // Start the engine first:  cd services/engine && uvicorn app.main:app --port 8000
 //
-// ⚠ Before any PUBLIC deploy, gate this route behind auth. FGO is irreversible;
+// Before any PUBLIC deploy, gate this route behind auth. FGO is irreversible;
 //   never show suggestions to a casual visitor as if they were advice.
 // =============================================================================
 
@@ -186,10 +186,10 @@ export default function OptimizerPage() {
   return (
     <div>
       <header className="mb-6 border-b border-line pb-6">
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-ember">
-          Undergrad · private layer
+        <p className="mb-2 text-[15px] text-ash">
+          For current undergrads. Your data stays in this browser tab.
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight">FGO &amp; CGPA optimizer</h1>
+        <h1 className="font-serif text-[40px] font-medium leading-tight sm:text-[48px]">FGO &amp; CGPA optimizer</h1>
         <p className="mt-2 text-ash">
           Enter your standing, then let the engine compute CGPA, your FGO quota, and a
           math-only suggestion of which courses to convert to maximize CGPA.
@@ -198,8 +198,8 @@ export default function OptimizerPage() {
 
       {/* The irreversibility banner is non-negotiable. It stays on screen always. */}
       <div className="mb-6 rounded-lg border border-bad/40 bg-bad/5 p-4">
-        <p className="font-mono text-xs font-semibold uppercase tracking-wider text-bad">
-          ⚠ FGO is irreversible
+        <p className="font-mono text-[13.5px] font-semibold text-bad">
+          FGO is irreversible
         </p>
         <p className="mt-1 text-sm leading-relaxed text-bone">
           Declaring FGO on a course cannot be undone, and quota is spent per attempt.
@@ -212,7 +212,7 @@ export default function OptimizerPage() {
 
       {/* upload your Degree Audit to auto-fill */}
       <div className="mb-6 rounded-lg border border-line bg-surface p-4">
-        <p className="font-mono text-xs uppercase tracking-wider text-ash">
+        <p className="font-mono text-[13.5px] text-ash">
           Auto-fill from your Degree Audit
         </p>
         <p className="mt-1 text-sm leading-relaxed text-bone">
@@ -222,7 +222,7 @@ export default function OptimizerPage() {
           is processed in memory and never stored.
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-3">
-          <label className="inline-flex cursor-pointer items-center rounded border border-ember px-3 py-1.5 font-mono text-xs text-ember hover:bg-ember/10">
+          <label className="inline-flex cursor-pointer items-center rounded border border-ember px-3 py-1.5 font-mono text-[13.5px] text-ember hover:bg-ember/10">
             <input
               type="file"
               accept="application/pdf,.pdf"
@@ -230,20 +230,20 @@ export default function OptimizerPage() {
               disabled={busy}
               className="hidden"
             />
-            {busy ? "parsing…" : "choose Degree Audit PDF"}
+            {busy ? "Reading your audit…" : "Choose your Degree Audit PDF"}
           </label>
           {hasData && (
             <button
               type="button"
               onClick={clearData}
-              className="inline-flex items-center rounded border border-line px-3 py-1.5 font-mono text-xs text-ash hover:border-bad hover:text-bad"
+              className="inline-flex items-center rounded border border-line px-3 py-1.5 font-mono text-[13.5px] text-ash hover:border-bad hover:text-bad"
               title="Wipe your audit, table, and results from this browser session"
             >
               clear my data
             </button>
           )}
         </div>
-        <p className="mt-3 border-t border-line pt-3 font-mono text-[11px] leading-relaxed text-ash">
+        <p className="mt-3 border-t border-line pt-3 font-mono text-[13.5px] leading-relaxed text-ash">
           Kept in your browser, this session only — cleared when you close the tab.
         </p>
       </div>
@@ -256,17 +256,17 @@ export default function OptimizerPage() {
           }`}
         >
           <p
-            className={`font-mono text-xs font-semibold uppercase tracking-wider ${
+            className={`font-mono text-xs font-semibold ${
               parsed.cgpa_matches ? "text-ember" : "text-bad"
             }`}
           >
             {parsed.cgpa_matches
               ? "✓ extraction verified by CGPA cross-check"
-              : "⚠ extraction NOT verified — review every row"}
+              : "extraction NOT verified — review every row"}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-bone">
             Recomputed CGPA {parsed.recomputed_cgpa?.toFixed(2) ?? "—"} vs audit-reported{" "}
-            {parsed.reported_cgpa?.toFixed(2) ?? "—"} ·{" "}
+            {parsed.reported_cgpa?.toFixed(2) ?? "—"};{" "}
             {parsed.recomputed_graded_au ?? "—"}/{parsed.reported_graded_au ?? "—"} graded AU.{" "}
             {parsed.cgpa_matches
               ? "The completed modules below reconcile exactly to your audit — still verify before declaring any FGO."
@@ -275,8 +275,8 @@ export default function OptimizerPage() {
           {parsed.warnings && parsed.warnings.length > 0 && (
             <ul className="mt-2 space-y-1">
               {parsed.warnings.map((w, i) => (
-                <li key={i} className="font-mono text-[11px] text-warn">
-                  ⚠ {w}
+                <li key={i} className="font-mono text-[13.5px] text-warn">
+                  {w}
                 </li>
               ))}
             </ul>
@@ -287,13 +287,13 @@ export default function OptimizerPage() {
             );
             return other.length > 0 ? (
               <div className="mt-3 border-t border-line pt-3">
-                <p className="font-mono text-[11px] uppercase tracking-wider text-ash">
+                <p className="font-mono text-[13.5px] text-ash">
                   {other.length} course(s) not loaded into the table — review separately:
                 </p>
                 <ul className="mt-1 space-y-1">
                   {other.map((c) => (
-                    <li key={c.code} className="font-mono text-[11px] text-ash">
-                      <span className="text-bone">{c.code}</span> · {c.status}
+                    <li key={c.code} className="font-mono text-[13.5px] text-ash">
+                      <span className="text-bone">{c.code}</span>, {c.status}
                       {c.grade ? ` (${c.grade})` : ""}
                       {c.needs_review && c.review_reason ? ` — ${c.review_reason}` : ""}
                     </li>
@@ -308,7 +308,7 @@ export default function OptimizerPage() {
       {/* course table */}
       <div className="overflow-x-auto rounded-lg border border-line">
         <table className="w-full text-sm">
-          <thead className="bg-surface2 font-mono text-[10px] uppercase tracking-wider text-ash">
+          <thead className="bg-surface2 font-mono text-[12.5px] text-ash">
             <tr>
               <th className="px-3 py-2 text-left">Course</th>
               <th className="px-3 py-2 text-left">AU</th>
@@ -328,7 +328,7 @@ export default function OptimizerPage() {
                       value={r.code}
                       onChange={(e) => update(i, { code: e.target.value })}
                       placeholder="EE2102"
-                      className="w-24 rounded border border-line bg-surface px-2 py-1 font-mono text-xs outline-none focus:border-ember"
+                      className="w-24 rounded border border-line bg-surface px-2 py-1 font-mono text-[13.5px] outline-none focus:border-ember"
                     />
                   </td>
                   <td className="px-3 py-2">
@@ -337,14 +337,14 @@ export default function OptimizerPage() {
                       min={0}
                       value={r.au}
                       onChange={(e) => update(i, { au: Number(e.target.value) })}
-                      className="w-14 rounded border border-line bg-surface px-2 py-1 text-xs outline-none focus:border-ember"
+                      className="w-14 rounded border border-line bg-surface px-2 py-1 text-[13.5px] outline-none focus:border-ember"
                     />
                   </td>
                   <td className="px-3 py-2">
                     <select
                       value={r.category}
                       onChange={(e) => update(i, { category: e.target.value })}
-                      className="rounded border border-line bg-surface px-2 py-1 text-xs outline-none focus:border-ember"
+                      className="rounded border border-line bg-surface px-2 py-1 text-[13.5px] outline-none focus:border-ember"
                     >
                       {CATEGORIES.map((c) => (
                         <option key={c.id} value={c.id}>
@@ -357,7 +357,7 @@ export default function OptimizerPage() {
                     <select
                       value={r.grade}
                       onChange={(e) => update(i, { grade: e.target.value })}
-                      className="rounded border border-line bg-surface px-2 py-1 font-mono text-xs outline-none focus:border-ember"
+                      className="rounded border border-line bg-surface px-2 py-1 font-mono text-[13.5px] outline-none focus:border-ember"
                     >
                       {GRADES.map((g) => (
                         <option key={g} value={g}>
@@ -379,7 +379,7 @@ export default function OptimizerPage() {
                   <td className="px-3 py-2 text-right">
                     <button
                       onClick={() => removeRow(i)}
-                      className="font-mono text-xs text-ash hover:text-bad"
+                      className="font-mono text-[13.5px] text-ash hover:text-bad"
                     >
                       ✕
                     </button>
@@ -392,22 +392,22 @@ export default function OptimizerPage() {
       </div>
 
       <div className="mt-3 flex flex-wrap gap-3">
-        <button onClick={addRow} className="rounded border border-line px-3 py-1.5 font-mono text-xs text-ash hover:border-ash">
-          + course
+        <button onClick={addRow} className="rounded-lg border border-line bg-surface px-3.5 py-2 text-[14.5px] text-ash hover:border-ash">
+          Add a course
         </button>
-        <button onClick={computeCgpa} disabled={busy} className="rounded border border-line px-3 py-1.5 font-mono text-xs text-bone hover:border-ember disabled:opacity-40">
-          compute CGPA
+        <button onClick={computeCgpa} disabled={busy} className="rounded-lg border border-line bg-surface px-3.5 py-2 text-[14.5px] text-bone hover:border-ember disabled:opacity-40">
+          Compute CGPA
         </button>
-        <button onClick={checkQuota} disabled={busy} className="rounded border border-line px-3 py-1.5 font-mono text-xs text-bone hover:border-ember disabled:opacity-40">
-          FGO quota
+        <button onClick={checkQuota} disabled={busy} className="rounded-lg border border-line bg-surface px-3.5 py-2 text-[14.5px] text-bone hover:border-ember disabled:opacity-40">
+          Check FGO quota
         </button>
-        <button onClick={suggest} disabled={busy} className="rounded bg-ember px-3 py-1.5 font-mono text-xs font-semibold text-canvas disabled:opacity-40">
-          suggest courses to FGO →
+        <button onClick={suggest} disabled={busy} className="rounded-lg bg-ember px-3.5 py-2 text-[14.5px] font-semibold text-surface disabled:opacity-40">
+          Suggest courses to FGO
         </button>
       </div>
 
       {err && (
-        <p className="mt-4 rounded border border-bad/40 bg-bad/5 px-3 py-2 font-mono text-[11px] text-bad">
+        <p className="mt-4 rounded border border-bad/40 bg-bad/5 px-3 py-2 font-mono text-[13.5px] text-bad">
           {err}
         </p>
       )}
@@ -422,14 +422,14 @@ export default function OptimizerPage() {
         {quota && (
           <Panel label="FGO quota (AU)">
             <p className="text-sm text-bone">
-              {quota.used_total_au} / {quota.total_quota_au} used ·{" "}
+              {quota.used_total_au} / {quota.total_quota_au} used,{" "}
               <span className="text-ash">{quota.remaining_total_au} left</span>
             </p>
-            <p className="mt-1 font-mono text-[11px] text-ash">
+            <p className="mt-1 font-mono text-[13.5px] text-ash">
               Core/MPE/ICC sub-cap: {quota.used_subcap_au} / {quota.subcap_quota_au}
             </p>
             {(quota.over_total || quota.over_subcap) && (
-              <p className="mt-2 font-mono text-[11px] text-bad">Over cap — see warnings.</p>
+              <p className="mt-2 font-mono text-[13.5px] text-bad">Over cap — see warnings.</p>
             )}
           </Panel>
         )}
@@ -437,13 +437,13 @@ export default function OptimizerPage() {
           <Panel label="Suggested to FGO">
             {suggested.length ? (
               <>
-                <p className="font-mono text-sm text-ember">{suggested.join(" · ")}</p>
+                <p className="font-mono text-sm text-ember">{suggested.join(", ")}</p>
                 <button
                   onClick={simulateSuggested}
                   disabled={busy}
-                  className="mt-3 rounded border border-ember px-3 py-1 font-mono text-[11px] text-ember disabled:opacity-40"
+                  className="mt-3 rounded border border-ember px-3 py-1 font-mono text-[13.5px] text-ember disabled:opacity-40"
                 >
-                  simulate these →
+                  Simulate these
                 </button>
               </>
             ) : (
@@ -455,7 +455,7 @@ export default function OptimizerPage() {
 
       {sim && (
         <div className="mt-6 rounded-lg border border-line bg-surface p-5">
-          <h2 className="font-mono text-xs uppercase tracking-widest text-ash">Simulation result</h2>
+          <h2 className="font-serif text-[22px] font-medium text-bone">Simulation result</h2>
           <p className="mt-2 text-2xl font-semibold text-bone">
             {sim.cgpa_before.toFixed(2)} <span className="text-ash">→</span>{" "}
             <span className="text-ember">{sim.cgpa_after.toFixed(2)}</span>{" "}
@@ -467,14 +467,14 @@ export default function OptimizerPage() {
           {sim.blocked?.length > 0 && (
             <ul className="mt-3 space-y-1">
               {sim.blocked.map((b: string) => (
-                <li key={b} className="font-mono text-[11px] text-bad">⊘ {b}</li>
+                <li key={b} className="font-mono text-[13.5px] text-bad">⊘ {b}</li>
               ))}
             </ul>
           )}
           {sim.warnings?.length > 0 && (
             <ul className="mt-3 space-y-1 border-t border-line pt-3">
               {sim.warnings.map((w: string, i: number) => (
-                <li key={i} className="font-mono text-[11px] text-warn">⚠ {w}</li>
+                <li key={i} className="font-mono text-[13.5px] text-warn">{w}</li>
               ))}
             </ul>
           )}
@@ -487,7 +487,7 @@ export default function OptimizerPage() {
 function Panel({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="rounded-lg border border-line bg-surface p-4">
-      <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-ash">{label}</p>
+      <p className="mb-2 font-mono text-[12.5px] text-ash">{label}</p>
       {children}
     </div>
   );

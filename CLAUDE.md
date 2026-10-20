@@ -60,7 +60,7 @@ ntu-copilot/
 │   │   ├── main.py            ← FastAPI surface (thin)
 │   │   └── engine/            ← PURE functions: cgpa, fgo, specialization, honours
 │   └── tests/                 ← 20 tests, run against the REAL rulebook
-└── apps/explorer/             ← Next.js 15 public site (SoulVector design)
+└── apps/explorer/             ← Next.js 15 public site (Handbook design)
     ├── app/                   ← home, specializations/[slug], admissions, suggest
     ├── components/
     ├── lib/rulebook.ts        ← typed reader over rulebook.json
@@ -132,7 +132,10 @@ Cross-cutting, not yet built:
 
 ## Design language (Explorer)
 
-SoulVector: charcoal canvas (`#0f0f0f`), ember accent (`#ff6b35`), IBM Plex Mono for
-structure/labels, IBM Plex Sans for body. One signature flourish only (the ember
-header seam). Tokens live in `apps/explorer/tailwind.config.ts`. Keep it disciplined —
-spend boldness in one place.
+Handbook: a well-set student handbook. Cool paper (`--canvas`), ink text, one deep-teal
+accent; green / amber / red are reserved for data confidence and warnings. Source Serif 4
+for headings and track names, IBM Plex Sans (tabular numerals) for everything else; no
+monospace labels, no uppercase tracked eyebrows, sentence-case copy. The one bold element
+is the home page's typeset index of specializations. Colours are CSS variables in
+`apps/explorer/app/globals.css` (light + dark), mapped to Tailwind names in
+`tailwind.config.ts` (`ember` = the accent, `bone` = ink, `ash` = muted, kept for history).

@@ -70,7 +70,7 @@ function LoginInner() {
   return (
     <div className="max-w-sm">
       <h1 className="font-mono text-lg font-semibold">Student sign-in</h1>
-      <p className="mt-2 font-mono text-xs text-ash">
+      <p className="mt-2 font-mono text-[13.5px] text-ash">
         The optimizer simulates irreversible FGO decisions — it is gated. We email a one-time
         code; we never store your password.
       </p>
@@ -90,7 +90,7 @@ function LoginInner() {
             onClick={sendCode}
             className="rounded-sm border border-ember/60 px-3 py-2 font-mono text-sm text-ember disabled:opacity-40"
           >
-            {busy ? "sending…" : "email me a code"}
+            {busy ? "Sending…" : "Email me a code"}
           </button>
         </div>
       ) : (
@@ -100,7 +100,7 @@ function LoginInner() {
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="6-digit code"
-            className="rounded-sm border border-line bg-transparent px-3 py-2 font-mono text-sm tracking-widest"
+            className="rounded-sm border border-line bg-transparent px-3 py-2 font-mono text-sm"
           />
           <button
             type="button"
@@ -108,12 +108,12 @@ function LoginInner() {
             onClick={verify}
             className="rounded-sm border border-ember/60 px-3 py-2 font-mono text-sm text-ember disabled:opacity-40"
           >
-            {busy ? "verifying…" : "verify & continue"}
+            {busy ? "Verifying…" : "Verify and continue"}
           </button>
         </div>
       )}
 
-      {err && <p className="mt-3 font-mono text-xs text-ember">{err}</p>}
+      {err && <p className="mt-3 font-mono text-[13.5px] text-ember">{err}</p>}
     </div>
   );
 }
