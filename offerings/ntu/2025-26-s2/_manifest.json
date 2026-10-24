@@ -1,0 +1,10 @@
+{
+  "academic_year": "2025-26",
+  "semester": 2,
+  "fetched_at": "2026-07-06T00:00:00Z",
+  "source": "sample:owa-fixture",
+  "count": 1,
+  "courses": [
+    "EE2010"
+  ]
+}

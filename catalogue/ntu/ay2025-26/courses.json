@@ -1,0 +1,307 @@
+{
+  "generated_from": "ntumods:code-title",
+  "academic_year": "2025-26",
+  "count": 60,
+  "courses": {
+    "CE1003": {
+      "title": "INTRODUCTION TO COMPUTATIONAL THINKING",
+      "au": null,
+      "school": null
+    },
+    "CE1005": {
+      "title": "DIGITAL LOGIC",
+      "au": null,
+      "school": null
+    },
+    "CE1006": {
+      "title": "COMPUTER ORGANISATION & ARCHITECTURE",
+      "au": null,
+      "school": null
+    },
+    "CE1007": {
+      "title": "DATA STRUCTURES",
+      "au": null,
+      "school": null
+    },
+    "CE1011": {
+      "title": "ENGINEERING MATHEMATICS I",
+      "au": null,
+      "school": null
+    },
+    "CE1012": {
+      "title": "ENGINEERING MATHEMATICS II",
+      "au": null,
+      "school": null
+    },
+    "CE2001": {
+      "title": "ALGORITHMS",
+      "au": null,
+      "school": null
+    },
+    "CE2002": {
+      "title": "OBJECT ORIENTED DESIGN & PROGRAMMING",
+      "au": null,
+      "school": null
+    },
+    "CE2003": {
+      "title": "DIGITAL SYSTEMS DESIGN",
+      "au": null,
+      "school": null
+    },
+    "CE2004": {
+      "title": "CIRCUITS & SIGNAL ANALYSIS",
+      "au": null,
+      "school": null
+    },
+    "CE2005": {
+      "title": "OPERATING SYSTEMS",
+      "au": null,
+      "school": null
+    },
+    "CE2006": {
+      "title": "SOFTWARE ENGINEERING",
+      "au": null,
+      "school": null
+    },
+    "CE2007": {
+      "title": "MICROPROCESSOR-BASED SYSTEMS DESIGN",
+      "au": null,
+      "school": null
+    },
+    "CE3001": {
+      "title": "ADVANCED COMPUTER ARCHITECTURE",
+      "au": null,
+      "school": null
+    },
+    "CE3002": {
+      "title": "SENSORS, INTERFACING & CONTROL",
+      "au": null,
+      "school": null
+    },
+    "CE3005": {
+      "title": "COMPUTER NETWORKS",
+      "au": null,
+      "school": null
+    },
+    "CE3006": {
+      "title": "DIGITAL COMMUNICATIONS",
+      "au": null,
+      "school": null
+    },
+    "CE3007": {
+      "title": "DIGITAL SIGNAL PROCESSING",
+      "au": null,
+      "school": null
+    },
+    "CE4003": {
+      "title": "COMPUTER VISION",
+      "au": null,
+      "school": null
+    },
+    "CE4016": {
+      "title": "ADVANCED TOPICS IN ALGORITHMS",
+      "au": null,
+      "school": null
+    },
+    "CE4022": {
+      "title": "PERSONAL MOBILE NETWORKS",
+      "au": null,
+      "school": null
+    },
+    "CE4023": {
+      "title": "ADVANCED COMPUTER NETWORKS",
+      "au": null,
+      "school": null
+    },
+    "CE4031": {
+      "title": "DATABASE SYSTEM PRINCIPLES",
+      "au": null,
+      "school": null
+    },
+    "CE4032": {
+      "title": "DATA ANALYTICS & MINING",
+      "au": null,
+      "school": null
+    },
+    "CE4042": {
+      "title": "NEURAL NETWORK & DEEP LEARNING",
+      "au": null,
+      "school": null
+    },
+    "CE4045": {
+      "title": "NATURAL LANGUAGE PROCESSING",
+      "au": null,
+      "school": null
+    },
+    "CE4062": {
+      "title": "COMPUTER SECURITY (SYSTEM SECURITY)",
+      "au": null,
+      "school": null
+    },
+    "CE4064": {
+      "title": "SECURITY MANAGEMENT",
+      "au": null,
+      "school": null
+    },
+    "CE4068": {
+      "title": "APPLICATION SECURITY",
+      "au": null,
+      "school": null
+    },
+    "CZ1003": {
+      "title": "INTRODUCTION TO COMPUTATIONAL THINKING",
+      "au": null,
+      "school": null
+    },
+    "CZ1005": {
+      "title": "DIGITAL LOGIC",
+      "au": null,
+      "school": null
+    },
+    "CZ1006": {
+      "title": "COMPUTER ORGANISATION & ARCHITECTURE",
+      "au": null,
+      "school": null
+    },
+    "CZ1007": {
+      "title": "DATA STRUCTURES",
+      "au": null,
+      "school": null
+    },
+    "CZ1011": {
+      "title": "ENGINEERING MATHEMATICS I",
+      "au": null,
+      "school": null
+    },
+    "CZ1012": {
+      "title": "ENGINEERING MATHEMATICS II",
+      "au": null,
+      "school": null
+    },
+    "CZ2001": {
+      "title": "ALGORITHMS",
+      "au": null,
+      "school": null
+    },
+    "CZ2002": {
+      "title": "OBJECT ORIENTED DESIGN & PROGRAMMING",
+      "au": null,
+      "school": null
+    },
+    "CZ2003": {
+      "title": "COMPUTER GRAPHICS & VISUALISATION",
+      "au": null,
+      "school": null
+    },
+    "CZ2004": {
+      "title": "HUMAN COMPUTER INTERACTION",
+      "au": null,
+      "school": null
+    },
+    "CZ2005": {
+      "title": "OPERATING SYSTEMS",
+      "au": null,
+      "school": null
+    },
+    "CZ2006": {
+      "title": "SOFTWARE ENGINEERING",
+      "au": null,
+      "school": null
+    },
+    "CZ2007": {
+      "title": "INTRODUCTION TO DATABASES",
+      "au": null,
+      "school": null
+    },
+    "CZ3001": {
+      "title": "ADVANCED COMPUTER ARCHITECTURE",
+      "au": null,
+      "school": null
+    },
+    "CZ3002": {
+      "title": "ADVANCED SOFTWARE ENGINEERING",
+      "au": null,
+      "school": null
+    },
+    "CZ3003": {
+      "title": "SOFTWARE SYSTEMS ANALYSIS & DESIGN",
+      "au": null,
+      "school": null
+    },
+    "CZ3005": {
+      "title": "ARTIFICIAL INTELLIGENCE",
+      "au": null,
+      "school": null
+    },
+    "CZ3006": {
+      "title": "NET CENTRIC COMPUTING",
+      "au": null,
+      "school": null
+    },
+    "CZ3007": {
+      "title": "COMPILER TECHNIQUES",
+      "au": null,
+      "school": null
+    },
+    "CZ4003": {
+      "title": "COMPUTER VISION",
+      "au": null,
+      "school": null
+    },
+    "CZ4016": {
+      "title": "ADVANCED TOPICS IN ALGORITHMS",
+      "au": null,
+      "school": null
+    },
+    "CZ4022": {
+      "title": "PERSONAL MOBILE NETWORKS",
+      "au": null,
+      "school": null
+    },
+    "CZ4023": {
+      "title": "ADVANCED COMPUTER NETWORKS",
+      "au": null,
+      "school": null
+    },
+    "CZ4031": {
+      "title": "DATABASE SYSTEM PRINCIPLES",
+      "au": null,
+      "school": null
+    },
+    "CZ4032": {
+      "title": "DATA ANALYTICS & MINING",
+      "au": null,
+      "school": null
+    },
+    "CZ4041": {
+      "title": "MACHINE LEARNING",
+      "au": null,
+      "school": null
+    },
+    "CZ4042": {
+      "title": "NEURAL NETWORK & DEEP LEARNING",
+      "au": null,
+      "school": null
+    },
+    "CZ4045": {
+      "title": "NATURAL LANGUAGE PROCESSING",
+      "au": null,
+      "school": null
+    },
+    "CZ4062": {
+      "title": "COMPUTER SECURITY (SYSTEM SECURITY)",
+      "au": null,
+      "school": null
+    },
+    "CZ4064": {
+      "title": "SECURITY MANAGEMENT",
+      "au": null,
+      "school": null
+    },
+    "CZ4068": {
+      "title": "APPLICATION SECURITY",
+      "au": null,
+      "school": null
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "course": "EE2010",
+  "academic_year": "2025-26",
+  "semester": 2,
+  "fetched_at": "2026-07-06T00:00:00Z",
+  "source": "sample:owa-fixture",
+  "indexes": [
+    {
+      "index": "10112",
+      "remark": "Teaching Wk1-13",
+      "slots": [
+        {
+          "type": "LEC",
+          "group": "SGL",
+          "day": "MON",
+          "start": "0930",
+          "end": "1120",
+          "venue": "LT1A",
+          "weeks": "1-13"
+        },
+        {
+          "type": "TUT",
+          "group": "SG1",
+          "day": "WED",
+          "start": "1330",
+          "end": "1420",
+          "venue": "TR+15",
+          "weeks": "2-13"
+        }
+      ]
+    },
+    {
+      "index": "10113",
+      "remark": "Teaching Wk1-13",
+      "slots": [
+        {
+          "type": "LEC",
+          "group": "SGL",
+          "day": "MON",
+          "start": "0930",
+          "end": "1120",
+          "venue": "LT1A",
+          "weeks": "1-13"
+        },
+        {
+          "type": "LAB",
+          "group": "SG5",
+          "day": "FRI",
+          "start": "0830",
+          "end": "1120",
+          "venue": "Lab2",
+          "weeks": "3,5,7,9,11"
+        }
+      ]
+    }
+  ]
+}
